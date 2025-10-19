@@ -2,6 +2,8 @@
 
 A beautiful and intuitive pour-over coffee brewing calculator built with React and TypeScript. This application helps coffee enthusiasts perfect their pour-over technique with precise measurements, timing, and step-by-step brewing instructions.
 
+🔗 **Live Demo**: [https://stromland.github.io/coffee/](https://stromland.github.io/coffee/)
+
 ## Features
 
 - **Coffee Calculator**: Input your coffee amount and water ratio to automatically calculate total water needed
