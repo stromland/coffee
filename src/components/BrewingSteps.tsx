@@ -94,19 +94,11 @@ const BrewingSteps: React.FC<BrewingStepsProps> = ({ steps, coffeeAmount, totalB
                 </span>
               </div>
               
-              <div className="grid grid-cols-2 gap-4">
-                <div className="bg-olive/20 px-3 py-2 rounded-md border border-caramel/20">
-                  <span className="text-caramel/80 text-xs block mb-1">Pour</span>
-                  <span className="font-bold text-cream text-lg">
-                    {step.waterAmount.toFixed(1)}g
-                  </span>
-                </div>
-                <div className="bg-olive/20 px-3 py-2 rounded-md border border-caramel/20">
-                  <span className="text-caramel/80 text-xs block mb-1">Total</span>
-                  <span className="font-bold text-cream text-lg">
-                    {step.cumulativeWater.toFixed(1)}g
-                  </span>
-                </div>
+              <div className="bg-olive/20 px-4 py-3 rounded-md border border-caramel/20">
+                <span className="text-caramel/80 text-xs block mb-1">Pour to</span>
+                <span className="font-bold text-cream text-2xl">
+                  {step.cumulativeWater.toFixed(1)}g
+                </span>
               </div>
             </div>
           </div>

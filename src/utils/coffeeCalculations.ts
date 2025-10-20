@@ -28,28 +28,28 @@ const generate46Steps = (totalWater: number, presetId?: string): BrewStep[] => {
         waterAmount: pour1,
         cumulativeWater: pour1,
         timeSeconds: 0,
-        description: "First pour (40% phase - affects sweetness)",
+        description: "40% phase - affects sweetness",
       },
       {
         stepNumber: 2,
         waterAmount: pour2,
         cumulativeWater: pour1 + pour2,
         timeSeconds: 45,
-        description: "Second pour (40% phase - affects sweetness)",
+        description: "40% phase - affects sweetness",
       },
       {
         stepNumber: 3,
         waterAmount: pour3,
         cumulativeWater: pour1 + pour2 + pour3,
         timeSeconds: 90,
-        description: "Third pour (60% phase - affects strength)",
+        description: "60% phase - affects strength",
       },
       {
         stepNumber: 4,
         waterAmount: pour4,
         cumulativeWater: totalWater,
         timeSeconds: 135,
-        description: "Fourth pour (60% phase - affects strength)",
+        description: "60% phase - affects strength",
       },
     ];
   }
@@ -83,7 +83,7 @@ const generate46Steps = (totalWater: number, presetId?: string): BrewStep[] => {
       waterAmount: scaledAmount,
       cumulativeWater,
       timeSeconds: pour.timeSeconds,
-      description: `Pour ${index + 1} (${phase})`,
+      description: phase,
     };
   });
 };
@@ -111,28 +111,28 @@ const generateHoffmanSteps = (totalWater: number): BrewStep[] => {
       waterAmount: pour2,
       cumulativeWater: bloom + pour2,
       timeSeconds: 45,
-      description: "Pour to 40% total",
+      description: "Continue pouring",
     },
     {
       stepNumber: 3,
       waterAmount: pour3,
       cumulativeWater: bloom + pour2 + pour3,
       timeSeconds: 70,
-      description: "Pour to 60% total",
+      description: "Continue pouring",
     },
     {
       stepNumber: 4,
       waterAmount: pour4,
       cumulativeWater: bloom + pour2 + pour3 + pour4,
       timeSeconds: 90,
-      description: "Pour to 80% total",
+      description: "Continue pouring",
     },
     {
       stepNumber: 5,
       waterAmount: pour5,
       cumulativeWater: totalWater,
       timeSeconds: 110,
-      description: "Pour to 100% total - swirl at 2:00",
+      description: "Final pour - swirl at 2:00",
     },
   ];
 };
