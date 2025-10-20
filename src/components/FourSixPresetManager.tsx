@@ -58,17 +58,19 @@ const FourSixPresetManager: React.FC<FourSixPresetManagerProps> = ({
 
         <div className="grid grid-cols-1 gap-3">
           {presets.map((preset) => (
-            <button
+            <div
               key={preset.id}
-              onClick={() => onPresetChange(preset.id)}
-              className={`p-4 rounded-lg border-2 transition-all text-left ${
+              className={`p-4 rounded-lg border-2 transition-all ${
                 selectedPresetId === preset.id
                   ? 'border-coffee bg-coffee/20 shadow-lg'
                   : 'border-caramel/20 hover:border-coffee/50 bg-olive-dark/30 hover:bg-olive-dark/50'
               }`}
             >
               <div className="flex items-start justify-between">
-                <div className="flex-1">
+                <button
+                  onClick={() => onPresetChange(preset.id)}
+                  className="flex-1 text-left"
+                >
                   <div className="flex items-center gap-2 mb-1">
                     <h4 className="font-semibold text-cream">{preset.name}</h4>
                     {preset.isDefault && (
@@ -80,7 +82,7 @@ const FourSixPresetManager: React.FC<FourSixPresetManagerProps> = ({
                   <p className="text-xs text-caramel/80">
                     {preset.pours.length} pours
                   </p>
-                </div>
+                </button>
                 <div className="flex items-center gap-2 ml-3">
                   {selectedPresetId === preset.id && (
                     <svg className="w-5 h-5 text-coffee" fill="currentColor" viewBox="0 0 20 20">
@@ -103,7 +105,7 @@ const FourSixPresetManager: React.FC<FourSixPresetManagerProps> = ({
                   )}
                 </div>
               </div>
-            </button>
+            </div>
           ))}
         </div>
       </div>
