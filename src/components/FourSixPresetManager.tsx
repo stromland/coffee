@@ -78,7 +78,7 @@ const FourSixPresetManager: React.FC<FourSixPresetManagerProps> = ({
                     )}
                   </div>
                   <p className="text-xs text-caramel/80">
-                    {preset.pours.length} pours • Total: 300g
+                    {preset.pours.length} pours
                   </p>
                 </div>
                 <div className="flex items-center gap-2 ml-3">
