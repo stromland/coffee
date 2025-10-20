@@ -32,7 +32,7 @@ const BrewingSteps: React.FC<BrewingStepsProps> = ({ steps, coffeeAmount, totalB
 
       {methodName && (
         <div className="mb-5 p-4 bg-olive-dark/50 rounded-lg border border-caramel/20">
-          <div className="flex items-center justify-between">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
             <div>
               <span className="text-xs text-caramel/70 block mb-1">Method</span>
               <span className="text-sm font-semibold text-cream">{methodName}</span>
@@ -42,7 +42,7 @@ const BrewingSteps: React.FC<BrewingStepsProps> = ({ steps, coffeeAmount, totalB
                 href={creditUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-xs text-coffee hover:text-caramel hover:underline inline-flex items-center gap-1 bg-coffee/10 px-3 py-2 rounded-md border border-coffee/30 transition-all"
+                className="text-xs text-coffee hover:text-caramel hover:underline inline-flex items-center gap-1 bg-coffee/10 px-3 py-2 rounded-md border border-coffee/30 transition-all w-fit"
               >
                 <svg
                   className="w-3 h-3"
