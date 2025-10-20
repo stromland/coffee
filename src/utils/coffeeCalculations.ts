@@ -154,7 +154,7 @@ export const brewMethods: BrewMethod[] = [
   {
     id: "4-6",
     name: "4:6 Method",
-    description: "Tetsu Kasuya's 4:6 method - 4 pours with progressive volumes",
+    description: "Tetsu Kasuya's 4:6 method",
     creditName: "Tetsu Kasuya (2016 World Brewers Cup Champion)",
     creditUrl: "https://projectbarista.com/4-6-method-recipe/",
     totalBrewTime: 210, // 3:30 minutes
@@ -163,7 +163,7 @@ export const brewMethods: BrewMethod[] = [
   {
     id: "hoffman",
     name: "Hoffman Method",
-    description: "James Hoffmann's 1 Cup V60 method - 5 equal pours (20% each)",
+    description: "James Hoffmann's 1 Cup V60 method",
     creditName: "James Hoffmann",
     creditUrl: "https://www.youtube.com/watch?v=1oB1oDrDkHM",
     totalBrewTime: 180, // 3:00 minutes (drawdown complete)
