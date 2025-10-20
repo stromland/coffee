@@ -45,19 +45,13 @@ function App() {
       <div className="bg-gradient-to-br from-olive-dark via-olive-dark to-olive/20 min-h-screen">
         <div className="max-w-7xl mx-auto px-4 py-6">
           <header className="mb-8">
-            <div className="flex items-center justify-between mb-6">
-              <div>
-                <h1 className="text-3xl md:text-4xl font-bold text-cream mb-1 flex items-center gap-3">
-                  ☕ Coffee Brew Dashboard
-                </h1>
-                <p className="text-caramel/80">
-                  Perfect your pour-over with precise measurements and timing
-                </p>
-              </div>
-              <div className="hidden md:flex items-center gap-2 bg-olive/30 px-4 py-2 rounded-lg border border-coffee/30">
-                <div className="w-2 h-2 bg-coffee rounded-full animate-pulse"></div>
-                <span className="text-cream text-sm font-medium">Live</span>
-              </div>
+            <div className="mb-6">
+              <h1 className="text-3xl md:text-4xl font-bold text-cream mb-1 flex items-center gap-3">
+                ☕ Coffee Brew Dashboard
+              </h1>
+              <p className="text-caramel/80">
+                Perfect your pour-over with precise measurements and timing
+              </p>
             </div>
           </header>
 
