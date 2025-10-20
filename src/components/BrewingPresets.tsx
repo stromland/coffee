@@ -8,55 +8,32 @@ interface BrewingPresetsProps {
 
 const BrewingPresets: React.FC<BrewingPresetsProps> = ({ selectedMethodId, onMethodChange }) => {
   return (
-    <div className="bg-white rounded-lg shadow-md p-6 mb-6 border-2 border-olive/20">
-      <h2 className="text-2xl font-bold text-olive-dark mb-4">Brewing Method</h2>
+    <div className="bg-olive/20 backdrop-blur-sm rounded-lg border border-coffee/30 p-6 shadow-2xl h-fit sticky top-6">
+      <div className="flex items-center gap-2 mb-6">
+        <div className="w-1 h-6 bg-coffee rounded-full"></div>
+        <h2 className="text-xl font-bold text-cream">Brewing Method</h2>
+      </div>
       
-      <div className="grid grid-cols-1 gap-4">
+      <div className="space-y-3">
         {brewMethods.map((method) => (
           <button
             key={method.id}
             onClick={() => onMethodChange(method.id)}
-            className={`p-4 rounded-lg border-2 transition-all text-left ${
+            className={`w-full p-4 rounded-lg border-2 transition-all text-left ${
               selectedMethodId === method.id
-                ? 'border-olive bg-olive/10'
-                : 'border-caramel/30 hover:border-olive/50 bg-white'
+                ? 'border-coffee bg-coffee/20 shadow-lg'
+                : 'border-caramel/20 hover:border-coffee/50 bg-olive-dark/30 hover:bg-olive-dark/50'
             }`}
           >
             <div className="flex items-start justify-between">
               <div className="flex-1">
-                <h3 className="font-bold text-lg text-olive-dark">{method.name}</h3>
-                <p className="text-sm text-olive mt-1">{method.description}</p>
-                {method.creditName && method.creditUrl && (
-                  <div className="mt-2">
-                    <a
-                      href={method.creditUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-xs text-coffee hover:text-coffee/80 hover:underline inline-flex items-center"
-                      onClick={(e) => e.stopPropagation()}
-                    >
-                      <svg
-                        className="w-3 h-3 mr-1"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth={2}
-                          d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-                        />
-                      </svg>
-                      {method.creditName}
-                    </a>
-                  </div>
-                )}
+                <h3 className="font-bold text-base text-cream">{method.name}</h3>
+                <p className="text-xs text-caramel/80 mt-1 leading-relaxed">{method.description}</p>
               </div>
               {selectedMethodId === method.id && (
-                <div className="ml-4">
+                <div className="ml-3 flex-shrink-0">
                   <svg
-                    className="w-6 h-6 text-olive"
+                    className="w-5 h-5 text-coffee"
                     fill="currentColor"
                     viewBox="0 0 20 20"
                   >

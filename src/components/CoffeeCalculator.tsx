@@ -24,16 +24,19 @@ const CoffeeCalculator: React.FC<CoffeeCalculatorProps> = ({
   };
 
   return (
-    <div className="bg-white rounded-lg shadow-md p-6 mb-6 border-2 border-olive/20">
-      <h2 className="text-2xl font-bold text-olive-dark mb-4">
-        Coffee Calculator
-      </h2>
+    <div className="bg-olive/20 backdrop-blur-sm rounded-lg border border-coffee/30 p-6 shadow-2xl">
+      <div className="flex items-center gap-2 mb-6">
+        <div className="w-1 h-6 bg-coffee rounded-full"></div>
+        <h2 className="text-xl font-bold text-cream">
+          Coffee Calculator
+        </h2>
+      </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div>
           <label
             htmlFor="coffee-amount"
-            className="block text-sm font-medium text-olive-dark mb-2"
+            className="block text-sm font-medium text-caramel mb-2"
           >
             Coffee Amount (g)
           </label>
@@ -44,7 +47,7 @@ const CoffeeCalculator: React.FC<CoffeeCalculatorProps> = ({
             step="0.5"
             value={settings.coffeeAmount || ""}
             onChange={handleCoffeeAmountChange}
-            className="w-full px-4 py-2 border border-olive/30 rounded-md focus:ring-2 focus:ring-olive focus:border-transparent bg-white"
+            className="w-full px-4 py-3 border border-coffee/40 rounded-md focus:ring-2 focus:ring-coffee focus:border-coffee bg-olive-dark/50 text-cream placeholder-caramel/50 transition-all"
             placeholder="20"
           />
         </div>
@@ -52,7 +55,7 @@ const CoffeeCalculator: React.FC<CoffeeCalculatorProps> = ({
         <div>
           <label
             htmlFor="water-ratio"
-            className="block text-sm font-medium text-olive-dark mb-2"
+            className="block text-sm font-medium text-caramel mb-2"
           >
             Water Ratio (1:X)
           </label>
@@ -60,7 +63,7 @@ const CoffeeCalculator: React.FC<CoffeeCalculatorProps> = ({
             id="water-ratio"
             value={settings.waterRatio}
             onChange={handleRatioChange}
-            className="w-full px-4 py-2 border border-olive/30 rounded-md focus:ring-2 focus:ring-olive focus:border-transparent bg-white"
+            className="w-full px-4 py-3 border border-coffee/40 rounded-md focus:ring-2 focus:ring-coffee focus:border-coffee bg-olive-dark/50 text-cream transition-all"
           >
             <option value={12}>1:12 (Strong)</option>
             <option value={13}>1:13</option>
@@ -75,14 +78,14 @@ const CoffeeCalculator: React.FC<CoffeeCalculatorProps> = ({
         </div>
       </div>
 
-      <div className="mt-6 p-4 bg-coffee/10 rounded-md border border-coffee/20">
+      <div className="mt-6 p-6 bg-gradient-to-br from-coffee/30 to-coffee/10 rounded-lg border border-coffee/50 shadow-inner">
         <div className="flex justify-between items-center">
-          <span className="text-olive-dark font-medium">Total Water:</span>
-          <span className="text-2xl font-bold text-coffee">
+          <span className="text-caramel font-medium">Total Water:</span>
+          <span className="text-3xl font-bold text-cream">
             {settings.totalWater.toFixed(0)}g
           </span>
         </div>
-        <div className="mt-2 text-sm text-olive">
+        <div className="mt-3 text-sm text-caramel/80">
           Ratio: 1:{settings.waterRatio} ({settings.coffeeAmount}g coffee ×{" "}
           {settings.waterRatio})
         </div>

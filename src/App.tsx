@@ -41,34 +41,53 @@ function App() {
   });
 
   return (
-    <div className="min-h-screen bg-cream py-8 px-4">
-      <div className="max-w-4xl mx-auto">
-        <header className="text-center mb-8">
-          <h1 className="text-4xl md:text-5xl font-bold text-olive-dark mb-2">
-            ☕ Coffee Brew Calculator
-          </h1>
-          <p className="text-olive">
-            Perfect your pour-over with precise measurements and timing
-          </p>
-        </header>
+    <div className="min-h-screen bg-olive-dark">
+      <div className="bg-gradient-to-br from-olive-dark via-olive-dark to-olive/20 min-h-screen">
+        <div className="max-w-7xl mx-auto px-4 py-6">
+          <header className="mb-8">
+            <div className="flex items-center justify-between mb-6">
+              <div>
+                <h1 className="text-3xl md:text-4xl font-bold text-cream mb-1 flex items-center gap-3">
+                  ☕ Coffee Brew Dashboard
+                </h1>
+                <p className="text-caramel/80">
+                  Perfect your pour-over with precise measurements and timing
+                </p>
+              </div>
+              <div className="hidden md:flex items-center gap-2 bg-olive/30 px-4 py-2 rounded-lg border border-coffee/30">
+                <div className="w-2 h-2 bg-coffee rounded-full animate-pulse"></div>
+                <span className="text-cream text-sm font-medium">Live</span>
+              </div>
+            </div>
+          </header>
 
-        <CoffeeCalculator 
-          settings={settings} 
-          onSettingsChange={handleSettingsChange} 
-        />
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            <div className="lg:col-span-2 space-y-6">
+              <CoffeeCalculator 
+                settings={settings} 
+                onSettingsChange={handleSettingsChange} 
+              />
 
-        <BrewingPresets 
-          selectedMethodId={selectedMethodId} 
-          onMethodChange={handleMethodChange} 
-        />
+              {brewSteps.length > 0 && (
+                <BrewingSteps 
+                  steps={brewSteps} 
+                  coffeeAmount={settings.coffeeAmount}
+                  totalBrewTime={getBrewMethod(selectedMethodId)?.totalBrewTime || 0}
+                  methodName={getBrewMethod(selectedMethodId)?.name}
+                  creditName={getBrewMethod(selectedMethodId)?.creditName}
+                  creditUrl={getBrewMethod(selectedMethodId)?.creditUrl}
+                />
+              )}
+            </div>
 
-        {brewSteps.length > 0 && (
-          <BrewingSteps 
-            steps={brewSteps} 
-            coffeeAmount={settings.coffeeAmount}
-            totalBrewTime={getBrewMethod(selectedMethodId)?.totalBrewTime || 0}
-          />
-        )}
+            <div className="lg:col-span-1">
+              <BrewingPresets 
+                selectedMethodId={selectedMethodId} 
+                onMethodChange={handleMethodChange} 
+              />
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );
