@@ -8,7 +8,7 @@ interface BrewingPresetsProps {
 
 const BrewingPresets: React.FC<BrewingPresetsProps> = ({ selectedMethodId, onMethodChange }) => {
   return (
-    <div className="bg-olive/20 backdrop-blur-sm rounded-lg border border-coffee/30 p-6 shadow-2xl h-fit sticky top-6">
+    <div className="bg-olive/20 backdrop-blur-sm rounded-lg p-6 shadow-2xl h-fit sticky top-6">
       <div className="flex items-center gap-2 mb-6">
         <div className="w-1 h-6 bg-coffee rounded-full"></div>
         <h2 className="text-xl font-bold text-cream">Brewing Method</h2>

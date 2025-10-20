@@ -24,14 +24,14 @@ const BrewingSteps: React.FC<BrewingStepsProps> = ({ steps, coffeeAmount, totalB
   const totalWater = steps.length > 0 ? steps[steps.length - 1].cumulativeWater : 0;
 
   return (
-    <div className="bg-olive/20 backdrop-blur-sm rounded-lg border border-coffee/30 p-6 shadow-2xl">
+    <div className="bg-olive/20 backdrop-blur-sm rounded-lg p-6 shadow-2xl">
       <div className="flex items-center gap-2 mb-6">
         <div className="w-1 h-6 bg-coffee rounded-full"></div>
         <h2 className="text-xl font-bold text-cream">Brewing Steps</h2>
       </div>
 
       {methodName && (
-        <div className="mb-5 p-4 bg-olive-dark/50 rounded-lg border border-caramel/20">
+        <div className="mb-5 p-4 bg-olive-dark/50 rounded-lg">
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
             <div>
               <span className="text-xs text-caramel/70 block mb-1">Method</span>
@@ -64,7 +64,7 @@ const BrewingSteps: React.FC<BrewingStepsProps> = ({ steps, coffeeAmount, totalB
         </div>
       )}
       
-      <div className="mb-5 p-4 bg-olive-dark/50 rounded-lg border border-caramel/20">
+      <div className="mb-5 p-4 bg-olive-dark/50 rounded-lg">
         <p className="text-sm text-caramel">
           <span className="font-semibold text-cream">Coffee:</span> {coffeeAmount}g | 
           <span className="font-semibold text-cream ml-3">Water:</span> {totalWater.toFixed(0)}g | 
@@ -82,19 +82,19 @@ const BrewingSteps: React.FC<BrewingStepsProps> = ({ steps, coffeeAmount, totalB
               <div className="absolute left-5 sm:left-8 top-10 sm:top-16 w-0.5 h-full bg-gradient-to-b from-coffee/50 to-transparent"></div>
             )}
             
-            <div className="absolute left-0 top-0 w-10 h-10 sm:w-16 sm:h-16 bg-gradient-to-br from-coffee to-coffee/70 rounded-lg flex items-center justify-center text-cream font-bold text-base sm:text-xl shadow-lg border-2 border-coffee/50">
+            <div className="absolute left-0 top-0 w-10 h-10 sm:w-16 sm:h-16 bg-gradient-to-br from-coffee to-coffee/70 rounded-lg flex items-center justify-center text-cream font-bold text-base sm:text-xl shadow-lg">
               {step.stepNumber}
             </div>
             
-            <div className="bg-olive-dark/40 rounded-lg p-4 border border-caramel/20 hover:border-coffee/40 transition-all">
+            <div className="bg-olive-dark/40 rounded-lg p-4 hover:bg-olive-dark/50 transition-all">
               <div className="flex justify-between items-start mb-3">
                 <h3 className="font-semibold text-cream text-base">{step.description}</h3>
-                <span className="text-xl font-mono font-bold text-coffee ml-4 bg-coffee/10 px-3 py-1 rounded-md border border-coffee/30">
+                <span className="text-xl font-mono font-bold text-coffee ml-4 bg-coffee/10 px-3 py-1 rounded-md">
                   {formatTime(step.timeSeconds)}
                 </span>
               </div>
               
-              <div className="bg-olive/20 px-4 py-3 rounded-md border border-caramel/20">
+              <div className="bg-olive/20 px-4 py-3 rounded-md">
                 <span className="text-caramel/80 text-xs block mb-1">Pour to</span>
                 <span className="font-bold text-cream text-2xl">
                   {step.cumulativeWater.toFixed(1)}g
@@ -105,7 +105,7 @@ const BrewingSteps: React.FC<BrewingStepsProps> = ({ steps, coffeeAmount, totalB
         ))}
       </div>
 
-      <div className="p-4 bg-coffee/20 rounded-lg border border-coffee/40">
+      <div className="p-4 bg-coffee/20 rounded-lg">
         <div className="flex items-center justify-center gap-2">
           <svg
             className="w-5 h-5 text-caramel"

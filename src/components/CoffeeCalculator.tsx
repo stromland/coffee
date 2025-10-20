@@ -24,7 +24,7 @@ const CoffeeCalculator: React.FC<CoffeeCalculatorProps> = ({
   };
 
   return (
-    <div className="bg-olive/20 backdrop-blur-sm rounded-lg border border-coffee/30 p-6 shadow-2xl">
+    <div className="bg-olive/20 backdrop-blur-sm rounded-lg p-6 shadow-2xl">
       <div className="flex items-center gap-2 mb-6">
         <div className="w-1 h-6 bg-coffee rounded-full"></div>
         <h2 className="text-xl font-bold text-cream">
@@ -78,7 +78,7 @@ const CoffeeCalculator: React.FC<CoffeeCalculatorProps> = ({
         </div>
       </div>
 
-      <div className="mt-6 p-6 bg-gradient-to-br from-coffee/30 to-coffee/10 rounded-lg border border-coffee/50 shadow-inner">
+      <div className="mt-6 p-6 bg-gradient-to-br from-coffee/30 to-coffee/10 rounded-lg shadow-inner">
         <div className="flex justify-between items-center">
           <span className="text-caramel font-medium">Total Water:</span>
           <span className="text-3xl font-bold text-cream">
