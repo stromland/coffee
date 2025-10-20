@@ -19,5 +19,17 @@ export interface BrewMethod {
   creditName?: string;
   creditUrl?: string;
   totalBrewTime: number; // in seconds
-  generateSteps: (totalWater: number) => BrewStep[];
+  generateSteps: (totalWater: number, presetId?: string) => BrewStep[];
+}
+
+export interface FourSixPour {
+  amount: number; // in grams (based on 300g total)
+  timeSeconds: number;
+}
+
+export interface FourSixPreset {
+  id: string;
+  name: string;
+  pours: FourSixPour[];
+  isDefault: boolean;
 }

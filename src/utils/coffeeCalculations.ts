@@ -1,4 +1,5 @@
 import type { BrewMethod, BrewStep } from "../types/coffee";
+import { getPresetById, defaultPresets } from "./presetStorage";
 
 export const calculateTotalWater = (
   coffeeAmount: number,
@@ -10,42 +11,81 @@ export const calculateTotalWater = (
 // 4:6 Method by Tetsu Kasuya
 // Custom pour pattern: 50g, 70g, 90g, 90g (for 300g total)
 // Scales proportionally: 16.67%, 23.33%, 30%, 30%
-const generate46Steps = (totalWater: number): BrewStep[] => {
-  const pour1 = totalWater * 0.1667; // ~16.67%
-  const pour2 = totalWater * 0.2333; // ~23.33%
-  const pour3 = totalWater * 0.3; // 30%
-  const pour4 = totalWater * 0.3; // 30%
+const generate46Steps = (totalWater: number, presetId?: string): BrewStep[] => {
+  const BASE_WATER = 300;
+  const preset = presetId ? getPresetById(presetId) : defaultPresets[0];
+  
+  if (!preset) {
+    // Fallback to original pattern
+    const pour1 = totalWater * 0.1667;
+    const pour2 = totalWater * 0.2333;
+    const pour3 = totalWater * 0.3;
+    const pour4 = totalWater * 0.3;
 
-  return [
-    {
-      stepNumber: 1,
-      waterAmount: pour1,
-      cumulativeWater: pour1,
-      timeSeconds: 0,
-      description: "First pour (40% phase - affects sweetness)",
-    },
-    {
-      stepNumber: 2,
-      waterAmount: pour2,
-      cumulativeWater: pour1 + pour2,
-      timeSeconds: 45,
-      description: "Second pour (40% phase - affects sweetness)",
-    },
-    {
-      stepNumber: 3,
-      waterAmount: pour3,
-      cumulativeWater: pour1 + pour2 + pour3,
-      timeSeconds: 90,
-      description: "Third pour (60% phase - affects strength)",
-    },
-    {
-      stepNumber: 4,
-      waterAmount: pour4,
-      cumulativeWater: totalWater,
-      timeSeconds: 135,
-      description: "Fourth pour (60% phase - affects strength)",
-    },
-  ];
+    return [
+      {
+        stepNumber: 1,
+        waterAmount: pour1,
+        cumulativeWater: pour1,
+        timeSeconds: 0,
+        description: "First pour (40% phase - affects sweetness)",
+      },
+      {
+        stepNumber: 2,
+        waterAmount: pour2,
+        cumulativeWater: pour1 + pour2,
+        timeSeconds: 45,
+        description: "Second pour (40% phase - affects sweetness)",
+      },
+      {
+        stepNumber: 3,
+        waterAmount: pour3,
+        cumulativeWater: pour1 + pour2 + pour3,
+        timeSeconds: 90,
+        description: "Third pour (60% phase - affects strength)",
+      },
+      {
+        stepNumber: 4,
+        waterAmount: pour4,
+        cumulativeWater: totalWater,
+        timeSeconds: 135,
+        description: "Fourth pour (60% phase - affects strength)",
+      },
+    ];
+  }
+
+  // Scale preset from 300g to actual totalWater
+  const scale = totalWater / BASE_WATER;
+  let cumulativeWater = 0;
+  
+  // Determine phase split (40% for phase 1)
+  const phase1Target = BASE_WATER * 0.4;
+  let phase1Index = -1;
+  let cumulative = 0;
+  
+  for (let i = 0; i < preset.pours.length; i++) {
+    cumulative += preset.pours[i].amount;
+    if (cumulative >= phase1Target - 0.1 && phase1Index === -1) {
+      phase1Index = i;
+      break;
+    }
+  }
+
+  return preset.pours.map((pour, index) => {
+    const scaledAmount = pour.amount * scale;
+    cumulativeWater += scaledAmount;
+    
+    const isPhase1 = index <= phase1Index;
+    const phase = isPhase1 ? "40% phase - affects sweetness" : "60% phase - affects strength";
+    
+    return {
+      stepNumber: index + 1,
+      waterAmount: scaledAmount,
+      cumulativeWater,
+      timeSeconds: pour.timeSeconds,
+      description: `Pour ${index + 1} (${phase})`,
+    };
+  });
 };
 
 // Hoffman Method - 1 Cup V60 Method

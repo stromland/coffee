@@ -2,6 +2,7 @@ import { useState } from 'react';
 import CoffeeCalculator from './components/CoffeeCalculator';
 import BrewingPresets from './components/BrewingPresets';
 import BrewingSteps from './components/BrewingSteps';
+import FourSixPresetManager from './components/FourSixPresetManager';
 import type { CoffeeSettings, BrewStep } from './types/coffee';
 import { getBrewMethod } from './utils/coffeeCalculations';
 
@@ -13,22 +14,32 @@ function App() {
   });
 
   const [selectedMethodId, setSelectedMethodId] = useState<string>('4-6');
+  const [selectedPresetId, setSelectedPresetId] = useState<string>('default-46');
   const [brewSteps, setBrewSteps] = useState<BrewStep[]>([]);
 
   const handleSettingsChange = (newSettings: CoffeeSettings) => {
     setSettings(newSettings);
-    updateBrewSteps(selectedMethodId, newSettings.totalWater);
+    updateBrewSteps(selectedMethodId, newSettings.totalWater, selectedPresetId);
   };
 
   const handleMethodChange = (methodId: string) => {
     setSelectedMethodId(methodId);
-    updateBrewSteps(methodId, settings.totalWater);
+    if (methodId === '4-6') {
+      updateBrewSteps(methodId, settings.totalWater, selectedPresetId);
+    } else {
+      updateBrewSteps(methodId, settings.totalWater);
+    }
   };
 
-  const updateBrewSteps = (methodId: string, totalWater: number) => {
+  const handlePresetChange = (presetId: string) => {
+    setSelectedPresetId(presetId);
+    updateBrewSteps(selectedMethodId, settings.totalWater, presetId);
+  };
+
+  const updateBrewSteps = (methodId: string, totalWater: number, presetId?: string) => {
     const method = getBrewMethod(methodId);
     if (method && totalWater > 0) {
-      const steps = method.generateSteps(totalWater);
+      const steps = method.generateSteps(totalWater, presetId);
       setBrewSteps(steps);
     } else {
       setBrewSteps([]);
@@ -37,7 +48,7 @@ function App() {
 
   // Initialize brew steps on mount
   useState(() => {
-    updateBrewSteps(selectedMethodId, settings.totalWater);
+    updateBrewSteps(selectedMethodId, settings.totalWater, selectedPresetId);
   });
 
   return (
@@ -61,6 +72,13 @@ function App() {
                 settings={settings} 
                 onSettingsChange={handleSettingsChange} 
               />
+
+              {selectedMethodId === '4-6' && (
+                <FourSixPresetManager
+                  selectedPresetId={selectedPresetId}
+                  onPresetChange={handlePresetChange}
+                />
+              )}
 
               {brewSteps.length > 0 && (
                 <BrewingSteps 
