@@ -79,7 +79,7 @@ const BrewingSteps: React.FC<BrewingStepsProps> = ({ steps, coffeeAmount, totalB
             className="relative pl-20 pb-6 last:pb-0"
           >
             {index < steps.length - 1 && (
-              <div className="absolute left-8 top-14 w-0.5 h-full bg-gradient-to-b from-coffee/50 to-transparent"></div>
+              <div className="absolute left-8 top-16 w-0.5 h-full bg-gradient-to-b from-coffee/50 to-transparent"></div>
             )}
             
             <div className="absolute left-0 top-0 w-16 h-16 bg-gradient-to-br from-coffee to-coffee/70 rounded-lg flex items-center justify-center text-cream font-bold text-xl shadow-lg border-2 border-coffee/50">
