@@ -3,6 +3,8 @@ import CoffeeCalculator from './components/CoffeeCalculator';
 import BrewingPresets from './components/BrewingPresets';
 import BrewingSteps from './components/BrewingSteps';
 import FourSixPresetManager from './components/FourSixPresetManager';
+import SaveSessionDialog from './components/SaveSessionDialog';
+import BrewingHistory from './components/BrewingHistory';
 import type { CoffeeSettings, BrewStep } from './types/coffee';
 import { getBrewMethod } from './utils/coffeeCalculations';
 
@@ -16,6 +18,9 @@ function App() {
   const [selectedMethodId, setSelectedMethodId] = useState<string>('4-6');
   const [selectedPresetId, setSelectedPresetId] = useState<string>('default-46');
   const [brewSteps, setBrewSteps] = useState<BrewStep[]>([]);
+  const [showSaveDialog, setShowSaveDialog] = useState(false);
+  const [showHistory, setShowHistory] = useState(false);
+  const [historyKey, setHistoryKey] = useState(0);
 
   const handleSettingsChange = (newSettings: CoffeeSettings) => {
     setSettings(newSettings);
@@ -46,6 +51,11 @@ function App() {
     }
   };
 
+  const handleSaveSession = () => {
+    setShowSaveDialog(false);
+    setHistoryKey(prev => prev + 1); // Force history to refresh
+  };
+
   // Initialize brew steps on mount
   useState(() => {
     updateBrewSteps(selectedMethodId, settings.totalWater, selectedPresetId);
@@ -56,13 +66,28 @@ function App() {
       <div className="bg-gradient-to-br from-olive-dark via-olive-dark to-olive/20 min-h-screen">
         <div className="max-w-7xl mx-auto px-4 py-6">
           <header className="mb-8">
-            <div className="mb-6">
-              <h1 className="text-3xl md:text-4xl font-bold text-cream mb-1 flex items-center gap-3">
-                ☕ Coffee Brew Dashboard
-              </h1>
-              <p className="text-caramel/80">
-                Perfect your pour-over with precise measurements and timing
-              </p>
+            <div className="mb-6 flex items-center justify-between">
+              <div>
+                <h1 className="text-3xl md:text-4xl font-bold text-cream mb-1 flex items-center gap-3">
+                  ☕ Coffee Brew Dashboard
+                </h1>
+                <p className="text-caramel/80">
+                  Perfect your pour-over with precise measurements and timing
+                </p>
+              </div>
+              <button
+                onClick={() => setShowHistory(!showHistory)}
+                className={`px-4 py-2 rounded-lg transition-all font-medium text-sm flex items-center gap-2 ${
+                  showHistory
+                    ? 'bg-coffee text-cream'
+                    : 'bg-olive/20 text-caramel hover:text-cream hover:bg-olive/30'
+                }`}
+              >
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                {showHistory ? 'Hide History' : 'Show History'}
+              </button>
             </div>
           </header>
 
@@ -95,7 +120,12 @@ function App() {
                   methodName={getBrewMethod(selectedMethodId)?.name}
                   creditName={getBrewMethod(selectedMethodId)?.creditName}
                   creditUrl={getBrewMethod(selectedMethodId)?.creditUrl}
+                  onSaveSession={() => setShowSaveDialog(true)}
                 />
+              )}
+
+              {showHistory && (
+                <BrewingHistory key={historyKey} />
               )}
             </div>
 
@@ -108,6 +138,17 @@ function App() {
           </div>
         </div>
       </div>
+
+      <SaveSessionDialog
+        isOpen={showSaveDialog}
+        onClose={() => setShowSaveDialog(false)}
+        onSave={handleSaveSession}
+        coffeeAmount={settings.coffeeAmount}
+        waterAmount={settings.totalWater}
+        brewingMethodId={selectedMethodId}
+        brewingMethodName={getBrewMethod(selectedMethodId)?.name || selectedMethodId}
+        brewTime={getBrewMethod(selectedMethodId)?.totalBrewTime}
+      />
     </div>
   );
 }

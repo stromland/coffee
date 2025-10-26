@@ -8,6 +8,7 @@ interface BrewingStepsProps {
   methodName?: string;
   creditName?: string;
   creditUrl?: string;
+  onSaveSession?: () => void;
 }
 
 const formatTime = (seconds: number): string => {
@@ -16,7 +17,7 @@ const formatTime = (seconds: number): string => {
   return `${mins}:${secs.toString().padStart(2, '0')}`;
 };
 
-const BrewingSteps: React.FC<BrewingStepsProps> = ({ steps, coffeeAmount, totalBrewTime, methodName, creditName, creditUrl }) => {
+const BrewingSteps: React.FC<BrewingStepsProps> = ({ steps, coffeeAmount, totalBrewTime, methodName, creditName, creditUrl, onSaveSession }) => {
   if (steps.length === 0) {
     return null;
   }
@@ -25,9 +26,22 @@ const BrewingSteps: React.FC<BrewingStepsProps> = ({ steps, coffeeAmount, totalB
 
   return (
     <div className="bg-olive/20 backdrop-blur-sm rounded-lg p-6 shadow-2xl">
-      <div className="flex items-center gap-2 mb-6">
-        <div className="w-1 h-6 bg-coffee rounded-full"></div>
-        <h2 className="text-xl font-bold text-cream">Brewing Steps</h2>
+      <div className="flex items-center justify-between gap-2 mb-6">
+        <div className="flex items-center gap-2">
+          <div className="w-1 h-6 bg-coffee rounded-full"></div>
+          <h2 className="text-xl font-bold text-cream">Brewing Steps</h2>
+        </div>
+        {onSaveSession && (
+          <button
+            onClick={onSaveSession}
+            className="px-4 py-2 bg-coffee hover:bg-coffee/80 text-cream rounded-lg transition-all font-medium text-sm flex items-center gap-2"
+          >
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4" />
+            </svg>
+            Save Session
+          </button>
+        )}
       </div>
 
       {methodName && (
