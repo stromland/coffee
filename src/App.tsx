@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import CoffeeCalculator from './components/CoffeeCalculator';
 import BrewingPresets from './components/BrewingPresets';
 import BrewingSteps from './components/BrewingSteps';
@@ -57,9 +57,10 @@ function App() {
   };
 
   // Initialize brew steps on mount
-  useState(() => {
+  useEffect(() => {
     updateBrewSteps(selectedMethodId, settings.totalWater, selectedPresetId);
-  });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <div className="min-h-screen bg-olive-dark">

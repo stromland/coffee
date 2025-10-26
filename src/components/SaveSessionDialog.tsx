@@ -33,7 +33,7 @@ const SaveSessionDialog: React.FC<SaveSessionDialogProps> = ({
 
   const handleSave = () => {
     const session: BrewingSession = {
-      id: `session-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
+      id: `session-${Date.now()}-${Math.random().toString(36).substring(2, 11)}`,
       timestamp: Date.now(),
       coffeeType: coffeeType || 'Unknown',
       brewingMethod: brewingMethodId,
