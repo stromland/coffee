@@ -33,3 +33,18 @@ export interface FourSixPreset {
   pours: FourSixPour[];
   isDefault: boolean;
 }
+
+export interface BrewingSession {
+  id: string;
+  timestamp: number; // Unix timestamp in milliseconds
+  coffeeType: string; // Name or type of coffee beans
+  brewingMethod: string; // Method ID (e.g., '4-6', 'hoffman')
+  brewingPreset?: string; // Preset ID for 4:6 method
+  coffeeAmount: number; // Amount in grams
+  waterAmount: number; // Amount in ml/g
+  waterTemperature?: number; // Temperature in celsius
+  brewTime?: number; // Duration in seconds
+  grindSize?: string; // Grind size description
+  rating?: number; // 1-5 scale
+  notes?: string; // Tasting notes or observations
+}
