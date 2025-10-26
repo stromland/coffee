@@ -39,6 +39,7 @@ export interface BrewingSession {
   timestamp: number; // Unix timestamp in milliseconds
   coffeeType: string; // Name or type of coffee beans
   brewingMethod: string; // Method ID (e.g., '4-6', 'hoffman')
+  brewingPreset?: string; // Preset ID for 4:6 method
   coffeeAmount: number; // Amount in grams
   waterAmount: number; // Amount in ml/g
   waterTemperature?: number; // Temperature in celsius

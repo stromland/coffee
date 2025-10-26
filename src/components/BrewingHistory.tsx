@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import type { BrewingSession } from '../types/coffee';
 import { loadSessions, deleteSession } from '../utils/sessionStorage';
 import { getBrewMethod } from '../utils/coffeeCalculations';
+import { getPresetById } from '../utils/presetStorage';
 
 const BrewingHistory: React.FC = () => {
   const [sessions, setSessions] = useState<BrewingSession[]>([]);
@@ -39,6 +40,12 @@ const BrewingHistory: React.FC = () => {
   const getMethodName = (methodId: string): string => {
     const method = getBrewMethod(methodId);
     return method?.name || methodId;
+  };
+
+  const getPresetName = (presetId?: string): string | undefined => {
+    if (!presetId) return undefined;
+    const preset = getPresetById(presetId);
+    return preset?.name;
   };
 
   if (sessions.length === 0) {
@@ -112,7 +119,12 @@ const BrewingHistory: React.FC = () => {
                   <div className="grid grid-cols-2 sm:grid-cols-3 gap-x-4 gap-y-2 text-sm">
                     <div>
                       <span className="text-caramel/60 text-xs">Method</span>
-                      <p className="text-cream font-medium">{getMethodName(session.brewingMethod)}</p>
+                      <p className="text-cream font-medium">
+                        {getMethodName(session.brewingMethod)}
+                        {session.brewingPreset && getPresetName(session.brewingPreset) && (
+                          <span className="text-caramel/70 text-xs ml-1">({getPresetName(session.brewingPreset)})</span>
+                        )}
+                      </p>
                     </div>
                     <div>
                       <span className="text-caramel/60 text-xs">Coffee</span>
