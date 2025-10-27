@@ -1,16 +1,18 @@
 import React, { useState } from 'react';
-import type { CustomRecipePreset } from '../types/coffee';
+import type { CustomRecipePreset, CoffeeSettings } from '../types/coffee';
 import { loadCustomPresets, deleteCustomPreset } from '../utils/customRecipeStorage';
 import CustomRecipePresetEditor from './CustomRecipePresetEditor';
 
 interface CustomRecipePresetManagerProps {
   selectedPresetId?: string;
   onPresetChange: (presetId: string) => void;
+  settings: CoffeeSettings;
 }
 
 const CustomRecipePresetManager: React.FC<CustomRecipePresetManagerProps> = ({ 
   selectedPresetId, 
-  onPresetChange 
+  onPresetChange,
+  settings
 }) => {
   const [presets, setPresets] = useState<CustomRecipePreset[]>(loadCustomPresets());
   const [isEditorOpen, setIsEditorOpen] = useState(false);
@@ -61,6 +63,7 @@ const CustomRecipePresetManager: React.FC<CustomRecipePresetManagerProps> = ({
     return (
       <CustomRecipePresetEditor
         preset={editingPreset}
+        settings={settings}
         onSave={handleSavePreset}
         onCancel={() => {
           setIsEditorOpen(false);
@@ -121,7 +124,7 @@ const CustomRecipePresetManager: React.FC<CustomRecipePresetManagerProps> = ({
                     <h4 className="font-semibold text-cream">{preset.name}</h4>
                   </div>
                   <p className="text-xs text-caramel/80">
-                    {preset.pours.length} steps • {preset.pours.reduce((sum, p) => sum + p.percentage, 0).toFixed(1)}% total
+                    {preset.pours.length} steps • {preset.pours.reduce((sum, p) => sum + (p.percentage / 100) * settings.totalWater, 0).toFixed(0)}g total
                   </p>
                 </button>
                 <div className="flex items-center gap-2 ml-3">

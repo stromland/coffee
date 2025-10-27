@@ -136,6 +136,7 @@ function App() {
                   <CustomRecipePresetManager
                     selectedPresetId={selectedPresetId}
                     onPresetChange={handlePresetChange}
+                    settings={settings}
                   />
                 )}
 
