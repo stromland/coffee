@@ -49,7 +49,7 @@ const CustomRecipePresetEditor: React.FC<CustomRecipePresetEditorProps> = ({ pre
     const maxTime = Math.max(...pours.map(p => p.timeSeconds));
     
     const newPreset: CustomRecipePreset = {
-      id: preset?.id || `custom-${Date.now()}`,
+      id: preset?.id || `custom-${Date.now()}-${Math.random().toString(36).substring(2, 11)}`,
       name: name.trim(),
       pours,
       totalBrewTime: maxTime + 60, // Add 60s buffer for final drawdown

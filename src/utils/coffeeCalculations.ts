@@ -181,10 +181,8 @@ const generateCustomSteps = (totalWater: number, presetId?: string): BrewStep[] 
   }
 
   // Use absolute amounts from preset (no scaling like 4:6 method)
-  let cumulativeWater = 0;
-  
-  return preset.pours.map((pour, index) => {
-    cumulativeWater += pour.amount;
+  return preset.pours.map((pour, index, arr) => {
+    const cumulativeWater = arr.slice(0, index + 1).reduce((sum, p) => sum + p.amount, 0);
     
     return {
       stepNumber: index + 1,
