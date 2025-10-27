@@ -12,9 +12,9 @@ const CustomRecipePresetEditor: React.FC<CustomRecipePresetEditorProps> = ({ pre
   const [name, setName] = useState(preset?.name || '');
   const [pours, setPours] = useState<CustomRecipePour[]>(
     preset?.pours || [
-      { amount: 50, timeSeconds: 0, description: 'Bloom' },
-      { amount: 100, timeSeconds: 45, description: 'First pour' },
-      { amount: 100, timeSeconds: 90, description: 'Second pour' },
+      { percentage: 16.67, timeSeconds: 0, description: 'Bloom' },
+      { percentage: 33.33, timeSeconds: 45, description: 'First pour' },
+      { percentage: 50, timeSeconds: 90, description: 'Second pour' },
     ]
   );
 
@@ -22,7 +22,7 @@ const CustomRecipePresetEditor: React.FC<CustomRecipePresetEditorProps> = ({ pre
     const lastPour = pours[pours.length - 1];
     setPours([
       ...pours,
-      { amount: 50, timeSeconds: lastPour ? lastPour.timeSeconds + 30 : 0, description: '' },
+      { percentage: 10, timeSeconds: lastPour ? lastPour.timeSeconds + 30 : 0, description: '' },
     ]);
   };
 
@@ -34,7 +34,7 @@ const CustomRecipePresetEditor: React.FC<CustomRecipePresetEditorProps> = ({ pre
 
   const handlePourChange = (index: number, field: keyof CustomRecipePour, value: string | number) => {
     const newPours = [...pours];
-    if (field === 'amount' || field === 'timeSeconds') {
+    if (field === 'percentage' || field === 'timeSeconds') {
       const numValue = typeof value === 'string' ? (value === '' ? 0 : parseFloat(value)) : value;
       newPours[index][field] = isNaN(numValue) ? 0 : numValue;
     } else {
@@ -59,7 +59,7 @@ const CustomRecipePresetEditor: React.FC<CustomRecipePresetEditorProps> = ({ pre
     onSave();
   };
 
-  const totalWater = pours.reduce((sum, pour) => sum + pour.amount, 0);
+  const totalPercentage = pours.reduce((sum, pour) => sum + pour.percentage, 0);
   const maxTime = Math.max(...pours.map(p => p.timeSeconds), 0);
 
   return (
@@ -96,9 +96,9 @@ const CustomRecipePresetEditor: React.FC<CustomRecipePresetEditorProps> = ({ pre
 
       <div className="grid grid-cols-2 gap-4 p-4 bg-olive-dark/50 rounded-lg mb-6">
         <div>
-          <div className="text-xs text-caramel/70 mb-1">Total Water</div>
+          <div className="text-xs text-caramel/70 mb-1">Total Percentage</div>
           <div className="text-lg font-bold text-cream">
-            {totalWater.toFixed(1)}g
+            {totalPercentage.toFixed(1)}%
           </div>
         </div>
         <div>
@@ -131,13 +131,14 @@ const CustomRecipePresetEditor: React.FC<CustomRecipePresetEditorProps> = ({ pre
             
             <div className="flex-1 grid grid-cols-1 sm:grid-cols-3 gap-3">
               <div>
-                <label className="block text-xs text-caramel/70 mb-1">Amount (g)</label>
+                <label className="block text-xs text-caramel/70 mb-1">Percentage (%)</label>
                 <input
                   type="number"
-                  value={pour.amount || ''}
-                  onChange={(e) => handlePourChange(index, 'amount', e.target.value)}
+                  value={pour.percentage || ''}
+                  onChange={(e) => handlePourChange(index, 'percentage', e.target.value)}
                   min="0"
-                  step="5"
+                  max="100"
+                  step="0.1"
                   className="w-full px-3 py-2 bg-olive-dark/50 border border-coffee/40 rounded-md text-cream focus:ring-2 focus:ring-coffee focus:border-coffee"
                 />
               </div>
