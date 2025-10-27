@@ -112,7 +112,7 @@ const CustomRecipePresetEditor: React.FC<CustomRecipePresetEditorProps> = ({ pre
         <div>
           <div className="text-xs text-caramel/70 mb-1">Total Water</div>
           <div className={`text-lg font-bold ${totalGrams > settings.totalWater ? 'text-red-400' : 'text-cream'}`}>
-            {totalGrams.toFixed(1)}g / {settings.totalWater}g
+            {totalGrams.toFixed(1)}g / {settings.totalWater.toFixed(1)}g
           </div>
         </div>
         <div>
@@ -126,7 +126,7 @@ const CustomRecipePresetEditor: React.FC<CustomRecipePresetEditorProps> = ({ pre
       {totalGrams > settings.totalWater && (
         <div className="mb-6 p-3 bg-red-900/20 border border-red-500/40 rounded-lg">
           <p className="text-sm text-red-300">
-            ⚠️ Total water ({totalGrams.toFixed(1)}g) cannot exceed {settings.totalWater}g. Please adjust your pours.
+            ⚠️ Total water ({totalGrams.toFixed(1)}g) cannot exceed {settings.totalWater.toFixed(1)}g. Please adjust your pours.
           </p>
         </div>
       )}
@@ -160,7 +160,7 @@ const CustomRecipePresetEditor: React.FC<CustomRecipePresetEditorProps> = ({ pre
                   onChange={(e) => handlePourChange(index, 'percentage', e.target.value)}
                   min="0"
                   max={settings.totalWater}
-                  step="1"
+                  step="0.1"
                   className="w-full px-3 py-2 bg-olive-dark/50 border border-coffee/40 rounded-md text-cream focus:ring-2 focus:ring-coffee focus:border-coffee"
                 />
               </div>
