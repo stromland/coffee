@@ -3,11 +3,13 @@ import CoffeeCalculator from './components/CoffeeCalculator';
 import BrewingPresets from './components/BrewingPresets';
 import BrewingSteps from './components/BrewingSteps';
 import FourSixPresetManager from './components/FourSixPresetManager';
+import CustomRecipePresetManager from './components/CustomRecipePresetManager';
 import SaveSessionForm from './components/SaveSessionForm';
 import BrewingHistory from './components/BrewingHistory';
 import type { CoffeeSettings, BrewStep } from './types/coffee';
 import { getBrewMethod } from './utils/coffeeCalculations';
 import { getPresetById } from './utils/presetStorage';
+import { getCustomPresetById } from './utils/customRecipeStorage';
 
 type Page = 'dashboard' | 'history';
 
@@ -31,7 +33,7 @@ function App() {
 
   const handleMethodChange = (methodId: string) => {
     setSelectedMethodId(methodId);
-    if (methodId === '4-6') {
+    if (methodId === '4-6' || methodId === 'custom-recipe') {
       updateBrewSteps(methodId, settings.totalWater, selectedPresetId);
     } else {
       updateBrewSteps(methodId, settings.totalWater);
@@ -130,11 +132,22 @@ function App() {
                   />
                 )}
 
+                {selectedMethodId === 'custom-recipe' && (
+                  <CustomRecipePresetManager
+                    selectedPresetId={selectedPresetId}
+                    onPresetChange={handlePresetChange}
+                  />
+                )}
+
                 {brewSteps.length > 0 && (
                   <BrewingSteps 
                     steps={brewSteps} 
                     coffeeAmount={settings.coffeeAmount}
-                    totalBrewTime={getBrewMethod(selectedMethodId)?.totalBrewTime || 0}
+                    totalBrewTime={
+                      selectedMethodId === 'custom-recipe' && selectedPresetId
+                        ? getCustomPresetById(selectedPresetId)?.totalBrewTime || 0
+                        : getBrewMethod(selectedMethodId)?.totalBrewTime || 0
+                    }
                     methodName={getBrewMethod(selectedMethodId)?.name}
                     creditName={getBrewMethod(selectedMethodId)?.creditName}
                     creditUrl={getBrewMethod(selectedMethodId)?.creditUrl}
@@ -146,9 +159,19 @@ function App() {
                   waterAmount={settings.totalWater}
                   brewingMethodId={selectedMethodId}
                   brewingMethodName={getBrewMethod(selectedMethodId)?.name || selectedMethodId}
-                  brewingPresetId={selectedMethodId === '4-6' ? selectedPresetId : undefined}
-                  brewingPresetName={selectedMethodId === '4-6' ? getPresetById(selectedPresetId)?.name : undefined}
-                  brewTime={getBrewMethod(selectedMethodId)?.totalBrewTime}
+                  brewingPresetId={selectedMethodId === '4-6' || selectedMethodId === 'custom-recipe' ? selectedPresetId : undefined}
+                  brewingPresetName={
+                    selectedMethodId === '4-6' 
+                      ? getPresetById(selectedPresetId)?.name 
+                      : selectedMethodId === 'custom-recipe'
+                      ? getCustomPresetById(selectedPresetId)?.name
+                      : undefined
+                  }
+                  brewTime={
+                    selectedMethodId === 'custom-recipe' && selectedPresetId
+                      ? getCustomPresetById(selectedPresetId)?.totalBrewTime
+                      : getBrewMethod(selectedMethodId)?.totalBrewTime
+                  }
                   onSave={handleSaveSession}
                 />
               </div>
