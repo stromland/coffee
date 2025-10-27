@@ -46,6 +46,9 @@ const CustomRecipePresetEditor: React.FC<CustomRecipePresetEditorProps> = ({ pre
   const handleSave = () => {
     if (!name.trim() || pours.length === 0) return;
 
+    const totalPercentage = pours.reduce((sum, pour) => sum + pour.percentage, 0);
+    if (totalPercentage > 100) return;
+
     const maxTime = Math.max(...pours.map(p => p.timeSeconds));
     
     const newPreset: CustomRecipePreset = {
@@ -97,7 +100,7 @@ const CustomRecipePresetEditor: React.FC<CustomRecipePresetEditorProps> = ({ pre
       <div className="grid grid-cols-2 gap-4 p-4 bg-olive-dark/50 rounded-lg mb-6">
         <div>
           <div className="text-xs text-caramel/70 mb-1">Total Percentage</div>
-          <div className="text-lg font-bold text-cream">
+          <div className={`text-lg font-bold ${totalPercentage > 100 ? 'text-red-400' : 'text-cream'}`}>
             {totalPercentage.toFixed(1)}%
           </div>
         </div>
@@ -108,6 +111,14 @@ const CustomRecipePresetEditor: React.FC<CustomRecipePresetEditorProps> = ({ pre
           </div>
         </div>
       </div>
+
+      {totalPercentage > 100 && (
+        <div className="mb-6 p-3 bg-red-900/20 border border-red-500/40 rounded-lg">
+          <p className="text-sm text-red-300">
+            ⚠️ Total percentage cannot exceed 100%. Please adjust your pour percentages.
+          </p>
+        </div>
+      )}
 
       <div className="flex items-center justify-between mb-4">
         <h3 className="text-lg font-semibold text-cream">Brew Steps</h3>
@@ -193,7 +204,7 @@ const CustomRecipePresetEditor: React.FC<CustomRecipePresetEditorProps> = ({ pre
         </button>
         <button
           onClick={handleSave}
-          disabled={!name.trim() || pours.length === 0}
+          disabled={!name.trim() || pours.length === 0 || totalPercentage > 100}
           className="flex-1 px-4 py-3 bg-coffee/30 hover:bg-coffee/40 border border-coffee/50 text-cream rounded-md transition-all font-medium disabled:opacity-50 disabled:cursor-not-allowed"
         >
           Save Recipe
