@@ -121,7 +121,7 @@ const CustomRecipePresetManager: React.FC<CustomRecipePresetManagerProps> = ({
                     <h4 className="font-semibold text-cream">{preset.name}</h4>
                   </div>
                   <p className="text-xs text-caramel/80">
-                    {preset.pours.length} steps • {preset.pours.reduce((sum, p) => sum + p.amount, 0)}g water
+                    {preset.pours.length} steps • {preset.pours.reduce((sum, p) => sum + p.percentage, 0).toFixed(1)}% total
                   </p>
                 </button>
                 <div className="flex items-center gap-2 ml-3">

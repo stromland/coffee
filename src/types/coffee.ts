@@ -35,7 +35,7 @@ export interface FourSixPreset {
 }
 
 export interface CustomRecipePour {
-  amount: number; // in grams (absolute amount, not percentage)
+  percentage: number; // percentage of total water (0-100)
   timeSeconds: number;
   description?: string; // Optional custom description for the pour
 }
