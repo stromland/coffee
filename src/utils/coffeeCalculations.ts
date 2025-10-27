@@ -1,5 +1,6 @@
 import type { BrewMethod, BrewStep } from "../types/coffee";
 import { getPresetById, defaultPresets } from "./presetStorage";
+import { getCustomPresetById } from "./customRecipeStorage";
 
 export const calculateTotalWater = (
   coffeeAmount: number,
@@ -150,6 +151,49 @@ const generateSinglePourSteps = (totalWater: number): BrewStep[] => {
   ];
 };
 
+// Custom Recipe Method
+// User-defined brewing recipe with no restrictions
+const generateCustomSteps = (totalWater: number, presetId?: string): BrewStep[] => {
+  if (!presetId) {
+    // Return a simple default if no preset is selected
+    return [
+      {
+        stepNumber: 1,
+        waterAmount: totalWater,
+        cumulativeWater: totalWater,
+        timeSeconds: 0,
+        description: "Create a custom preset to define your brew steps",
+      },
+    ];
+  }
+
+  const preset = getCustomPresetById(presetId);
+  if (!preset) {
+    return [
+      {
+        stepNumber: 1,
+        waterAmount: totalWater,
+        cumulativeWater: totalWater,
+        timeSeconds: 0,
+        description: "Preset not found",
+      },
+    ];
+  }
+
+  // Use absolute amounts from preset (no scaling like 4:6 method)
+  return preset.pours.map((pour, index, arr) => {
+    const cumulativeWater = arr.slice(0, index + 1).reduce((sum, p) => sum + p.amount, 0);
+    
+    return {
+      stepNumber: index + 1,
+      waterAmount: pour.amount,
+      cumulativeWater,
+      timeSeconds: pour.timeSeconds,
+      description: pour.description || `Pour ${index + 1}`,
+    };
+  });
+};
+
 export const brewMethods: BrewMethod[] = [
   {
     id: "4-6",
@@ -175,6 +219,13 @@ export const brewMethods: BrewMethod[] = [
     description: "Simple continuous pour method",
     totalBrewTime: 180, // 3:00 minutes
     generateSteps: generateSinglePourSteps,
+  },
+  {
+    id: "custom-recipe",
+    name: "Custom Recipe",
+    description: "Create your own brewing recipe with custom pours",
+    totalBrewTime: 180, // Default, will be overridden by preset
+    generateSteps: generateCustomSteps,
   },
 ];
 

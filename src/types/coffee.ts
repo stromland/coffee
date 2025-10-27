@@ -34,6 +34,19 @@ export interface FourSixPreset {
   isDefault: boolean;
 }
 
+export interface CustomRecipePour {
+  amount: number; // in grams (absolute amount, not percentage)
+  timeSeconds: number;
+  description?: string; // Optional custom description for the pour
+}
+
+export interface CustomRecipePreset {
+  id: string;
+  name: string;
+  pours: CustomRecipePour[];
+  totalBrewTime: number; // Total brew time in seconds
+}
+
 export interface BrewingSession {
   id: string;
   timestamp: number; // Unix timestamp in milliseconds
