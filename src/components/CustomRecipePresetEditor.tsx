@@ -9,8 +9,6 @@ interface CustomRecipePresetEditorProps {
   onCancel: () => void;
 }
 
-const CustomRecipePresetEditor: React.FC<CustomRecipePresetEditorProps> = ({ preset, settings, onSave, onCancel }) => {
-  const [name, setName] = useState(preset?.name || '');
   
   // Convert preset pours from percentages to grams for display
   const convertPercentageToGrams = (percentage: number): number => {
@@ -63,7 +61,7 @@ const CustomRecipePresetEditor: React.FC<CustomRecipePresetEditorProps> = ({ pre
     const maxTime = Math.max(...pours.map(p => p.timeSeconds));
     
     const newPreset: CustomRecipePreset = {
-      id: preset?.id || `custom-${Date.now()}-${Math.random().toString(36).substring(2, 11)}`,
+      id: preset?.id || generateSecureId('custom'),
       name: name.trim(),
       pours, // Already stored as percentages
       totalBrewTime: maxTime + 60, // Add 60s buffer for final drawdown
