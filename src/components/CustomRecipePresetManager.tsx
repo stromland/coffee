@@ -1,7 +1,12 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import type { CustomRecipePreset, CoffeeSettings } from '../types/coffee';
 import { loadCustomPresets, deleteCustomPreset } from '../utils/customRecipeStorage';
 import CustomRecipePresetEditor from './CustomRecipePresetEditor';
+import {
+  exportCustomRecipePreset,
+  exportAllCustomRecipePresets,
+  importCustomRecipePresets
+} from '../utils/customRecipeImportExport';
 
 interface CustomRecipePresetManagerProps {
   selectedPresetId?: string;
@@ -17,6 +22,7 @@ const CustomRecipePresetManager: React.FC<CustomRecipePresetManagerProps> = ({
   const [presets, setPresets] = useState<CustomRecipePreset[]>(loadCustomPresets());
   const [isEditorOpen, setIsEditorOpen] = useState(false);
   const [editingPreset, setEditingPreset] = useState<CustomRecipePreset | undefined>();
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleDeletePreset = (presetId: string) => {
     if (confirm('Are you sure you want to delete this recipe?')) {
@@ -59,6 +65,44 @@ const CustomRecipePresetManager: React.FC<CustomRecipePresetManagerProps> = ({
     setIsEditorOpen(true);
   };
 
+  const handleExportPreset = (preset: CustomRecipePreset) => {
+    try {
+      exportCustomRecipePreset(preset);
+    } catch (error) {
+      alert('Failed to export recipe: ' + (error as Error).message);
+    }
+  };
+
+  const handleExportAll = () => {
+    try {
+      exportAllCustomRecipePresets();
+    } catch (error) {
+      alert((error as Error).message);
+    }
+  };
+
+  const handleImport = () => {
+    fileInputRef.current?.click();
+  };
+
+  const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    try {
+      const result = await importCustomRecipePresets(file);
+      setPresets(loadCustomPresets());
+      alert(`Successfully imported ${result.imported} recipe(s)${result.skipped > 0 ? `. Skipped ${result.skipped} invalid recipe(s).` : '.'}`);
+    } catch (error) {
+      alert('Failed to import recipes: ' + (error as Error).message);
+    } finally {
+      // Reset the file input
+      if (fileInputRef.current) {
+        fileInputRef.current.value = '';
+      }
+    }
+  };
+
   if (isEditorOpen) {
     return (
       <CustomRecipePresetEditor
@@ -80,16 +124,48 @@ const CustomRecipePresetManager: React.FC<CustomRecipePresetManagerProps> = ({
           <div className="w-1 h-6 bg-coffee rounded-full"></div>
           <h3 className="text-lg font-bold text-cream">Custom Recipes</h3>
         </div>
-        <button
-          onClick={handleCreateNew}
-          className="px-4 py-2 bg-coffee/20 hover:bg-coffee/30 border border-coffee/40 hover:border-coffee/60 text-cream rounded-md transition-all text-sm font-medium flex items-center gap-2"
-        >
-          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
-          </svg>
-          Create New
-        </button>
+        <div className="flex items-center gap-2">
+          <button
+            onClick={handleImport}
+            className="px-3 py-2 bg-olive/30 hover:bg-olive/40 border border-caramel/30 hover:border-caramel/50 text-cream rounded-md transition-all text-sm font-medium flex items-center gap-2"
+            title="Import recipes"
+          >
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
+            </svg>
+            Import
+          </button>
+          {presets.length > 0 && (
+            <button
+              onClick={handleExportAll}
+              className="px-3 py-2 bg-olive/30 hover:bg-olive/40 border border-caramel/30 hover:border-caramel/50 text-cream rounded-md transition-all text-sm font-medium flex items-center gap-2"
+              title="Export all recipes"
+            >
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M9 19l3 3m0 0l3-3m-3 3V10" />
+              </svg>
+              Export All
+            </button>
+          )}
+          <button
+            onClick={handleCreateNew}
+            className="px-4 py-2 bg-coffee/20 hover:bg-coffee/30 border border-coffee/40 hover:border-coffee/60 text-cream rounded-md transition-all text-sm font-medium flex items-center gap-2"
+          >
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+            </svg>
+            Create New
+          </button>
+        </div>
       </div>
+
+      <input
+        ref={fileInputRef}
+        type="file"
+        accept=".json"
+        onChange={handleFileChange}
+        className="hidden"
+      />
 
       {presets.length === 0 ? (
         <div className="p-8 text-center border-2 border-dashed border-caramel/20 rounded-lg">
@@ -133,6 +209,18 @@ const CustomRecipePresetManager: React.FC<CustomRecipePresetManagerProps> = ({
                       <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                     </svg>
                   )}
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleExportPreset(preset);
+                    }}
+                    className="p-1 text-caramel/60 hover:text-coffee hover:bg-coffee/10 rounded transition-all"
+                    title="Export recipe"
+                  >
+                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M9 19l3 3m0 0l3-3m-3 3V10" />
+                    </svg>
+                  </button>
                   <button
                     onClick={(e) => {
                       e.stopPropagation();

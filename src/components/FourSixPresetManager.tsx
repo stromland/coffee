@@ -1,7 +1,12 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import type { FourSixPreset } from '../types/coffee';
 import { loadPresets, deletePreset } from '../utils/presetStorage';
 import FourSixPresetEditor from './FourSixPresetEditor';
+import { 
+  exportFourSixPreset, 
+  exportAllFourSixPresets, 
+  importFourSixPresets 
+} from '../utils/presetImportExport';
 
 interface FourSixPresetManagerProps {
   selectedPresetId: string;
@@ -15,6 +20,7 @@ const FourSixPresetManager: React.FC<FourSixPresetManagerProps> = ({
   const [presets, setPresets] = useState<FourSixPreset[]>(loadPresets());
   const [isEditorOpen, setIsEditorOpen] = useState(false);
   const [editingPreset, setEditingPreset] = useState<FourSixPreset | undefined>();
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleDeletePreset = (presetId: string) => {
     if (confirm('Are you sure you want to delete this preset?')) {
@@ -37,6 +43,44 @@ const FourSixPresetManager: React.FC<FourSixPresetManagerProps> = ({
     setIsEditorOpen(true);
   };
 
+  const handleExportPreset = (preset: FourSixPreset) => {
+    try {
+      exportFourSixPreset(preset);
+    } catch (error) {
+      alert('Failed to export preset: ' + (error as Error).message);
+    }
+  };
+
+  const handleExportAll = () => {
+    try {
+      exportAllFourSixPresets();
+    } catch (error) {
+      alert((error as Error).message);
+    }
+  };
+
+  const handleImport = () => {
+    fileInputRef.current?.click();
+  };
+
+  const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    try {
+      const result = await importFourSixPresets(file);
+      setPresets(loadPresets());
+      alert(`Successfully imported ${result.imported} preset(s)${result.skipped > 0 ? `. Skipped ${result.skipped} invalid preset(s).` : '.'}`);
+    } catch (error) {
+      alert('Failed to import presets: ' + (error as Error).message);
+    } finally {
+      // Reset the file input
+      if (fileInputRef.current) {
+        fileInputRef.current.value = '';
+      }
+    }
+  };
+
   if (isEditorOpen) {
     return (
       <FourSixPresetEditor
@@ -57,16 +101,46 @@ const FourSixPresetManager: React.FC<FourSixPresetManagerProps> = ({
           <div className="w-1 h-6 bg-coffee rounded-full"></div>
           <h3 className="text-lg font-bold text-cream">4:6 Presets</h3>
         </div>
-        <button
-          onClick={handleCreateNew}
-          className="px-4 py-2 bg-coffee/20 hover:bg-coffee/30 border border-coffee/40 hover:border-coffee/60 text-cream rounded-md transition-all text-sm font-medium flex items-center gap-2"
-        >
-          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
-          </svg>
-          Create New
-        </button>
+        <div className="flex items-center gap-2">
+          <button
+            onClick={handleImport}
+            className="px-3 py-2 bg-olive/30 hover:bg-olive/40 border border-caramel/30 hover:border-caramel/50 text-cream rounded-md transition-all text-sm font-medium flex items-center gap-2"
+            title="Import presets"
+          >
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
+            </svg>
+            Import
+          </button>
+          <button
+            onClick={handleExportAll}
+            className="px-3 py-2 bg-olive/30 hover:bg-olive/40 border border-caramel/30 hover:border-caramel/50 text-cream rounded-md transition-all text-sm font-medium flex items-center gap-2"
+            title="Export all custom presets"
+          >
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M9 19l3 3m0 0l3-3m-3 3V10" />
+            </svg>
+            Export All
+          </button>
+          <button
+            onClick={handleCreateNew}
+            className="px-4 py-2 bg-coffee/20 hover:bg-coffee/30 border border-coffee/40 hover:border-coffee/60 text-cream rounded-md transition-all text-sm font-medium flex items-center gap-2"
+          >
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+            </svg>
+            Create New
+          </button>
+        </div>
       </div>
+
+      <input
+        ref={fileInputRef}
+        type="file"
+        accept=".json"
+        onChange={handleFileChange}
+        className="hidden"
+      />
 
       <div className="grid grid-cols-1 gap-3">
         {presets.map((preset) => (
@@ -102,18 +176,32 @@ const FourSixPresetManager: React.FC<FourSixPresetManagerProps> = ({
                   </svg>
                 )}
                 {!preset.isDefault && (
-                  <button
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      handleDeletePreset(preset.id);
-                    }}
-                    className="p-1 text-caramel/60 hover:text-coffee hover:bg-coffee/10 rounded transition-all"
-                    title="Delete preset"
-                  >
-                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-                    </svg>
-                  </button>
+                  <>
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleExportPreset(preset);
+                      }}
+                      className="p-1 text-caramel/60 hover:text-coffee hover:bg-coffee/10 rounded transition-all"
+                      title="Export preset"
+                    >
+                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M9 19l3 3m0 0l3-3m-3 3V10" />
+                      </svg>
+                    </button>
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleDeletePreset(preset.id);
+                      }}
+                      className="p-1 text-caramel/60 hover:text-coffee hover:bg-coffee/10 rounded transition-all"
+                      title="Delete preset"
+                    >
+                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                      </svg>
+                    </button>
+                  </>
                 )}
               </div>
             </div>

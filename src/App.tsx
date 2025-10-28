@@ -6,7 +6,7 @@ import FourSixPresetManager from './components/FourSixPresetManager';
 import CustomRecipePresetManager from './components/CustomRecipePresetManager';
 import SaveSessionForm from './components/SaveSessionForm';
 import BrewingHistory from './components/BrewingHistory';
-import type { CoffeeSettings, BrewStep } from './types/coffee';
+import type { CoffeeSettings, BrewStep, BrewingSession } from './types/coffee';
 import { getBrewMethod } from './utils/coffeeCalculations';
 import { getPresetById } from './utils/presetStorage';
 import { getCustomPresetById } from './utils/customRecipeStorage';
@@ -57,6 +57,32 @@ function App() {
 
   const handleSaveSession = () => {
     setHistoryKey(prev => prev + 1); // Force history to refresh
+  };
+
+  const handleBrewAgain = (session: BrewingSession) => {
+    // Calculate the water ratio from the session data
+    const waterRatio = session.waterAmount / session.coffeeAmount;
+    
+    // Update settings
+    setSettings({
+      coffeeAmount: session.coffeeAmount,
+      waterRatio: waterRatio,
+      totalWater: session.waterAmount,
+    });
+    
+    // Update method
+    setSelectedMethodId(session.brewingMethod);
+    
+    // Update preset if available
+    if (session.brewingPreset) {
+      setSelectedPresetId(session.brewingPreset);
+      updateBrewSteps(session.brewingMethod, session.waterAmount, session.brewingPreset);
+    } else {
+      updateBrewSteps(session.brewingMethod, session.waterAmount);
+    }
+    
+    // Switch to dashboard view
+    setCurrentPage('dashboard');
   };
 
   // Initialize brew steps on mount
@@ -185,7 +211,7 @@ function App() {
               </div>
             </div>
           ) : (
-            <BrewingHistory key={historyKey} />
+            <BrewingHistory key={historyKey} onBrewAgain={handleBrewAgain} />
           )}
         </div>
       </div>
