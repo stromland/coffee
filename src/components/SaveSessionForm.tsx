@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import type { BrewingSession } from '../types/coffee';
 import { saveSession } from '../utils/sessionStorage';
+import { generateSecureId } from '../utils/idGenerator';
 
 interface SaveSessionFormProps {
   coffeeAmount: number;
@@ -12,18 +13,6 @@ interface SaveSessionFormProps {
   brewTime?: number;
   onSave: () => void;
 }
-
-// Generate a cryptographically secure random ID
-const generateSecureId = (prefix: string): string => {
-  const timestamp = Date.now();
-  const randomBytes = new Uint8Array(6);
-  window.crypto.getRandomValues(randomBytes);
-  const randomString = Array.from(randomBytes)
-    .map(byte => byte.toString(36))
-    .join('')
-    .substring(0, 9);
-  return `${prefix}-${timestamp}-${randomString}`;
-};
 
 const SaveSessionForm: React.FC<SaveSessionFormProps> = ({
   coffeeAmount,

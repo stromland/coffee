@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import type { CustomRecipePreset, CustomRecipePour, CoffeeSettings } from '../types/coffee';
 import { saveCustomPreset } from '../utils/customRecipeStorage';
+import { generateSecureId } from '../utils/idGenerator';
 
 interface CustomRecipePresetEditorProps {
   preset?: CustomRecipePreset;
@@ -8,18 +9,6 @@ interface CustomRecipePresetEditorProps {
   onSave: () => void;
   onCancel: () => void;
 }
-
-// Generate a cryptographically secure random ID
-const generateSecureId = (prefix: string): string => {
-  const timestamp = Date.now();
-  const randomBytes = new Uint8Array(6);
-  window.crypto.getRandomValues(randomBytes);
-  const randomString = Array.from(randomBytes)
-    .map(byte => byte.toString(36))
-    .join('')
-    .substring(0, 9);
-  return `${prefix}-${timestamp}-${randomString}`;
-};
 
 const CustomRecipePresetEditor: React.FC<CustomRecipePresetEditorProps> = ({
   preset,
