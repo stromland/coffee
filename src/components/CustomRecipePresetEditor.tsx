@@ -9,6 +9,25 @@ interface CustomRecipePresetEditorProps {
   onCancel: () => void;
 }
 
+// Generate a cryptographically secure random ID
+const generateSecureId = (prefix: string): string => {
+  const timestamp = Date.now();
+  const randomBytes = new Uint8Array(6);
+  window.crypto.getRandomValues(randomBytes);
+  const randomString = Array.from(randomBytes)
+    .map(byte => byte.toString(36))
+    .join('')
+    .substring(0, 9);
+  return `${prefix}-${timestamp}-${randomString}`;
+};
+
+const CustomRecipePresetEditor: React.FC<CustomRecipePresetEditorProps> = ({
+  preset,
+  settings,
+  onSave,
+  onCancel,
+}) => {
+  const [name, setName] = useState(preset?.name || '');
   
   // Convert preset pours from percentages to grams for display
   const convertPercentageToGrams = (percentage: number): number => {
