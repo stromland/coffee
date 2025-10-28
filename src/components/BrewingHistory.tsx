@@ -3,8 +3,13 @@ import type { BrewingSession } from '../types/coffee';
 import { loadSessions, deleteSession } from '../utils/sessionStorage';
 import { getBrewMethod } from '../utils/coffeeCalculations';
 import { getPresetById } from '../utils/presetStorage';
+import { getCustomPresetById } from '../utils/customRecipeStorage';
 
-const BrewingHistory: React.FC = () => {
+interface BrewingHistoryProps {
+  onBrewAgain?: (session: BrewingSession) => void;
+}
+
+const BrewingHistory: React.FC<BrewingHistoryProps> = ({ onBrewAgain }) => {
   const [sessions, setSessions] = useState<BrewingSession[]>([]);
   const [expandedId, setExpandedId] = useState<string | null>(null);
 
@@ -46,6 +51,28 @@ const BrewingHistory: React.FC = () => {
     if (!presetId) return undefined;
     const preset = getPresetById(presetId);
     return preset?.name;
+  };
+
+  const handleBrewAgain = (session: BrewingSession) => {
+    // Check if the preset still exists
+    if (session.brewingPreset) {
+      const preset = session.brewingMethod === '4-6' 
+        ? getPresetById(session.brewingPreset)
+        : session.brewingMethod === 'custom-recipe'
+        ? getCustomPresetById(session.brewingPreset)
+        : undefined;
+      
+      if (!preset) {
+        const confirmMessage = 'The preset used in this session no longer exists. Do you want to brew again without the preset?';
+        if (!confirm(confirmMessage)) {
+          return;
+        }
+      }
+    }
+    
+    if (onBrewAgain) {
+      onBrewAgain(session);
+    }
   };
 
   if (sessions.length === 0) {
@@ -163,6 +190,18 @@ const BrewingHistory: React.FC = () => {
                 </div>
 
                 <div className="flex flex-col gap-2">
+                  {onBrewAgain && (
+                    <button
+                      onClick={() => handleBrewAgain(session)}
+                      className="text-coffee hover:text-cream transition-colors"
+                      aria-label="Brew again"
+                      title="Brew again with these settings"
+                    >
+                      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                      </svg>
+                    </button>
+                  )}
                   {session.notes && (
                     <button
                       onClick={() => setExpandedId(expandedId === session.id ? null : session.id)}
