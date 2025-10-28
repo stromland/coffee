@@ -70,7 +70,7 @@ export const importCustomRecipePresets = (file: File): Promise<{ imported: numbe
           
           if (existingPreset) {
             // Generate a new ID for the imported preset
-            preset.id = `${preset.id}-imported-${Date.now()}`;
+            preset.id = `${preset.id}-imported-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
             preset.name = `${preset.name} (imported)`;
           }
           
