@@ -13,8 +13,6 @@ interface SaveSessionFormProps {
   onSave: () => void;
 }
 
-const SaveSessionForm: React.FC<SaveSessionFormProps> = ({
-  coffeeAmount,
   waterAmount,
   brewingMethodId,
   brewingMethodName,
@@ -33,7 +31,7 @@ const SaveSessionForm: React.FC<SaveSessionFormProps> = ({
     if (!coffeeType.trim()) return;
 
     const session: BrewingSession = {
-      id: `session-${Date.now()}-${Math.random().toString(36).substring(2, 11)}`,
+      id: generateSecureId('session'),
       timestamp: Date.now(),
       coffeeType: coffeeType || 'Unknown',
       brewingMethod: brewingMethodId,
