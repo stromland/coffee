@@ -96,7 +96,7 @@ const FourSixPresetManager: React.FC<FourSixPresetManagerProps> = ({
 
   return (
     <div className="bg-olive/20 backdrop-blur-sm rounded-lg p-6 shadow-2xl mb-6">
-      <div className="flex items-center justify-between mb-4">
+      <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-3 mb-4">
         <div className="flex items-center gap-2">
           <div className="w-1 h-6 bg-coffee rounded-full"></div>
           <h3 className="text-lg font-bold text-cream">4:6 Presets</h3>
