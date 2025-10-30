@@ -66,4 +66,10 @@ When instructed to start working on a GitHub issue:
 2. **Assign the issue**: Use `gh issue edit <issue-number> --add-assignee @me` to assign the user
 3. **Create feature branch**: Create a new branch using the pattern `issue-<number>-brief-description`
 4. **Track progress**: Update the issue with progress comments as tasks are completed using `gh issue comment <issue-number> --body "message"`
-5. **Complete work**: When all tasks are done, comment on the issue and wait for user to close it or create a PR
+5. **Complete work**: When all tasks are done, comment on the issue
+6. **Ask before PR**: When you believe the issue is complete, **ask the user if you should create a pull request**
+7. **Create PR**: If approved, push the branch and create a PR with:
+   - Title matching the issue
+   - Detailed description of changes
+   - Reference to the issue (e.g., "Closes #16")
+   - Update the issue with the PR link
