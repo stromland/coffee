@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import type { FourSixPreset, FourSixPour } from '../types/coffee';
 import { validateFourSixPreset } from '../utils/fourSixValidator';
 import { savePreset } from '../utils/presetStorage';
-import { generateSecureId } from '../utils/idGenerator';
+import { generateSecureId } from '../shared/utils/idGenerator';
 
 interface FourSixPresetEditorProps {
   preset?: FourSixPreset;

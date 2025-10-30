@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import type { BrewingSession } from '../types/coffee';
 import { saveSession } from '../utils/sessionStorage';
-import { generateSecureId } from '../utils/idGenerator';
+import { generateSecureId } from '../shared/utils/idGenerator';
 
 interface SaveSessionFormProps {
   coffeeAmount: number;
