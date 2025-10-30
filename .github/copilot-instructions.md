@@ -4,12 +4,12 @@
 
 ### DRY (Don't Repeat Yourself)
 - **Avoid code duplication**: Extract common functionality into shared utility functions or components
-- **Create reusable utilities**: Place shared functions in appropriate directories (e.g., `src/utils/` for utility functions)
+- **Create reusable utilities**: Place shared functions in appropriate directories (e.g., `src/shared/utils/` for utility functions)
 - **Use imports**: Always import shared code rather than duplicating it across files
 - **Consistent patterns**: If you find similar code in multiple places, refactor it into a single, reusable implementation
 
 ### Examples
-- ✅ **Good**: Create `src/utils/idGenerator.ts` and import `generateSecureId` where needed
+- ✅ **Good**: Create `src/shared/utils/idGenerator.ts` and import `generateSecureId` where needed
 - ❌ **Bad**: Copy the same `generateSecureId` function into multiple component files
 
 ## Project Structure
