@@ -7,6 +7,7 @@ export const defaultPresets: FourSixPreset[] = [
     id: 'default-46',
     name: 'Original 4:6',
     isDefault: true,
+    totalBrewTime: 210, // 3:30 minutes
     pours: [
       { amount: 50, timeSeconds: 0 },
       { amount: 70, timeSeconds: 45 },
@@ -18,6 +19,7 @@ export const defaultPresets: FourSixPreset[] = [
     id: 'gentle-46',
     name: 'Gentle (5 pours)',
     isDefault: true,
+    totalBrewTime: 240, // 4:00 minutes
     pours: [
       { amount: 60, timeSeconds: 0 },
       { amount: 60, timeSeconds: 45 },
@@ -30,6 +32,7 @@ export const defaultPresets: FourSixPreset[] = [
     id: 'bold-46',
     name: 'Bold (3 pours)',
     isDefault: true,
+    totalBrewTime: 180, // 3:00 minutes
     pours: [
       { amount: 120, timeSeconds: 0 },
       { amount: 90, timeSeconds: 60 },
@@ -45,6 +48,14 @@ export const loadPresets = (): FourSixPreset[] => {
       return defaultPresets;
     }
     const customPresets = JSON.parse(stored) as FourSixPreset[];
+    
+    // Migration: Add totalBrewTime to old presets that don't have it
+    customPresets.forEach(preset => {
+      if (typeof preset.totalBrewTime !== 'number') {
+        preset.totalBrewTime = 210; // Default to 3:30
+      }
+    });
+    
     return [...defaultPresets, ...customPresets];
   } catch (error) {
     console.error('Failed to load presets:', error);

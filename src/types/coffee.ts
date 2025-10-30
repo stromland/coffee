@@ -18,7 +18,7 @@ export interface BrewMethod {
   description: string;
   creditName?: string;
   creditUrl?: string;
-  totalBrewTime: number; // in seconds
+  totalBrewTime?: number; // Default total brew time in seconds (optional, can be overridden by presets)
   generateSteps: (totalWater: number, presetId?: string) => BrewStep[];
 }
 
@@ -32,6 +32,7 @@ export interface FourSixPreset {
   name: string;
   pours: FourSixPour[];
   isDefault: boolean;
+  totalBrewTime: number; // Total brew time in seconds (including drawdown after last pour)
 }
 
 export interface CustomRecipePour {

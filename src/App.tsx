@@ -173,9 +173,11 @@ function App() {
                     steps={brewSteps} 
                     coffeeAmount={settings.coffeeAmount}
                     totalBrewTime={
-                      selectedMethodId === 'custom-recipe' && selectedPresetId
-                        ? getCustomPresetById(selectedPresetId)?.totalBrewTime || 0
-                        : getBrewMethod(selectedMethodId)?.totalBrewTime || 0
+                      selectedMethodId === '4-6' && selectedPresetId
+                        ? getPresetById(selectedPresetId)?.totalBrewTime || 180
+                        : selectedMethodId === 'custom-recipe' && selectedPresetId
+                        ? getCustomPresetById(selectedPresetId)?.totalBrewTime || 180
+                        : getBrewMethod(selectedMethodId)?.totalBrewTime || 180
                     }
                     methodName={getBrewMethod(selectedMethodId)?.name}
                     creditName={getBrewMethod(selectedMethodId)?.creditName}
@@ -197,7 +199,9 @@ function App() {
                       : undefined
                   }
                   brewTime={
-                    selectedMethodId === 'custom-recipe' && selectedPresetId
+                    selectedMethodId === '4-6' && selectedPresetId
+                      ? getPresetById(selectedPresetId)?.totalBrewTime
+                      : selectedMethodId === 'custom-recipe' && selectedPresetId
                       ? getCustomPresetById(selectedPresetId)?.totalBrewTime
                       : getBrewMethod(selectedMethodId)?.totalBrewTime
                   }
