@@ -21,11 +21,11 @@ const CustomRecipePresetEditor: React.FC<CustomRecipePresetEditorProps> = ({
   
   // Convert preset pours from percentages to grams for display
   const convertPercentageToGrams = (percentage: number): number => {
-    return (percentage / 100) * settings.totalWater;
+    return Math.round((percentage / 100) * settings.totalWater * 10) / 10;
   };
 
   const convertGramsToPercentage = (grams: number): number => {
-    return (grams / settings.totalWater) * 100;
+    return Math.round((grams / settings.totalWater) * 100 * 1000) / 1000;
   };
 
   // Initialize pours: convert from percentages if editing, otherwise start empty
@@ -50,7 +50,7 @@ const CustomRecipePresetEditor: React.FC<CustomRecipePresetEditorProps> = ({
     if (field === 'percentage') {
       // Input is in grams, convert to percentage for storage
       const grams = typeof value === 'string' ? (value === '' ? 0 : parseFloat(value)) : value;
-      const percentage = isNaN(grams) ? 0 : convertGramsToPercentage(grams);
+      const percentage = isNaN(grams) || grams === 0 ? 0 : convertGramsToPercentage(grams);
       newPours[index][field] = percentage;
     } else if (field === 'timeSeconds') {
       const numValue = typeof value === 'string' ? (value === '' ? 0 : parseFloat(value)) : value;
@@ -194,12 +194,11 @@ const CustomRecipePresetEditor: React.FC<CustomRecipePresetEditorProps> = ({
               <div>
                 <label className="block text-xs text-caramel/70 mb-1">Water (g)</label>
                 <input
-                  type="number"
-                  value={convertPercentageToGrams(pour.percentage).toFixed(1)}
+                  type="text"
+                  inputMode="decimal"
+                  value={pour.percentage === 0 ? '' : convertPercentageToGrams(pour.percentage)}
                   onChange={(e) => handlePourChange(index, 'percentage', e.target.value)}
-                  min="0"
-                  max={settings.totalWater}
-                  step="0.1"
+                  placeholder="0.0"
                   className="w-full px-3 py-2 bg-olive-dark/50 border border-coffee/40 rounded-md text-cream focus:ring-2 focus:ring-coffee focus:border-coffee"
                 />
               </div>
