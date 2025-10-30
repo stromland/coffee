@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { createPortal } from 'react-dom';
 import type { BrewStep } from '../types/coffee';
 import BrewMode from './BrewMode';
 
@@ -25,17 +26,22 @@ const BrewingSteps: React.FC<BrewingStepsProps> = ({ steps, coffeeAmount, totalB
     return null;
   }
 
-  // Show brew mode if active
+  // Show brew mode if active - fullscreen zen mode using portal
   if (isBrewMode) {
-    return (
-      <BrewMode
-        steps={steps}
-        coffeeAmount={coffeeAmount}
-        totalBrewTime={totalBrewTime}
-        methodName={methodName}
-        presetName={presetName}
-        onExit={() => setIsBrewMode(false)}
-      />
+    return createPortal(
+      <div className="fixed inset-0 z-[9999] bg-olive-dark flex items-center justify-center p-4 overflow-auto">
+        <div className="w-full max-w-2xl my-auto">
+          <BrewMode
+            steps={steps}
+            coffeeAmount={coffeeAmount}
+            totalBrewTime={totalBrewTime}
+            methodName={methodName}
+            presetName={presetName}
+            onExit={() => setIsBrewMode(false)}
+          />
+        </div>
+      </div>,
+      document.body
     );
   }
 
