@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import type { FourSixPreset, FourSixPour } from '../types/coffee';
 import { validateFourSixPreset } from '../utils/fourSixValidator';
 import { savePreset } from '../utils/presetStorage';
+import { generateSecureId } from '../utils/idGenerator';
 
 interface FourSixPresetEditorProps {
   preset?: FourSixPreset;
@@ -63,7 +64,7 @@ const FourSixPresetEditor: React.FC<FourSixPresetEditorProps> = ({ preset, onSav
 
     const newPreset: FourSixPreset = {
       // If editing a default preset, create a new ID for the copy
-      id: preset?.isDefault ? `custom-${Date.now()}` : (preset?.id || `custom-${Date.now()}`),
+      id: preset?.isDefault ? generateSecureId('custom') : (preset?.id || generateSecureId('custom')),
       name: name.trim(),
       pours,
       drawdownTime,
