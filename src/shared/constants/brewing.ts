@@ -9,15 +9,17 @@
 export const BASE_WATER_AMOUNT = 300;
 
 /**
- * Default coffee to water ratios
+ * Default coffee to water ratios based on strength preference
  */
 export const DEFAULT_RATIOS = {
-  /** Light roast recommended ratio (1:16) */
-  LIGHT: 16,
-  /** Medium roast recommended ratio (1:15) */
-  MEDIUM: 15,
-  /** Dark roast recommended ratio (1:14) */
-  DARK: 14,
+  /** Very light strength ratio (1:20) */
+  VERY_LIGHT: 20,
+  /** Light strength ratio (1:17) */
+  LIGHT: 17,
+  /** Balanced strength ratio (1:15) */
+  BALANCED: 15,
+  /** Strong strength ratio (1:12) */
+  STRONG: 12,
 } as const;
 
 /**
