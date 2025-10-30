@@ -62,7 +62,8 @@ const FourSixPresetEditor: React.FC<FourSixPresetEditorProps> = ({ preset, onSav
     if (!validation.isValid || !name.trim()) return;
 
     const newPreset: FourSixPreset = {
-      id: preset?.id || `custom-${Date.now()}`,
+      // If editing a default preset, create a new ID for the copy
+      id: preset?.isDefault ? `custom-${Date.now()}` : (preset?.id || `custom-${Date.now()}`),
       name: name.trim(),
       pours,
       drawdownTime,
@@ -81,7 +82,7 @@ const FourSixPresetEditor: React.FC<FourSixPresetEditorProps> = ({ preset, onSav
         <div className="flex items-center gap-2">
           <div className="w-1 h-6 bg-coffee rounded-full"></div>
           <h2 className="text-2xl font-bold text-cream">
-            {preset ? 'Edit Preset' : 'Create New 4:6 Preset'}
+            {preset?.isDefault ? 'Copy Preset' : preset ? 'Edit Preset' : 'Create New 4:6 Preset'}
           </h2>
         </div>
         <button
