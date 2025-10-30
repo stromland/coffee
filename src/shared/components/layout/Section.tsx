@@ -9,8 +9,6 @@ export interface SectionProps extends React.HTMLAttributes<HTMLElement> {
   actions?: React.ReactNode;
   /** Section content */
   children: React.ReactNode;
-  /** Background style */
-  variant?: 'default' | 'card';
 }
 
 /**
@@ -21,17 +19,11 @@ export const Section: React.FC<SectionProps> = ({
   description,
   actions,
   children,
-  variant = 'default',
   className = '',
   ...props
 }) => {
-  const variantStyles = {
-    default: '',
-    card: 'bg-olive/20 backdrop-blur-sm rounded-lg p-6 shadow-2xl',
-  };
-
   return (
-    <section className={`mb-8 ${variantStyles[variant]} ${className}`} {...props}>
+    <section className={`mb-8 ${className}`} {...props}>
       {(title || description || actions) && (
         <div className="mb-6">
           <div className="flex items-start justify-between gap-4 mb-2">
