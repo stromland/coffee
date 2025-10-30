@@ -135,8 +135,31 @@ const BrewMode: React.FC<BrewModeProps> = ({
         </p>
       </div>
 
-      {/* Current Step Display */}
-      {!isFinished ? (
+      {/* Show start button before starting */}
+      {!isStarted ? (
+        <div className="mb-6 p-6 bg-olive-dark/50 rounded-lg flex flex-col items-center justify-center">
+          <button
+            onClick={() => setIsStarted(true)}
+            className="px-8 py-6 bg-coffee/30 hover:bg-coffee/40 border-2 border-coffee/50 rounded-xl transition-all flex flex-col items-center justify-center gap-2 hover:scale-105"
+          >
+            <svg
+              className="w-12 h-12 text-cream"
+              fill="currentColor"
+              viewBox="0 0 20 20"
+            >
+              <path
+                fillRule="evenodd"
+                d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z"
+                clipRule="evenodd"
+              />
+            </svg>
+            <span className="text-cream font-bold text-xl">Start Brew</span>
+          </button>
+          <p className="text-caramel text-sm mt-4">
+            {steps.length} steps • {formatTime(totalBrewTime)} total time
+          </p>
+        </div>
+      ) : !isFinished ? (
         <div className="mb-6 p-6 bg-olive-dark/50 rounded-lg">
           <div className="flex items-center justify-between mb-4">
             <div className="flex items-center gap-3">
@@ -161,25 +184,7 @@ const BrewMode: React.FC<BrewModeProps> = ({
                 {currentStep.cumulativeWater.toFixed(1)}g
               </span>
             </div>
-            {!isStarted ? (
-              <button
-                onClick={() => setIsStarted(true)}
-                className="p-3 bg-coffee/30 hover:bg-coffee/40 border border-coffee/50 rounded-md transition-all flex flex-col items-center justify-center"
-              >
-                <svg
-                  className="w-8 h-8 text-cream mb-1"
-                  fill="currentColor"
-                  viewBox="0 0 20 20"
-                >
-                  <path
-                    fillRule="evenodd"
-                    d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z"
-                    clipRule="evenodd"
-                  />
-                </svg>
-                <span className="text-cream font-bold text-sm">Start</span>
-              </button>
-            ) : !isLastStep && timeUntilNextPour > 0 ? (
+            {!isLastStep && timeUntilNextPour > 0 ? (
               <div className="p-3 bg-coffee/20 border border-coffee/40 rounded-md">
                 <span className="text-caramel/80 text-xs block mb-1">
                   Next pour in
