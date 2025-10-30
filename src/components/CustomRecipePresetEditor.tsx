@@ -21,7 +21,7 @@ const CustomRecipePresetEditor: React.FC<CustomRecipePresetEditorProps> = ({
   
   // Convert preset pours from percentages to grams for display
   const convertPercentageToGrams = (percentage: number): number => {
-    return Math.round((percentage / 100) * settings.totalWater * 10) / 10;
+    return parseFloat(((percentage / 100) * settings.totalWater).toFixed(1));
   };
 
   const convertGramsToPercentage = (grams: number): number => {
