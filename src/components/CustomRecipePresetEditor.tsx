@@ -17,6 +17,7 @@ const CustomRecipePresetEditor: React.FC<CustomRecipePresetEditorProps> = ({
   onCancel,
 }) => {
   const [name, setName] = useState(preset?.name || '');
+  const [totalBrewTime, setTotalBrewTime] = useState(preset?.totalBrewTime || 180);
   
   // Convert preset pours from percentages to grams for display
   const convertPercentageToGrams = (percentage: number): number => {
@@ -65,14 +66,12 @@ const CustomRecipePresetEditor: React.FC<CustomRecipePresetEditorProps> = ({
 
     const totalGramsCheck = pours.reduce((sum, pour) => sum + convertPercentageToGrams(pour.percentage), 0);
     if (totalGramsCheck > settings.totalWater) return;
-
-    const maxTime = Math.max(...pours.map(p => p.timeSeconds));
     
     const newPreset: CustomRecipePreset = {
       id: preset?.id || generateSecureId('custom'),
       name: name.trim(),
       pours, // Already stored as percentages
-      totalBrewTime: maxTime + 60, // Add 60s buffer for final drawdown
+      totalBrewTime,
     };
 
     saveCustomPreset(newPreset);
@@ -112,6 +111,37 @@ const CustomRecipePresetEditor: React.FC<CustomRecipePresetEditorProps> = ({
           placeholder="My Custom Brew"
           className="w-full px-4 py-2 bg-olive-dark/50 border border-coffee/40 rounded-md text-cream placeholder-caramel/50 focus:ring-2 focus:ring-coffee focus:border-coffee"
         />
+      </div>
+
+      <div className="mb-6">
+        <label className="block text-sm font-medium text-caramel mb-2">
+          Total Brew Time (including drawdown)
+        </label>
+        <div className="flex items-center gap-3">
+          <input
+            type="number"
+            value={Math.floor(totalBrewTime / 60)}
+            onChange={(e) => {
+              const mins = parseInt(e.target.value) || 0;
+              setTotalBrewTime(mins * 60 + (totalBrewTime % 60));
+            }}
+            min="0"
+            className="w-24 px-4 py-2 bg-olive-dark/50 border border-coffee/40 rounded-md text-cream focus:ring-2 focus:ring-coffee focus:border-coffee"
+          />
+          <span className="text-caramel">minutes</span>
+          <input
+            type="number"
+            value={totalBrewTime % 60}
+            onChange={(e) => {
+              const secs = parseInt(e.target.value) || 0;
+              setTotalBrewTime(Math.floor(totalBrewTime / 60) * 60 + secs);
+            }}
+            min="0"
+            max="59"
+            className="w-24 px-4 py-2 bg-olive-dark/50 border border-coffee/40 rounded-md text-cream focus:ring-2 focus:ring-coffee focus:border-coffee"
+          />
+          <span className="text-caramel">seconds</span>
+        </div>
       </div>
 
       <div className="grid grid-cols-2 gap-4 p-4 bg-olive-dark/50 rounded-lg mb-6">

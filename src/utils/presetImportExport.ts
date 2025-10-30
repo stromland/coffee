@@ -124,6 +124,11 @@ const validateFourSixPreset = (preset: unknown): preset is FourSixPreset => {
   
   const p = preset as Partial<FourSixPreset>;
   
+  // If totalBrewTime is missing, add a default value for backwards compatibility
+  if (typeof p.totalBrewTime !== 'number') {
+    (p as FourSixPreset).totalBrewTime = 210; // Default to 3:30
+  }
+  
   return (
     typeof p.id === 'string' &&
     typeof p.name === 'string' &&
