@@ -59,7 +59,15 @@ export const loadPresets = (): FourSixPreset[] => {
 export const savePreset = (preset: FourSixPreset): void => {
   try {
     const customPresets = loadPresets().filter(p => !p.isDefault);
-    customPresets.push(preset);
+    // Check if preset with same ID exists
+    const existingIndex = customPresets.findIndex(p => p.id === preset.id);
+    if (existingIndex !== -1) {
+      // Update existing preset
+      customPresets[existingIndex] = preset;
+    } else {
+      // Add new preset
+      customPresets.push(preset);
+    }
     localStorage.setItem(STORAGE_KEY, JSON.stringify(customPresets));
   } catch (error) {
     console.error('Failed to save preset:', error);
