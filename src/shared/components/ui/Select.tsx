@@ -1,5 +1,7 @@
 import React from 'react';
 
+let selectIdCounter = 0;
+
 export interface SelectProps extends React.SelectHTMLAttributes<HTMLSelectElement> {
   /** Label text */
   label?: string;
@@ -30,7 +32,7 @@ export const Select = React.forwardRef<HTMLSelectElement, SelectProps>(
     },
     ref
   ) => {
-    const selectId = id || `select-${Math.random().toString(36).substr(2, 9)}`;
+    const selectId = React.useMemo(() => id || `select-${++selectIdCounter}`, [id]);
     
     const baseStyles =
       'px-4 py-2 bg-olive-dark/50 border rounded-md text-cream focus:ring-2 focus:ring-coffee transition-colors cursor-pointer';

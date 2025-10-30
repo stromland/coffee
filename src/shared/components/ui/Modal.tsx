@@ -1,5 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 
+let modalIdCounter = 0;
+
 export interface ModalProps {
   /** Whether the modal is open */
   isOpen: boolean;
@@ -33,6 +35,7 @@ export const Modal: React.FC<ModalProps> = ({
   closeOnEscape = true,
 }) => {
   const modalRef = useRef<HTMLDivElement>(null);
+  const titleId = React.useMemo(() => `modal-title-${++modalIdCounter}`, []);
 
   useEffect(() => {
     if (!isOpen) return;
@@ -71,6 +74,9 @@ export const Modal: React.FC<ModalProps> = ({
     <div
       className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm"
       onClick={handleBackdropClick}
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby={title ? titleId : undefined}
     >
       <div
         ref={modalRef}
@@ -80,7 +86,7 @@ export const Modal: React.FC<ModalProps> = ({
           <div className="flex items-center justify-between p-6 border-b border-coffee/20">
             <div className="flex items-center gap-2">
               <div className="w-1 h-6 bg-coffee rounded-full"></div>
-              <h2 className="text-2xl font-bold text-cream">{title}</h2>
+              <h2 id={titleId} className="text-2xl font-bold text-cream">{title}</h2>
             </div>
             <button
               onClick={onClose}
