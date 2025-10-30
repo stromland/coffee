@@ -13,6 +13,13 @@ import { getCustomPresetById } from './utils/customRecipeStorage';
 
 type Page = 'dashboard' | 'history';
 
+// Helper to calculate total brew time from steps and drawdown
+const calculateTotalBrewTime = (steps: BrewStep[], drawdownTime: number): number => {
+  if (steps.length === 0) return 0;
+  const lastStepTime = steps[steps.length - 1].timeSeconds;
+  return lastStepTime + drawdownTime;
+};
+
 function App() {
   const [settings, setSettings] = useState<CoffeeSettings>({
     coffeeAmount: 20,
@@ -174,12 +181,19 @@ function App() {
                     coffeeAmount={settings.coffeeAmount}
                     totalBrewTime={
                       selectedMethodId === '4-6' && selectedPresetId
-                        ? getPresetById(selectedPresetId)?.totalBrewTime || 180
+                        ? calculateTotalBrewTime(brewSteps, getPresetById(selectedPresetId)?.drawdownTime || 60)
                         : selectedMethodId === 'custom-recipe' && selectedPresetId
-                        ? getCustomPresetById(selectedPresetId)?.totalBrewTime || 180
-                        : getBrewMethod(selectedMethodId)?.totalBrewTime || 180
+                        ? calculateTotalBrewTime(brewSteps, getCustomPresetById(selectedPresetId)?.drawdownTime || 60)
+                        : calculateTotalBrewTime(brewSteps, getBrewMethod(selectedMethodId)?.drawdownTime || 60)
                     }
                     methodName={getBrewMethod(selectedMethodId)?.name}
+                    presetName={
+                      selectedMethodId === '4-6' 
+                        ? getPresetById(selectedPresetId)?.name 
+                        : selectedMethodId === 'custom-recipe'
+                        ? getCustomPresetById(selectedPresetId)?.name
+                        : undefined
+                    }
                     creditName={getBrewMethod(selectedMethodId)?.creditName}
                     creditUrl={getBrewMethod(selectedMethodId)?.creditUrl}
                   />
@@ -200,10 +214,10 @@ function App() {
                   }
                   brewTime={
                     selectedMethodId === '4-6' && selectedPresetId
-                      ? getPresetById(selectedPresetId)?.totalBrewTime
+                      ? calculateTotalBrewTime(brewSteps, getPresetById(selectedPresetId)?.drawdownTime || 60)
                       : selectedMethodId === 'custom-recipe' && selectedPresetId
-                      ? getCustomPresetById(selectedPresetId)?.totalBrewTime
-                      : getBrewMethod(selectedMethodId)?.totalBrewTime
+                      ? calculateTotalBrewTime(brewSteps, getCustomPresetById(selectedPresetId)?.drawdownTime || 60)
+                      : calculateTotalBrewTime(brewSteps, getBrewMethod(selectedMethodId)?.drawdownTime || 60)
                   }
                   onSave={handleSaveSession}
                 />

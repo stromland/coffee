@@ -18,7 +18,7 @@ export interface BrewMethod {
   description: string;
   creditName?: string;
   creditUrl?: string;
-  totalBrewTime?: number; // Default total brew time in seconds (optional, can be overridden by presets)
+  drawdownTime?: number; // Default drawdown time in seconds after last pour
   generateSteps: (totalWater: number, presetId?: string) => BrewStep[];
 }
 
@@ -32,7 +32,7 @@ export interface FourSixPreset {
   name: string;
   pours: FourSixPour[];
   isDefault: boolean;
-  totalBrewTime: number; // Total brew time in seconds (including drawdown after last pour)
+  drawdownTime: number; // Additional time in seconds after last pour for coffee to drip through
 }
 
 export interface CustomRecipePour {
@@ -45,7 +45,7 @@ export interface CustomRecipePreset {
   id: string;
   name: string;
   pours: CustomRecipePour[];
-  totalBrewTime: number; // Total brew time in seconds
+  drawdownTime: number; // Additional time in seconds after last pour for coffee to drip through
 }
 
 export interface BrewingSession {

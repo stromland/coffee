@@ -203,7 +203,7 @@ export const brewMethods: BrewMethod[] = [
     description: "Tetsu Kasuya's 4:6 method",
     creditName: "Tetsu Kasuya (2016 World Brewers Cup Champion)",
     creditUrl: "https://projectbarista.com/4-6-method-recipe/",
-    totalBrewTime: 210, // 3:30 minutes
+    drawdownTime: 75, // Default 1:15 drawdown
     generateSteps: generate46Steps,
   },
   {
@@ -212,21 +212,21 @@ export const brewMethods: BrewMethod[] = [
     description: "James Hoffmann's 1 Cup V60 method",
     creditName: "James Hoffmann",
     creditUrl: "https://www.youtube.com/watch?v=1oB1oDrDkHM",
-    totalBrewTime: 180, // 3:00 minutes (drawdown complete)
+    drawdownTime: 70, // 1:10 drawdown (completes around 3:00)
     generateSteps: generateHoffmanSteps,
   },
   {
     id: "single-pour",
     name: "Single Pour",
     description: "Simple continuous pour method",
-    totalBrewTime: 180, // 3:00 minutes
+    drawdownTime: 120, // 2:00 drawdown
     generateSteps: generateSinglePourSteps,
   },
   {
     id: "custom-recipe",
     name: "Custom Recipe",
     description: "Create your own brewing recipe with custom pours",
-    totalBrewTime: 180, // Default, will be overridden by preset
+    drawdownTime: 60, // Default 1:00, overridden by preset
     generateSteps: generateCustomSteps,
   },
 ];

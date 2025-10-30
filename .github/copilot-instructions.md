@@ -30,3 +30,8 @@
 - Use TypeScript types consistently
 - Add JSDoc comments for exported functions
 - Keep components focused and single-purpose
+
+## Git Workflow
+
+- **Always ask before committing**: Never commit changes without explicit user confirmation
+- Present a summary of changes and wait for approval before running `git commit`
