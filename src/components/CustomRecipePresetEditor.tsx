@@ -25,7 +25,7 @@ const CustomRecipePresetEditor: React.FC<CustomRecipePresetEditorProps> = ({
   };
 
   const convertGramsToPercentage = (grams: number): number => {
-    return Math.round((grams / settings.totalWater) * 100 * 1000) / 1000;
+    return parseFloat(((grams / settings.totalWater) * 100).toFixed(3));
   };
 
   // Initialize pours: convert from percentages if editing, otherwise start empty
