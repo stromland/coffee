@@ -121,18 +121,6 @@ const validateCustomRecipePreset = (preset: unknown): preset is CustomRecipePres
   
   const p = preset as Partial<CustomRecipePreset>;
   
-  // Migration: Convert old totalBrewTime to drawdownTime
-  if ('totalBrewTime' in p && typeof (p as any).totalBrewTime === 'number') {
-    const lastPourTime = p.pours && p.pours.length > 0 ? p.pours[p.pours.length - 1].timeSeconds : 0;
-    (p as CustomRecipePreset).drawdownTime = (p as any).totalBrewTime - lastPourTime;
-    delete (p as any).totalBrewTime;
-  }
-  
-  // If drawdownTime is missing, add a default value for backwards compatibility
-  if (typeof p.drawdownTime !== 'number') {
-    (p as CustomRecipePreset).drawdownTime = 60; // Default to 1:00
-  }
-  
   return (
     typeof p.id === 'string' &&
     typeof p.name === 'string' &&
