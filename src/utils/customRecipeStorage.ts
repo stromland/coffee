@@ -8,7 +8,22 @@ export const loadCustomPresets = (): CustomRecipePreset[] => {
     if (!stored) {
       return [];
     }
-    return JSON.parse(stored) as CustomRecipePreset[];
+    const presets = JSON.parse(stored) as CustomRecipePreset[];
+    
+    // Migration: Convert old totalBrewTime to drawdownTime
+    presets.forEach(preset => {
+      if ('totalBrewTime' in preset && typeof (preset as any).totalBrewTime === 'number') {
+        const lastPourTime = preset.pours.length > 0 ? preset.pours[preset.pours.length - 1].timeSeconds : 0;
+        preset.drawdownTime = (preset as any).totalBrewTime - lastPourTime;
+        delete (preset as any).totalBrewTime;
+      }
+      // Default drawdown time if missing
+      if (typeof preset.drawdownTime !== 'number') {
+        preset.drawdownTime = 60; // Default 1 minute
+      }
+    });
+    
+    return presets;
   } catch (error) {
     console.error('Failed to load custom presets:', error);
     return [];

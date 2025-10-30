@@ -11,7 +11,7 @@ interface FourSixPresetEditorProps {
 
 const FourSixPresetEditor: React.FC<FourSixPresetEditorProps> = ({ preset, onSave, onCancel }) => {
   const [name, setName] = useState(preset?.name || '');
-  const [totalBrewTime, setTotalBrewTime] = useState(preset?.totalBrewTime || 210);
+  const [drawdownTime, setDrawdownTime] = useState(preset?.drawdownTime || 60);
   const [pours, setPours] = useState<FourSixPour[]>(
     preset?.pours || [
       { amount: 50, timeSeconds: 0 },
@@ -65,7 +65,7 @@ const FourSixPresetEditor: React.FC<FourSixPresetEditorProps> = ({ preset, onSav
       id: preset?.id || `custom-${Date.now()}`,
       name: name.trim(),
       pours,
-      totalBrewTime,
+      drawdownTime,
       isDefault: false,
     };
 
@@ -109,15 +109,15 @@ const FourSixPresetEditor: React.FC<FourSixPresetEditorProps> = ({ preset, onSav
 
       <div className="mb-6">
         <label className="block text-sm font-medium text-caramel mb-2">
-          Total Brew Time (including drawdown)
+          Drawdown Time (after last pour)
         </label>
         <div className="flex items-center gap-3">
           <input
             type="number"
-            value={Math.floor(totalBrewTime / 60)}
+            value={Math.floor(drawdownTime / 60)}
             onChange={(e) => {
               const mins = parseInt(e.target.value) || 0;
-              setTotalBrewTime(mins * 60 + (totalBrewTime % 60));
+              setDrawdownTime(mins * 60 + (drawdownTime % 60));
             }}
             min="0"
             className="w-24 px-4 py-2 bg-olive-dark/50 border border-coffee/40 rounded-md text-cream focus:ring-2 focus:ring-coffee focus:border-coffee"
@@ -125,10 +125,10 @@ const FourSixPresetEditor: React.FC<FourSixPresetEditorProps> = ({ preset, onSav
           <span className="text-caramel">minutes</span>
           <input
             type="number"
-            value={totalBrewTime % 60}
+            value={drawdownTime % 60}
             onChange={(e) => {
               const secs = parseInt(e.target.value) || 0;
-              setTotalBrewTime(Math.floor(totalBrewTime / 60) * 60 + secs);
+              setDrawdownTime(Math.floor(drawdownTime / 60) * 60 + secs);
             }}
             min="0"
             max="59"
@@ -136,6 +136,9 @@ const FourSixPresetEditor: React.FC<FourSixPresetEditorProps> = ({ preset, onSav
           />
           <span className="text-caramel">seconds</span>
         </div>
+        <p className="text-xs text-caramel/70 mt-2">
+          Time for coffee to drip through after the final pour
+        </p>
       </div>
 
       <div className="grid grid-cols-3 gap-4 p-4 bg-olive-dark/50 rounded-lg mb-6">

@@ -7,7 +7,7 @@ export const defaultPresets: FourSixPreset[] = [
     id: 'default-46',
     name: 'Original 4:6',
     isDefault: true,
-    totalBrewTime: 210, // 3:30 minutes
+    drawdownTime: 75, // 1:15 drawdown after last pour at 2:15
     pours: [
       { amount: 50, timeSeconds: 0 },
       { amount: 70, timeSeconds: 45 },
@@ -19,7 +19,7 @@ export const defaultPresets: FourSixPreset[] = [
     id: 'gentle-46',
     name: 'Gentle (5 pours)',
     isDefault: true,
-    totalBrewTime: 240, // 4:00 minutes
+    drawdownTime: 90, // 1:30 drawdown after last pour at 2:30
     pours: [
       { amount: 60, timeSeconds: 0 },
       { amount: 60, timeSeconds: 45 },
@@ -32,7 +32,7 @@ export const defaultPresets: FourSixPreset[] = [
     id: 'bold-46',
     name: 'Bold (3 pours)',
     isDefault: true,
-    totalBrewTime: 180, // 3:00 minutes
+    drawdownTime: 60, // 1:00 drawdown after last pour at 2:00
     pours: [
       { amount: 120, timeSeconds: 0 },
       { amount: 90, timeSeconds: 60 },
@@ -49,10 +49,16 @@ export const loadPresets = (): FourSixPreset[] => {
     }
     const customPresets = JSON.parse(stored) as FourSixPreset[];
     
-    // Migration: Add totalBrewTime to old presets that don't have it
+    // Migration: Convert old totalBrewTime to drawdownTime
     customPresets.forEach(preset => {
-      if (typeof preset.totalBrewTime !== 'number') {
-        preset.totalBrewTime = 210; // Default to 3:30
+      if ('totalBrewTime' in preset && typeof (preset as any).totalBrewTime === 'number') {
+        const lastPourTime = preset.pours.length > 0 ? preset.pours[preset.pours.length - 1].timeSeconds : 0;
+        preset.drawdownTime = (preset as any).totalBrewTime - lastPourTime;
+        delete (preset as any).totalBrewTime;
+      }
+      // Default drawdown time if missing
+      if (typeof preset.drawdownTime !== 'number') {
+        preset.drawdownTime = 60; // Default 1 minute
       }
     });
     
