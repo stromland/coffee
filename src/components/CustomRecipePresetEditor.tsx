@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import type { CustomRecipePreset, CustomRecipePour, CoffeeSettings } from '../types/coffee';
 import { saveCustomPreset } from '../utils/customRecipeStorage';
-import { generateSecureId } from '../utils/idGenerator';
+import { generateSecureId } from '../shared/utils/idGenerator';
 
 interface CustomRecipePresetEditorProps {
   preset?: CustomRecipePreset;
