@@ -1,6 +1,12 @@
 /**
- * Base repository providing generic CRUD operations for localStorage
- * Helper class for localStorage-based repository implementations
+ * Abstract base class for localStorage-backed repositories.
+ *
+ * Provides generic CRUD operations for entities with an `id` property.
+ * Subclasses should extend this class to implement domain-specific repositories,
+ * and may add additional methods or override base behavior as needed.
+ *
+ * @template T - The entity type, which must have an `id: string` property.
+ * @abstract
  */
 export abstract class BaseRepository<T extends { id: string }> {
   protected storageKey: string;
