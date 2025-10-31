@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import type { BrewingSession } from "../types/coffee";
 import { sessionService } from "../core/services";
 import { generateSecureId } from "../shared/utils/idGenerator";
+import { Card, Input, Button } from "../shared/components/ui";
 
 interface SaveSessionFormProps {
   coffeeAmount: number;
@@ -58,12 +59,7 @@ const SaveSessionForm: React.FC<SaveSessionFormProps> = ({
   };
 
   return (
-    <div className="bg-olive/20 backdrop-blur-sm rounded-lg p-6 shadow-2xl">
-      <div className="flex items-center gap-2 mb-6">
-        <div className="w-1 h-6 bg-coffee rounded-full"></div>
-        <h2 className="text-xl font-bold text-cream">Save Brewing Session</h2>
-      </div>
-
+    <Card title="Save Brewing Session">
       <div className="space-y-4 mb-6">
         {/* Auto-filled info */}
         <div className="p-4 bg-coffee/10 rounded-lg border border-coffee/30">
@@ -84,53 +80,50 @@ const SaveSessionForm: React.FC<SaveSessionFormProps> = ({
           )}
         </div>
 
-        {/* Coffee Type - Required */}
-        <div>
-          <label htmlFor="coffee-type" className="block text-sm font-medium text-caramel mb-2">
-            Coffee Type / Beans <span className="text-coffee">*</span>
-          </label>
-          <input
-            id="coffee-type"
-            type="text"
-            value={coffeeType}
-            onChange={(e) => setCoffeeType(e.target.value)}
-            className="w-full px-4 py-2 border border-coffee/40 rounded-md focus:ring-2 focus:ring-coffee focus:border-coffee bg-olive/20 text-cream placeholder-caramel/50"
-            placeholder="e.g., Ethiopian Yirgacheffe"
-          />
-        </div>
+        <Input
+          id="coffee-type"
+          type="text"
+          value={coffeeType}
+          onChange={(e) => setCoffeeType(e.target.value)}
+          label={
+            <>
+              Coffee Type / Beans <span className="text-coffee">*</span>
+            </>
+          }
+          placeholder="e.g., Ethiopian Yirgacheffe"
+          fullWidth
+        />
 
-        {/* Water Temperature - Optional */}
-        <div>
-          <label htmlFor="water-temp" className="block text-sm font-medium text-caramel mb-2">
-            Water Temperature (°C) <span className="text-caramel/50 text-xs">- optional</span>
-          </label>
-          <input
-            id="water-temp"
-            type="number"
-            min="0"
-            max="100"
-            step="0.5"
-            value={waterTemperature}
-            onChange={(e) => setWaterTemperature(e.target.value)}
-            className="w-full px-4 py-2 border border-coffee/40 rounded-md focus:ring-2 focus:ring-coffee focus:border-coffee bg-olive/20 text-cream placeholder-caramel/50"
-            placeholder="e.g., 92"
-          />
-        </div>
+        <Input
+          id="water-temp"
+          type="number"
+          min="0"
+          max="100"
+          step="0.5"
+          value={waterTemperature}
+          onChange={(e) => setWaterTemperature(e.target.value)}
+          label={
+            <>
+              Water Temperature (°C) <span className="text-caramel/50 text-xs">- optional</span>
+            </>
+          }
+          placeholder="e.g., 92"
+          fullWidth
+        />
 
-        {/* Grind Size - Optional */}
-        <div>
-          <label htmlFor="grind-size" className="block text-sm font-medium text-caramel mb-2">
-            Grind Size <span className="text-caramel/50 text-xs">- optional</span>
-          </label>
-          <input
-            id="grind-size"
-            type="text"
-            value={grindSize}
-            onChange={(e) => setGrindSize(e.target.value)}
-            className="w-full px-4 py-2 border border-coffee/40 rounded-md focus:ring-2 focus:ring-coffee focus:border-coffee bg-olive/20 text-cream placeholder-caramel/50"
-            placeholder="e.g., Medium-Fine, 15 clicks"
-          />
-        </div>
+        <Input
+          id="grind-size"
+          type="text"
+          value={grindSize}
+          onChange={(e) => setGrindSize(e.target.value)}
+          label={
+            <>
+              Grind Size <span className="text-caramel/50 text-xs">- optional</span>
+            </>
+          }
+          placeholder="e.g., Medium-Fine, 15 clicks"
+          fullWidth
+        />
 
         {/* Rating - Optional */}
         <div>
@@ -171,14 +164,10 @@ const SaveSessionForm: React.FC<SaveSessionFormProps> = ({
         </div>
       </div>
 
-      <button
-        onClick={handleSave}
-        disabled={!coffeeType.trim()}
-        className="w-full px-4 py-3 bg-coffee hover:bg-coffee/80 text-cream rounded-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed font-semibold"
-      >
+      <Button onClick={handleSave} disabled={!coffeeType.trim()} fullWidth>
         Save Session
-      </button>
-    </div>
+      </Button>
+    </Card>
   );
 };
 

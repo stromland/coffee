@@ -1,5 +1,6 @@
 import React, { useState, useMemo } from "react";
 import { brewingService } from "../core/services";
+import { Section } from "../shared/components";
 
 interface BrewingPresetsProps {
   selectedMethodId: string;
@@ -49,12 +50,7 @@ const BrewingPresets: React.FC<BrewingPresetsProps> = ({ selectedMethodId, onMet
   };
 
   return (
-    <div className="bg-olive/20 backdrop-blur-sm rounded-lg p-6 shadow-2xl h-fit sticky top-6">
-      <div className="flex items-center gap-2 mb-6">
-        <div className="w-1 h-6 bg-coffee rounded-full"></div>
-        <h2 className="text-xl font-bold text-cream">Brewing Method</h2>
-      </div>
-
+    <Section title="Brewing Method" className="sticky top-6 h-fit">
       <div className="space-y-3">
         {Array.from(categories.entries()).map(([category, categoryMethods]) => {
           const isExpanded = isCategoryExpanded(category);
@@ -138,7 +134,7 @@ const BrewingPresets: React.FC<BrewingPresetsProps> = ({ selectedMethodId, onMet
           );
         })}
       </div>
-    </div>
+    </Section>
   );
 };
 

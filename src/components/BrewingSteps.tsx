@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { createPortal } from "react-dom";
 import type { BrewStep } from "../types/coffee";
 import BrewMode from "./BrewMode";
+import { formatTime } from "../shared/utils";
+import { Section, Button } from "../shared/components";
 
 interface BrewingStepsProps {
   steps: BrewStep[];
@@ -11,12 +13,6 @@ interface BrewingStepsProps {
   creditName?: string;
   creditUrl?: string;
 }
-
-const formatTime = (seconds: number): string => {
-  const mins = Math.floor(seconds / 60);
-  const secs = seconds % 60;
-  return `${mins}:${secs.toString().padStart(2, "0")}`;
-};
 
 const BrewingSteps: React.FC<BrewingStepsProps> = ({
   steps,
@@ -53,15 +49,14 @@ const BrewingSteps: React.FC<BrewingStepsProps> = ({
   const totalWater = steps.length > 0 ? steps[steps.length - 1].cumulativeWater : 0;
 
   return (
-    <div className="bg-olive/20 backdrop-blur-sm rounded-lg p-6 shadow-2xl">
-      <div className="flex items-center justify-between mb-6">
-        <div className="flex items-center gap-2">
-          <div className="w-1 h-6 bg-coffee rounded-full"></div>
-          <h2 className="text-xl font-bold text-cream">Brewing Steps</h2>
-        </div>
-        <button
+    <Section
+      title="Brewing Steps"
+      actions={
+        <Button
           onClick={() => setIsBrewMode(true)}
-          className="px-4 py-2 bg-coffee/30 hover:bg-coffee/40 border border-coffee/50 text-cream rounded-lg transition-all font-medium text-sm flex items-center gap-2"
+          variant="secondary"
+          size="sm"
+          className="flex items-center gap-2"
         >
           <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
             <path
@@ -71,8 +66,9 @@ const BrewingSteps: React.FC<BrewingStepsProps> = ({
             />
           </svg>
           Enter Brew Mode
-        </button>
-      </div>
+        </Button>
+      }
+    >
 
       {methodName && (
         <div className="mb-5 p-4 bg-olive-dark/50 rounded-lg">
@@ -156,7 +152,7 @@ const BrewingSteps: React.FC<BrewingStepsProps> = ({
           </span>
         </div>
       </div>
-    </div>
+    </Section>
   );
 };
 
