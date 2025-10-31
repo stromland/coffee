@@ -27,8 +27,7 @@ const BrewMode: React.FC<BrewModeProps> = ({
   const [isStarted, setIsStarted] = useState(false);
 
   const currentStep = steps[currentStepIndex];
-  const nextStep =
-    currentStepIndex < steps.length - 1 ? steps[currentStepIndex + 1] : null;
+  const nextStep = currentStepIndex < steps.length - 1 ? steps[currentStepIndex + 1] : null;
   const isLastStep = currentStepIndex === steps.length - 1;
   const isFinished = elapsedTime >= totalBrewTime;
 
@@ -84,12 +83,7 @@ const BrewMode: React.FC<BrewModeProps> = ({
           className="text-caramel hover:text-cream transition-colors"
           title="Exit Brew Mode"
         >
-          <svg
-            className="w-6 h-6"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-          >
+          <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path
               strokeLinecap="round"
               strokeLinejoin="round"
@@ -121,8 +115,7 @@ const BrewMode: React.FC<BrewModeProps> = ({
       {/* Info Header */}
       <div className="mb-5 p-3 bg-olive-dark/30 rounded-lg">
         <p className="text-xs text-caramel text-center">
-          <span className="font-semibold text-cream">Method:</span>{" "}
-          {methodName || "Unknown"}
+          <span className="font-semibold text-cream">Method:</span> {methodName || "Unknown"}
         </p>
       </div>
 
@@ -133,11 +126,7 @@ const BrewMode: React.FC<BrewModeProps> = ({
             onClick={() => setIsStarted(true)}
             className="px-8 py-6 bg-coffee/30 hover:bg-coffee/40 border-2 border-coffee/50 rounded-xl transition-all flex flex-col items-center justify-center gap-2 hover:scale-105"
           >
-            <svg
-              className="w-12 h-12 text-cream"
-              fill="currentColor"
-              viewBox="0 0 20 20"
-            >
+            <svg className="w-12 h-12 text-cream" fill="currentColor" viewBox="0 0 20 20">
               <path
                 fillRule="evenodd"
                 d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z"
@@ -159,45 +148,35 @@ const BrewMode: React.FC<BrewModeProps> = ({
               </div>
               <div>
                 <div className="text-xs text-caramel/70">Current Step</div>
-                <div className="text-lg font-semibold text-cream">
-                  {currentStep.description}
-                </div>
+                <div className="text-lg font-semibold text-cream">{currentStep.description}</div>
               </div>
             </div>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div className="p-3 bg-olive/20 rounded-md">
-              <span className="text-caramel/80 text-xs block mb-1">
-                Pour to
-              </span>
+              <span className="text-caramel/80 text-xs block mb-1">Pour to</span>
               <span className="font-bold text-cream text-2xl">
                 {currentStep.cumulativeWater.toFixed(1)}g
               </span>
             </div>
             {!isLastStep && timeUntilNextPour > 0 ? (
               <div className="p-3 bg-coffee/20 border border-coffee/40 rounded-md">
-                <span className="text-caramel/80 text-xs block mb-1">
-                  Next pour in
-                </span>
+                <span className="text-caramel/80 text-xs block mb-1">Next pour in</span>
                 <span className="font-bold text-coffee text-2xl">
                   {formatTime(Math.max(0, timeUntilNextPour))}
                 </span>
               </div>
             ) : isLastStep && timeUntilNextPour > 0 ? (
               <div className="p-3 bg-coffee/20 border border-coffee/40 rounded-md">
-                <span className="text-caramel/80 text-xs block mb-1">
-                  Brew finishes in
-                </span>
+                <span className="text-caramel/80 text-xs block mb-1">Brew finishes in</span>
                 <span className="font-bold text-coffee text-2xl">
                   {formatTime(Math.max(0, timeUntilNextPour))}
                 </span>
               </div>
             ) : (
               <div className="p-3 bg-olive/20 rounded-md">
-                <span className="text-caramel/80 text-xs block mb-1">
-                  Step Time
-                </span>
+                <span className="text-caramel/80 text-xs block mb-1">Step Time</span>
                 <span className="font-bold text-cream text-2xl">
                   {formatTime(currentStep.timeSeconds)}
                 </span>
@@ -226,12 +205,9 @@ const BrewMode: React.FC<BrewModeProps> = ({
       {/* Info Footer */}
       <div className="p-3 bg-olive-dark/30 rounded-lg">
         <p className="text-xs text-caramel text-center">
-          <span className="font-semibold text-cream">Coffee:</span>{" "}
-          {coffeeAmount}g |{" "}
-          <span className="font-semibold text-cream">Water:</span>{" "}
-          {totalWater.toFixed(0)}g |{" "}
-          <span className="font-semibold text-cream">Total Time:</span>{" "}
-          {formatTime(totalBrewTime)}
+          <span className="font-semibold text-cream">Coffee:</span> {coffeeAmount}g |{" "}
+          <span className="font-semibold text-cream">Water:</span> {totalWater.toFixed(0)}g |{" "}
+          <span className="font-semibold text-cream">Total Time:</span> {formatTime(totalBrewTime)}
         </p>
       </div>
     </div>

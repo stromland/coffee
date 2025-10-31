@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 
 export interface FormGroupProps extends React.HTMLAttributes<HTMLDivElement> {
   /** Title for the form group */
@@ -16,7 +16,7 @@ export const FormGroup: React.FC<FormGroupProps> = ({
   title,
   description,
   children,
-  className = '',
+  className = "",
   ...props
 }) => {
   return (

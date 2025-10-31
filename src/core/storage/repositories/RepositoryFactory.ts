@@ -1,9 +1,6 @@
 import type { IBrewMethodRepository } from "./interfaces/IBrewMethodRepository";
 import type { ISessionRepository } from "./interfaces/ISessionRepository";
-import {
-  LocalStorageBrewMethodRepository,
-  LocalStorageSessionRepository,
-} from "./localStorage";
+import { LocalStorageBrewMethodRepository, LocalStorageSessionRepository } from "./localStorage";
 
 /**
  * Factory for creating repository instances

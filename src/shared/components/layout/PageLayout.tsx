@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 
 export interface PageLayoutProps {
   /** Page title */
@@ -10,7 +10,7 @@ export interface PageLayoutProps {
   /** Page content */
   children: React.ReactNode;
   /** Maximum width constraint */
-  maxWidth?: 'sm' | 'md' | 'lg' | 'xl' | '2xl' | 'full';
+  maxWidth?: "sm" | "md" | "lg" | "xl" | "2xl" | "full";
 }
 
 /**
@@ -21,15 +21,15 @@ export const PageLayout: React.FC<PageLayoutProps> = ({
   description,
   actions,
   children,
-  maxWidth = 'xl',
+  maxWidth = "xl",
 }) => {
   const maxWidthStyles = {
-    sm: 'max-w-2xl',
-    md: 'max-w-4xl',
-    lg: 'max-w-6xl',
-    xl: 'max-w-7xl',
-    '2xl': 'max-w-screen-2xl',
-    full: 'max-w-full',
+    sm: "max-w-2xl",
+    md: "max-w-4xl",
+    lg: "max-w-6xl",
+    xl: "max-w-7xl",
+    "2xl": "max-w-screen-2xl",
+    full: "max-w-full",
   };
 
   return (

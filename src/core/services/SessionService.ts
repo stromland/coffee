@@ -38,6 +38,4 @@ export class SessionService {
 /**
  * Singleton instance of SessionService
  */
-export const sessionService = new SessionService(
-  RepositoryFactory.createSessionRepository()
-);
+export const sessionService = new SessionService(RepositoryFactory.createSessionRepository());

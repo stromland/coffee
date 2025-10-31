@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
-import type { BrewingSession } from '../types/coffee';
-import { sessionService } from '../core/services';
-import { generateSecureId } from '../shared/utils/idGenerator';
+import React, { useState } from "react";
+import type { BrewingSession } from "../types/coffee";
+import { sessionService } from "../core/services";
+import { generateSecureId } from "../shared/utils/idGenerator";
 
 interface SaveSessionFormProps {
   coffeeAmount: number;
@@ -20,19 +20,19 @@ const SaveSessionForm: React.FC<SaveSessionFormProps> = ({
   brewTime,
   onSave,
 }) => {
-  const [coffeeType, setCoffeeType] = useState('');
-  const [waterTemperature, setWaterTemperature] = useState('');
-  const [grindSize, setGrindSize] = useState('');
+  const [coffeeType, setCoffeeType] = useState("");
+  const [waterTemperature, setWaterTemperature] = useState("");
+  const [grindSize, setGrindSize] = useState("");
   const [rating, setRating] = useState<number | undefined>(undefined);
-  const [notes, setNotes] = useState('');
+  const [notes, setNotes] = useState("");
 
   const handleSave = () => {
     if (!coffeeType.trim()) return;
 
     const session: BrewingSession = {
-      id: generateSecureId('session'),
+      id: generateSecureId("session"),
       timestamp: Date.now(),
-      coffeeType: coffeeType || 'Unknown',
+      coffeeType: coffeeType || "Unknown",
       brewingMethod: brewingMethodId,
       coffeeAmount,
       waterAmount,
@@ -45,13 +45,13 @@ const SaveSessionForm: React.FC<SaveSessionFormProps> = ({
 
     sessionService.saveSession(session);
     onSave();
-    
+
     // Reset form
-    setCoffeeType('');
-    setWaterTemperature('');
-    setGrindSize('');
+    setCoffeeType("");
+    setWaterTemperature("");
+    setGrindSize("");
     setRating(undefined);
-    setNotes('');
+    setNotes("");
   };
 
   return (
@@ -75,7 +75,8 @@ const SaveSessionForm: React.FC<SaveSessionFormProps> = ({
           </p>
           {brewTime && (
             <p className="text-sm text-caramel">
-              <span className="font-semibold text-cream">Brew Time:</span> {Math.floor(brewTime / 60)}:{(brewTime % 60).toString().padStart(2, '0')}
+              <span className="font-semibold text-cream">Brew Time:</span>{" "}
+              {Math.floor(brewTime / 60)}:{(brewTime % 60).toString().padStart(2, "0")}
             </p>
           )}
         </div>
@@ -141,8 +142,8 @@ const SaveSessionForm: React.FC<SaveSessionFormProps> = ({
                 onClick={() => setRating(rating === value ? undefined : value)}
                 className={`w-12 h-12 rounded-lg border-2 transition-all ${
                   rating && rating >= value
-                    ? 'border-coffee bg-coffee/20 text-coffee'
-                    : 'border-caramel/30 hover:border-coffee/50 text-caramel/50'
+                    ? "border-coffee bg-coffee/20 text-coffee"
+                    : "border-caramel/30 hover:border-coffee/50 text-caramel/50"
                 }`}
               >
                 ★

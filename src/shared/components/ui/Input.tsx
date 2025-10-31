@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 
 let inputIdCounter = 0;
 
@@ -17,36 +17,22 @@ export interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> 
  * Reusable Input component with consistent styling
  */
 export const Input = React.forwardRef<HTMLInputElement, InputProps>(
-  (
-    {
-      label,
-      error,
-      helperText,
-      fullWidth = false,
-      className = '',
-      id,
-      ...props
-    },
-    ref
-  ) => {
+  ({ label, error, helperText, fullWidth = false, className = "", id, ...props }, ref) => {
     const inputId = React.useMemo(() => id || `input-${++inputIdCounter}`, [id]);
-    
+
     const baseStyles =
-      'px-4 py-2 bg-olive-dark/50 border rounded-md text-cream placeholder-caramel/50 focus:ring-2 focus:ring-coffee transition-colors';
-    
+      "px-4 py-2 bg-olive-dark/50 border rounded-md text-cream placeholder-caramel/50 focus:ring-2 focus:ring-coffee transition-colors";
+
     const borderStyle = error
-      ? 'border-red-500 focus:border-red-500'
-      : 'border-coffee/40 focus:border-coffee';
-    
-    const widthStyle = fullWidth ? 'w-full' : '';
+      ? "border-red-500 focus:border-red-500"
+      : "border-coffee/40 focus:border-coffee";
+
+    const widthStyle = fullWidth ? "w-full" : "";
 
     return (
-      <div className={fullWidth ? 'w-full' : ''}>
+      <div className={fullWidth ? "w-full" : ""}>
         {label && (
-          <label
-            htmlFor={inputId}
-            className="block text-sm font-medium text-caramel mb-2"
-          >
+          <label htmlFor={inputId} className="block text-sm font-medium text-caramel mb-2">
             {label}
           </label>
         )}
@@ -56,15 +42,11 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
           className={`${baseStyles} ${borderStyle} ${widthStyle} ${className}`}
           {...props}
         />
-        {error && (
-          <p className="mt-1 text-sm text-red-500">{error}</p>
-        )}
-        {helperText && !error && (
-          <p className="mt-1 text-xs text-caramel/70">{helperText}</p>
-        )}
+        {error && <p className="mt-1 text-sm text-red-500">{error}</p>}
+        {helperText && !error && <p className="mt-1 text-xs text-caramel/70">{helperText}</p>}
       </div>
     );
   }
 );
 
-Input.displayName = 'Input';
+Input.displayName = "Input";

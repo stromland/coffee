@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState } from "react";
 
 /**
  * Custom hook for persisting state in localStorage
@@ -6,7 +6,10 @@ import { useState } from 'react';
  * @param initialValue - Initial value if no stored value exists
  * @returns Tuple of [storedValue, setValue]
  */
-export function useLocalStorage<T>(key: string, initialValue: T): [T, (value: T | ((val: T) => T)) => void] {
+export function useLocalStorage<T>(
+  key: string,
+  initialValue: T
+): [T, (value: T | ((val: T) => T)) => void] {
   // State to store our value
   const [storedValue, setStoredValue] = useState<T>(() => {
     try {

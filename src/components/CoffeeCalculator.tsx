@@ -7,10 +7,7 @@ interface CoffeeCalculatorProps {
   onSettingsChange: (settings: CoffeeSettings) => void;
 }
 
-const CoffeeCalculator: React.FC<CoffeeCalculatorProps> = ({
-  settings,
-  onSettingsChange,
-}) => {
+const CoffeeCalculator: React.FC<CoffeeCalculatorProps> = ({ settings, onSettingsChange }) => {
   const handleCoffeeAmountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const coffeeAmount = parseFloat(e.target.value) || 0;
     const totalWater = brewingService.calculateTotalWater(coffeeAmount, settings.waterRatio);
@@ -27,17 +24,12 @@ const CoffeeCalculator: React.FC<CoffeeCalculatorProps> = ({
     <div className="bg-olive/20 backdrop-blur-sm rounded-lg p-6 shadow-2xl">
       <div className="flex items-center gap-2 mb-6">
         <div className="w-1 h-6 bg-coffee rounded-full"></div>
-        <h2 className="text-xl font-bold text-cream">
-          Coffee Calculator
-        </h2>
+        <h2 className="text-xl font-bold text-cream">Coffee Calculator</h2>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div>
-          <label
-            htmlFor="coffee-amount"
-            className="block text-sm font-medium text-caramel mb-2"
-          >
+          <label htmlFor="coffee-amount" className="block text-sm font-medium text-caramel mb-2">
             Coffee Amount (g)
           </label>
           <input
@@ -53,10 +45,7 @@ const CoffeeCalculator: React.FC<CoffeeCalculatorProps> = ({
         </div>
 
         <div>
-          <label
-            htmlFor="water-ratio"
-            className="block text-sm font-medium text-caramel mb-2"
-          >
+          <label htmlFor="water-ratio" className="block text-sm font-medium text-caramel mb-2">
             Water Ratio (1:X)
           </label>
           <select
@@ -81,13 +70,10 @@ const CoffeeCalculator: React.FC<CoffeeCalculatorProps> = ({
       <div className="mt-6 p-6 bg-gradient-to-br from-coffee/30 to-coffee/10 rounded-lg shadow-inner">
         <div className="flex justify-between items-center">
           <span className="text-caramel font-medium">Total Water:</span>
-          <span className="text-3xl font-bold text-cream">
-            {settings.totalWater.toFixed(0)}g
-          </span>
+          <span className="text-3xl font-bold text-cream">{settings.totalWater.toFixed(0)}g</span>
         </div>
         <div className="mt-3 text-sm text-caramel/80">
-          Ratio: 1:{settings.waterRatio} ({settings.coffeeAmount}g coffee ×{" "}
-          {settings.waterRatio})
+          Ratio: 1:{settings.waterRatio} ({settings.coffeeAmount}g coffee × {settings.waterRatio})
         </div>
       </div>
     </div>

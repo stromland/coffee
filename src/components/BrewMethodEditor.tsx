@@ -9,11 +9,7 @@ interface BrewMethodEditorProps {
   onCancel: () => void;
 }
 
-const BrewMethodEditor: React.FC<BrewMethodEditorProps> = ({
-  method,
-  onSave,
-  onCancel,
-}) => {
+const BrewMethodEditor: React.FC<BrewMethodEditorProps> = ({ method, onSave, onCancel }) => {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [category, setCategory] = useState("Custom");
@@ -43,9 +39,7 @@ const BrewMethodEditor: React.FC<BrewMethodEditorProps> = ({
       const defaultCoffee = 20;
       const defaultRatio = 15;
       const totalWater = defaultCoffee * defaultRatio;
-      const grams = method.pours.map((p) =>
-        ((p.percentage / 100) * totalWater).toFixed(0)
-      );
+      const grams = method.pours.map((p) => ((p.percentage / 100) * totalWater).toFixed(0));
       const times = method.pours.map((p) => p.timeSeconds.toString());
 
       setCoffeeAmount(defaultCoffee.toString());
@@ -58,10 +52,7 @@ const BrewMethodEditor: React.FC<BrewMethodEditorProps> = ({
   const handleAddPour = () => {
     const lastPour = pours[pours.length - 1];
     const newTime = lastPour ? lastPour.timeSeconds + 30 : 0;
-    setPours([
-      ...pours,
-      { percentage: 0, timeSeconds: newTime, description: "" },
-    ]);
+    setPours([...pours, { percentage: 0, timeSeconds: newTime, description: "" }]);
     setPourGrams([...pourGrams, "0"]);
     setPourTimes([...pourTimes, newTime.toString()]);
   };
@@ -89,8 +80,7 @@ const BrewMethodEditor: React.FC<BrewMethodEditorProps> = ({
     const gramsNumbers = newGrams.map((g) => parseFloat(g) || 0);
     const newPours = pours.map((pour, i) => ({
       ...pour,
-      percentage:
-        expectedTotal > 0 ? (gramsNumbers[i] / expectedTotal) * 100 : 0,
+      percentage: expectedTotal > 0 ? (gramsNumbers[i] / expectedTotal) * 100 : 0,
     }));
     setPours(newPours);
   };
@@ -120,9 +110,7 @@ const BrewMethodEditor: React.FC<BrewMethodEditorProps> = ({
       const gramsNumbers = pourGrams.map((g) => parseFloat(g) || 0);
       const currentTotal = gramsNumbers.reduce((sum, g) => sum + g, 0);
       if (currentTotal > 0) {
-        const newGrams = gramsNumbers.map((g) =>
-          ((g / currentTotal) * totalWater).toFixed(1)
-        );
+        const newGrams = gramsNumbers.map((g) => ((g / currentTotal) * totalWater).toFixed(1));
         setPourGrams(newGrams);
       }
     }
@@ -139,19 +127,13 @@ const BrewMethodEditor: React.FC<BrewMethodEditorProps> = ({
       const gramsNumbers = pourGrams.map((g) => parseFloat(g) || 0);
       const currentTotal = gramsNumbers.reduce((sum, g) => sum + g, 0);
       if (currentTotal > 0) {
-        const newGrams = gramsNumbers.map((g) =>
-          ((g / currentTotal) * totalWater).toFixed(1)
-        );
+        const newGrams = gramsNumbers.map((g) => ((g / currentTotal) * totalWater).toFixed(1));
         setPourGrams(newGrams);
       }
     }
   };
 
-  const handlePourChange = (
-    index: number,
-    field: keyof Pour,
-    value: string | number
-  ) => {
+  const handlePourChange = (index: number, field: keyof Pour, value: string | number) => {
     const newPours = [...pours];
     if (field === "description") {
       newPours[index] = { ...newPours[index], [field]: String(value) };
@@ -238,9 +220,7 @@ const BrewMethodEditor: React.FC<BrewMethodEditorProps> = ({
   const expectedTotalWater = coffee * ratio;
   const totalPercentage = pours.reduce((sum, p) => sum + p.percentage, 0);
   const totalBrewTime =
-    pours.length > 0
-      ? Math.max(...pours.map((p) => p.timeSeconds)) + drawdownTime
-      : drawdownTime;
+    pours.length > 0 ? Math.max(...pours.map((p) => p.timeSeconds)) + drawdownTime : drawdownTime;
 
   return (
     <div className="bg-olive/20 backdrop-blur-sm rounded-lg p-6 shadow-2xl">
@@ -257,9 +237,7 @@ const BrewMethodEditor: React.FC<BrewMethodEditorProps> = ({
         {/* Basic Info */}
         <div className="space-y-4">
           <div>
-            <label className="block text-sm font-medium text-cream mb-2">
-              Method Name *
-            </label>
+            <label className="block text-sm font-medium text-cream mb-2">Method Name *</label>
             <input
               type="text"
               value={name}
@@ -270,9 +248,7 @@ const BrewMethodEditor: React.FC<BrewMethodEditorProps> = ({
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-cream mb-2">
-              Description
-            </label>
+            <label className="block text-sm font-medium text-cream mb-2">Description</label>
             <input
               type="text"
               value={description}
@@ -284,9 +260,7 @@ const BrewMethodEditor: React.FC<BrewMethodEditorProps> = ({
 
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="block text-sm font-medium text-cream mb-2">
-                Category
-              </label>
+              <label className="block text-sm font-medium text-cream mb-2">Category</label>
               <input
                 type="text"
                 value={category}
@@ -328,9 +302,7 @@ const BrewMethodEditor: React.FC<BrewMethodEditorProps> = ({
               />
             </div>
             <div>
-              <label className="block text-sm font-medium text-cream mb-2">
-                Water Ratio (1:X)
-              </label>
+              <label className="block text-sm font-medium text-cream mb-2">Water Ratio (1:X)</label>
               <input
                 type="text"
                 inputMode="decimal"
@@ -342,8 +314,7 @@ const BrewMethodEditor: React.FC<BrewMethodEditorProps> = ({
             </div>
           </div>
           <p className="text-xs text-caramel/70 mt-2">
-            Set your coffee amount and desired ratio. Water amounts in pours
-            will scale accordingly.
+            Set your coffee amount and desired ratio. Water amounts in pours will scale accordingly.
           </p>
         </div>
 
@@ -372,15 +343,12 @@ const BrewMethodEditor: React.FC<BrewMethodEditorProps> = ({
             </div>
             <div>
               <span className="text-caramel/70">Pours:</span>
-              <span className="ml-2 font-semibold text-cream">
-                {pours.length}
-              </span>
+              <span className="ml-2 font-semibold text-cream">{pours.length}</span>
             </div>
             <div>
               <span className="text-caramel/70">Total Time:</span>
               <span className="ml-2 font-semibold text-cream">
-                {Math.floor(totalBrewTime / 60)}:
-                {(totalBrewTime % 60).toString().padStart(2, "0")}
+                {Math.floor(totalBrewTime / 60)}:{(totalBrewTime % 60).toString().padStart(2, "0")}
               </span>
             </div>
           </div>
@@ -403,12 +371,9 @@ const BrewMethodEditor: React.FC<BrewMethodEditorProps> = ({
                   />
                 </svg>
                 <div>
-                  <p className="text-red-300 font-semibold text-sm">
-                    Total water exceeds 100%
-                  </p>
+                  <p className="text-red-300 font-semibold text-sm">Total water exceeds 100%</p>
                   <p className="text-red-200 text-xs mt-1">
-                    Reduce pour amounts or increase coffee amount/ratio to save
-                    this method.
+                    Reduce pour amounts or increase coffee amount/ratio to save this method.
                   </p>
                 </div>
               </div>
@@ -419,19 +384,12 @@ const BrewMethodEditor: React.FC<BrewMethodEditorProps> = ({
         {/* Pours */}
         <div>
           <div className="flex items-center justify-between mb-4">
-            <label className="text-sm font-medium text-cream">
-              Pour Schedule
-            </label>
+            <label className="text-sm font-medium text-cream">Pour Schedule</label>
             <button
               onClick={handleAddPour}
               className="px-3 py-1 bg-coffee/30 hover:bg-coffee/40 text-cream rounded text-sm flex items-center gap-1"
             >
-              <svg
-                className="w-4 h-4"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path
                   strokeLinecap="round"
                   strokeLinejoin="round"
@@ -445,10 +403,7 @@ const BrewMethodEditor: React.FC<BrewMethodEditorProps> = ({
 
           <div className="space-y-3">
             {pours.map((pour, index) => (
-              <div
-                key={index}
-                className="p-4 bg-olive-dark/30 rounded-lg border border-caramel/20"
-              >
+              <div key={index} className="p-4 bg-olive-dark/30 rounded-lg border border-caramel/20">
                 <div className="flex items-start gap-3">
                   <div className="flex-shrink-0 w-8 h-8 rounded-full bg-coffee/20 flex items-center justify-center text-cream font-semibold text-sm">
                     {index + 1}
@@ -456,16 +411,12 @@ const BrewMethodEditor: React.FC<BrewMethodEditorProps> = ({
 
                   <div className="flex-1 grid grid-cols-3 gap-3">
                     <div>
-                      <label className="block text-xs text-caramel/70 mb-1">
-                        Water (grams)
-                      </label>
+                      <label className="block text-xs text-caramel/70 mb-1">Water (grams)</label>
                       <input
                         type="text"
                         inputMode="decimal"
                         value={pourGrams[index]}
-                        onChange={(e) =>
-                          handlePourGramsChange(index, e.target.value)
-                        }
+                        onChange={(e) => handlePourGramsChange(index, e.target.value)}
                         placeholder="0"
                         className="w-full px-3 py-2 bg-olive-dark/50 border border-caramel/30 rounded text-cream text-sm focus:outline-none focus:border-coffee"
                       />
@@ -475,31 +426,23 @@ const BrewMethodEditor: React.FC<BrewMethodEditorProps> = ({
                     </div>
 
                     <div>
-                      <label className="block text-xs text-caramel/70 mb-1">
-                        Time (seconds)
-                      </label>
+                      <label className="block text-xs text-caramel/70 mb-1">Time (seconds)</label>
                       <input
                         type="text"
                         inputMode="decimal"
                         value={pourTimes[index]}
-                        onChange={(e) =>
-                          handlePourTimeChange(index, e.target.value)
-                        }
+                        onChange={(e) => handlePourTimeChange(index, e.target.value)}
                         placeholder="0"
                         className="w-full px-3 py-2 bg-olive-dark/50 border border-caramel/30 rounded text-cream text-sm focus:outline-none focus:border-coffee"
                       />
                     </div>
 
                     <div>
-                      <label className="block text-xs text-caramel/70 mb-1">
-                        Description
-                      </label>
+                      <label className="block text-xs text-caramel/70 mb-1">Description</label>
                       <input
                         type="text"
                         value={pour.description || ""}
-                        onChange={(e) =>
-                          handlePourChange(index, "description", e.target.value)
-                        }
+                        onChange={(e) => handlePourChange(index, "description", e.target.value)}
                         placeholder="Optional"
                         className="w-full px-3 py-2 bg-olive-dark/50 border border-caramel/30 rounded text-cream text-sm placeholder-caramel/50 focus:outline-none focus:border-coffee"
                       />
@@ -512,12 +455,7 @@ const BrewMethodEditor: React.FC<BrewMethodEditorProps> = ({
                     className="flex-shrink-0 p-2 text-red-400 hover:text-red-300 hover:bg-red-900/20 rounded disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
                     title="Remove pour"
                   >
-                    <svg
-                      className="w-5 h-5"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
+                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path
                         strokeLinecap="round"
                         strokeLinejoin="round"
@@ -582,15 +520,10 @@ const BrewMethodEditor: React.FC<BrewMethodEditorProps> = ({
               />
             </svg>
             <div className="flex-1">
-              <p className="text-red-300 font-semibold mb-2">
-                Please fix the following issues:
-              </p>
+              <p className="text-red-300 font-semibold mb-2">Please fix the following issues:</p>
               <ul className="space-y-2">
                 {errors.map((error, index) => (
-                  <li
-                    key={index}
-                    className="flex items-start gap-2 text-red-200 text-sm"
-                  >
+                  <li key={index} className="flex items-start gap-2 text-red-200 text-sm">
                     <span className="text-red-400 mt-1">•</span>
                     <span>{error}</span>
                   </li>

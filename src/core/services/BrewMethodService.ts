@@ -54,18 +54,18 @@ export class BrewMethodService {
   getCategories(): string[] {
     const methods = this.getAllMethods();
     const categories = new Set<string>();
-    
+
     methods.forEach((method) => {
       if (method.category) {
         categories.add(method.category);
       }
     });
-    
+
     // Add "Custom" category if there are custom methods
     if (this.getCustomMethods().length > 0) {
       categories.add("Custom");
     }
-    
+
     return Array.from(categories);
   }
 
@@ -107,17 +107,17 @@ export class BrewMethodService {
    */
   generateSteps(methodId: string, totalWater: number): BrewStep[] {
     const method = this.getMethodById(methodId);
-    
+
     if (!method) {
       throw new Error(`Method not found: ${methodId}`);
     }
 
     let cumulativeWater = 0;
-    
+
     return method.pours.map((pour, index) => {
       const waterAmount = (pour.percentage / 100) * totalWater;
       cumulativeWater += waterAmount;
-      
+
       return {
         stepNumber: index + 1,
         waterAmount,
@@ -135,12 +135,12 @@ export class BrewMethodService {
    */
   calculateTotalBrewTime(methodId: string): number {
     const method = this.getMethodById(methodId);
-    
+
     if (!method) {
       throw new Error(`Method not found: ${methodId}`);
     }
 
-    const lastPourTime = Math.max(...method.pours.map(p => p.timeSeconds));
+    const lastPourTime = Math.max(...method.pours.map((p) => p.timeSeconds));
     return lastPourTime + method.drawdownTime;
   }
 
@@ -165,7 +165,9 @@ export class BrewMethodService {
     // Validate total percentage is 100%
     const totalPercentage = method.pours.reduce((sum, pour) => sum + pour.percentage, 0);
     if (Math.abs(totalPercentage - 100) > 0.01) {
-      throw new Error(`Pour percentages must sum to 100% (currently ${totalPercentage.toFixed(1)}%)`);
+      throw new Error(
+        `Pour percentages must sum to 100% (currently ${totalPercentage.toFixed(1)}%)`
+      );
     }
 
     // Validate each pour

@@ -22,7 +22,7 @@ export const BREAKPOINTS = {
   MD: 768,
   LG: 1024,
   XL: 1280,
-  '2XL': 1536,
+  "2XL": 1536,
 } as const;
 
 /**
