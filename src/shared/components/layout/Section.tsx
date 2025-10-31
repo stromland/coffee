@@ -29,7 +29,7 @@ export const Section: React.FC<SectionProps> = ({
     >
       {(title || description || actions) && (
         <div className="mb-6">
-          <div className="flex items-start justify-between gap-4 mb-2">
+          <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4 mb-2">
             {title && (
               <div className="flex items-center gap-2">
                 <div className="w-1 h-6 bg-coffee rounded-full"></div>

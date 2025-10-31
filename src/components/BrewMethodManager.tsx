@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from "react";
-import type { BrewMethod } from "../types/coffee";
+import React, { useEffect, useState } from "react";
 import { brewMethodService } from "../core/services";
+import type { BrewMethod } from "../types/coffee";
 import BrewMethodEditor from "./BrewMethodEditor";
 
 interface BrewMethodManagerProps {
@@ -82,7 +82,7 @@ const BrewMethodManager: React.FC<BrewMethodManagerProps> = ({ onMethodChange })
       description: "",
       category: "Custom",
       drawdownTime: 60,
-      pours: [{ percentage: 100, timeSeconds: 0, description: "Pour all water" }],
+      pours: [{ percentage: 0, atTimeSeconds: 0, description: "" }],
       isDefault: false,
       isCustom: true,
     });
