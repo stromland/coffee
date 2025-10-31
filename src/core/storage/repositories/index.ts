@@ -5,16 +5,14 @@
 
 // Interfaces
 export type {
-  ICustomRecipePresetRepository,
-  IFourSixPresetRepository,
+  IBrewMethodRepository,
   ISessionRepository,
 } from "./interfaces";
 
 // LocalStorage implementations
 export {
-  defaultFourSixPresets,
-  LocalStorageCustomRecipePresetRepository,
-  LocalStorageFourSixPresetRepository,
+  defaultBrewMethods,
+  LocalStorageBrewMethodRepository,
   LocalStorageSessionRepository,
 } from "./localStorage";
 

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import type { BrewingSession } from '../types/coffee';
-import { sessionService, brewingService, presetService } from '../core/services';
+import { sessionService, brewingService } from '../core/services';
 
 interface BrewingHistoryProps {
   onBrewAgain?: (session: BrewingSession) => void;
@@ -44,27 +44,14 @@ const BrewingHistory: React.FC<BrewingHistoryProps> = ({ onBrewAgain }) => {
     return method?.name || methodId;
   };
 
-  const getPresetName = (presetId?: string): string | undefined => {
-    if (!presetId) return undefined;
-    const preset = presetService.getFourSixPresetById(presetId);
-    return preset?.name;
-  };
-
   const handleBrewAgain = (session: BrewingSession) => {
-    // Check if the preset still exists
-    if (session.brewingPreset) {
-      const preset = session.brewingMethod === '4-6' 
-        ? presetService.getFourSixPresetById(session.brewingPreset)
-        : session.brewingMethod === 'custom-recipe'
-        ? presetService.getCustomRecipePresetById(session.brewingPreset)
-        : undefined;
-      
-      if (!preset) {
-        const confirmMessage = 'The preset used in this session no longer exists. Do you want to brew again without the preset?';
-        if (!confirm(confirmMessage)) {
-          return;
-        }
-      }
+    // Check if the method still exists
+    const method = brewingService.getBrewMethod(session.brewingMethod);
+    
+    if (!method) {
+      const confirmMessage = 'The brewing method used in this session no longer exists. Please select a different method.';
+      alert(confirmMessage);
+      return;
     }
     
     if (onBrewAgain) {
@@ -145,9 +132,6 @@ const BrewingHistory: React.FC<BrewingHistoryProps> = ({ onBrewAgain }) => {
                       <span className="text-caramel/60 text-xs">Method</span>
                       <p className="text-cream font-medium">
                         {getMethodName(session.brewingMethod)}
-                        {session.brewingPreset && getPresetName(session.brewingPreset) && (
-                          <span className="text-caramel/70 text-xs ml-1">({getPresetName(session.brewingPreset)})</span>
-                        )}
                       </p>
                     </div>
                     <div>

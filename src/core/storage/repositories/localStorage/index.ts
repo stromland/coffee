@@ -3,9 +3,8 @@
  */
 
 export { BaseRepository } from "./BaseRepository";
-export { LocalStorageCustomRecipePresetRepository } from "./LocalStorageCustomRecipePresetRepository";
 export {
-  defaultFourSixPresets,
-  LocalStorageFourSixPresetRepository,
-} from "./LocalStorageFourSixPresetRepository";
+  defaultBrewMethods,
+  LocalStorageBrewMethodRepository,
+} from "./LocalStorageBrewMethodRepository";
 export { LocalStorageSessionRepository } from "./LocalStorageSessionRepository";

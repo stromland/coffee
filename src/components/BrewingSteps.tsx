@@ -8,7 +8,6 @@ interface BrewingStepsProps {
   coffeeAmount: number;
   totalBrewTime: number;
   methodName?: string;
-  presetName?: string;
   creditName?: string;
   creditUrl?: string;
 }
@@ -19,7 +18,7 @@ const formatTime = (seconds: number): string => {
   return `${mins}:${secs.toString().padStart(2, '0')}`;
 };
 
-const BrewingSteps: React.FC<BrewingStepsProps> = ({ steps, coffeeAmount, totalBrewTime, methodName, presetName, creditName, creditUrl }) => {
+const BrewingSteps: React.FC<BrewingStepsProps> = ({ steps, coffeeAmount, totalBrewTime, methodName, creditName, creditUrl }) => {
   const [isBrewMode, setIsBrewMode] = useState(false);
 
   if (steps.length === 0) {
@@ -36,7 +35,6 @@ const BrewingSteps: React.FC<BrewingStepsProps> = ({ steps, coffeeAmount, totalB
             coffeeAmount={coffeeAmount}
             totalBrewTime={totalBrewTime}
             methodName={methodName}
-            presetName={presetName}
             onExit={() => setIsBrewMode(false)}
           />
         </div>

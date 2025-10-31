@@ -8,8 +8,6 @@ interface SaveSessionFormProps {
   waterAmount: number;
   brewingMethodId: string;
   brewingMethodName: string;
-  brewingPresetId?: string;
-  brewingPresetName?: string;
   brewTime?: number;
   onSave: () => void;
 }
@@ -19,8 +17,6 @@ const SaveSessionForm: React.FC<SaveSessionFormProps> = ({
   waterAmount,
   brewingMethodId,
   brewingMethodName,
-  brewingPresetId,
-  brewingPresetName,
   brewTime,
   onSave,
 }) => {
@@ -38,7 +34,6 @@ const SaveSessionForm: React.FC<SaveSessionFormProps> = ({
       timestamp: Date.now(),
       coffeeType: coffeeType || 'Unknown',
       brewingMethod: brewingMethodId,
-      brewingPreset: brewingPresetId,
       coffeeAmount,
       waterAmount,
       waterTemperature: waterTemperature ? parseFloat(waterTemperature) : undefined,
@@ -71,7 +66,6 @@ const SaveSessionForm: React.FC<SaveSessionFormProps> = ({
         <div className="p-4 bg-coffee/10 rounded-lg border border-coffee/30">
           <p className="text-sm text-caramel mb-2">
             <span className="font-semibold text-cream">Method:</span> {brewingMethodName}
-            {brewingPresetName && <span className="text-caramel/70"> ({brewingPresetName})</span>}
           </p>
           <p className="text-sm text-caramel mb-2">
             <span className="font-semibold text-cream">Coffee:</span> {coffeeAmount}g
