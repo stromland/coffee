@@ -25,7 +25,7 @@ const AppLayout = ({ children }: AppLayoutProps) => {
                     ☕ Coffee Brew Dashboard
                   </h1>
                   <p className="text-caramel/80">
-                    Perfect your pour-over with precise measurements and timing
+                    Your digital barista for coffee brewing
                   </p>
                 </div>
                 <nav className="flex gap-3">
