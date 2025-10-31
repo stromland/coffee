@@ -26,12 +26,14 @@ export const Card = React.forwardRef<HTMLDivElement, CardProps>(
     };
 
     // If title is provided and no custom header, create default header with title
-    const headerContent = header || (title && (
-      <div className="flex items-center gap-2">
-        <div className="w-1 h-6 bg-coffee rounded-full"></div>
-        <h2 className="text-xl font-bold text-cream">{title}</h2>
-      </div>
-    ));
+    const headerContent =
+      header ||
+      (title && (
+        <div className="flex items-center gap-2">
+          <div className="w-1 h-6 bg-coffee rounded-full"></div>
+          <h2 className="text-xl font-bold text-cream">{title}</h2>
+        </div>
+      ));
 
     return (
       <div ref={ref} className={`${baseStyles} ${className}`} {...props}>
