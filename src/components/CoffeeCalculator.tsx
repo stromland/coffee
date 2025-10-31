@@ -1,6 +1,6 @@
 import React from "react";
 import type { CoffeeSettings } from "../types/coffee";
-import { calculateTotalWater } from "../utils/coffeeCalculations";
+import { brewingService } from "../core/services";
 
 interface CoffeeCalculatorProps {
   settings: CoffeeSettings;
@@ -13,13 +13,13 @@ const CoffeeCalculator: React.FC<CoffeeCalculatorProps> = ({
 }) => {
   const handleCoffeeAmountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const coffeeAmount = parseFloat(e.target.value) || 0;
-    const totalWater = calculateTotalWater(coffeeAmount, settings.waterRatio);
+    const totalWater = brewingService.calculateTotalWater(coffeeAmount, settings.waterRatio);
     onSettingsChange({ ...settings, coffeeAmount, totalWater });
   };
 
   const handleRatioChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const waterRatio = parseFloat(e.target.value);
-    const totalWater = calculateTotalWater(settings.coffeeAmount, waterRatio);
+    const totalWater = brewingService.calculateTotalWater(settings.coffeeAmount, waterRatio);
     onSettingsChange({ ...settings, waterRatio, totalWater });
   };
 

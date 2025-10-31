@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import type { FourSixPreset, FourSixPour } from '../types/coffee';
 import { validateFourSixPreset } from '../utils/fourSixValidator';
-import { savePreset } from '../utils/presetStorage';
+import { presetService } from '../core/services';
 import { generateSecureId } from '../shared/utils/idGenerator';
 
 interface FourSixPresetEditorProps {
@@ -71,7 +71,7 @@ const FourSixPresetEditor: React.FC<FourSixPresetEditorProps> = ({ preset, onSav
       isDefault: false,
     };
 
-    savePreset(newPreset);
+    presetService.saveFourSixPreset(newPreset);
     onSave();
   };
 

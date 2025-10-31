@@ -1,5 +1,5 @@
 import React from 'react';
-import { brewMethods } from '../utils/coffeeCalculations';
+import { brewingService } from '../core/services';
 
 interface BrewingPresetsProps {
   selectedMethodId: string;
@@ -7,6 +7,8 @@ interface BrewingPresetsProps {
 }
 
 const BrewingPresets: React.FC<BrewingPresetsProps> = ({ selectedMethodId, onMethodChange }) => {
+  const brewMethods = brewingService.getAllBrewMethods();
+  
   return (
     <div className="bg-olive/20 backdrop-blur-sm rounded-lg p-6 shadow-2xl h-fit sticky top-6">
       <div className="flex items-center gap-2 mb-6">

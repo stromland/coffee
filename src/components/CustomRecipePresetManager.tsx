@@ -1,12 +1,8 @@
 import React, { useState, useRef } from 'react';
 import type { CustomRecipePreset, CoffeeSettings } from '../types/coffee';
-import { loadCustomPresets, deleteCustomPreset } from '../utils/customRecipeStorage';
+import { presetService } from '../core/services';
+import { usePresetImportExport } from '../shared/hooks';
 import CustomRecipePresetEditor from './CustomRecipePresetEditor';
-import {
-  exportCustomRecipePreset,
-  exportAllCustomRecipePresets,
-  importCustomRecipePresets
-} from '../utils/customRecipeImportExport';
 
 interface CustomRecipePresetManagerProps {
   selectedPresetId?: string;
@@ -19,18 +15,19 @@ const CustomRecipePresetManager: React.FC<CustomRecipePresetManagerProps> = ({
   onPresetChange,
   settings
 }) => {
-  const [presets, setPresets] = useState<CustomRecipePreset[]>(loadCustomPresets());
+  const [presets, setPresets] = useState<CustomRecipePreset[]>(presetService.loadCustomRecipePresets());
   const [isEditorOpen, setIsEditorOpen] = useState(false);
   const [editingPreset, setEditingPreset] = useState<CustomRecipePreset | undefined>();
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const { exportCustomRecipePreset, exportAllCustomRecipePresets, importCustomRecipePresets } = usePresetImportExport();
 
   const handleDeletePreset = (presetId: string) => {
     if (confirm('Are you sure you want to delete this recipe?')) {
-      deleteCustomPreset(presetId);
-      setPresets(loadCustomPresets());
+      presetService.deleteCustomRecipePreset(presetId);
+      setPresets(presetService.loadCustomRecipePresets());
       if (selectedPresetId === presetId) {
         // Deselect if the deleted preset was selected
-        const remaining = loadCustomPresets();
+        const remaining = presetService.loadCustomRecipePresets();
         if (remaining.length > 0) {
           onPresetChange(remaining[0].id);
         }
@@ -44,7 +41,7 @@ const CustomRecipePresetManager: React.FC<CustomRecipePresetManagerProps> = ({
   };
 
   const handleSavePreset = () => {
-    const updatedPresets = loadCustomPresets();
+    const updatedPresets = presetService.loadCustomRecipePresets();
     setPresets(updatedPresets);
     setIsEditorOpen(false);
     setEditingPreset(undefined);
@@ -91,7 +88,7 @@ const CustomRecipePresetManager: React.FC<CustomRecipePresetManagerProps> = ({
 
     try {
       const result = await importCustomRecipePresets(file);
-      setPresets(loadCustomPresets());
+      setPresets(presetService.loadCustomRecipePresets());
       alert(`Successfully imported ${result.imported} recipe(s)${result.skipped > 0 ? `. Skipped ${result.skipped} invalid recipe(s).` : '.'}`);
     } catch (error) {
       alert('Failed to import recipes: ' + (error as Error).message);

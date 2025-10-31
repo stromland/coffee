@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import type { CustomRecipePreset, CustomRecipePour, CoffeeSettings } from '../types/coffee';
-import { saveCustomPreset } from '../utils/customRecipeStorage';
+import { presetService } from '../core/services';
 import { generateSecureId } from '../shared/utils/idGenerator';
 
 interface CustomRecipePresetEditorProps {
@@ -74,7 +74,7 @@ const CustomRecipePresetEditor: React.FC<CustomRecipePresetEditorProps> = ({
       drawdownTime,
     };
 
-    saveCustomPreset(newPreset);
+    presetService.saveCustomRecipePreset(newPreset);
     onSave();
   };
 

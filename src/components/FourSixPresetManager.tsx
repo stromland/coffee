@@ -1,12 +1,8 @@
 import React, { useState, useRef } from 'react';
 import type { FourSixPreset } from '../types/coffee';
-import { loadPresets, deletePreset } from '../utils/presetStorage';
+import { presetService } from '../core/services';
+import { usePresetImportExport } from '../shared/hooks';
 import FourSixPresetEditor from './FourSixPresetEditor';
-import { 
-  exportFourSixPreset, 
-  exportAllFourSixPresets, 
-  importFourSixPresets 
-} from '../utils/presetImportExport';
 
 interface FourSixPresetManagerProps {
   selectedPresetId: string;
@@ -17,15 +13,16 @@ const FourSixPresetManager: React.FC<FourSixPresetManagerProps> = ({
   selectedPresetId, 
   onPresetChange 
 }) => {
-  const [presets, setPresets] = useState<FourSixPreset[]>(loadPresets());
+  const [presets, setPresets] = useState<FourSixPreset[]>(presetService.loadFourSixPresets());
   const [isEditorOpen, setIsEditorOpen] = useState(false);
   const [editingPreset, setEditingPreset] = useState<FourSixPreset | undefined>();
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const { exportFourSixPreset, exportAllFourSixPresets, importFourSixPresets } = usePresetImportExport();
 
   const handleDeletePreset = (presetId: string) => {
     if (confirm('Are you sure you want to delete this preset?')) {
-      deletePreset(presetId);
-      setPresets(loadPresets());
+      presetService.deleteFourSixPreset(presetId);
+      setPresets(presetService.loadFourSixPresets());
       if (selectedPresetId === presetId) {
         onPresetChange('default-46');
       }
@@ -33,7 +30,7 @@ const FourSixPresetManager: React.FC<FourSixPresetManagerProps> = ({
   };
 
   const handleSavePreset = () => {
-    setPresets(loadPresets());
+    setPresets(presetService.loadFourSixPresets());
     setIsEditorOpen(false);
     setEditingPreset(undefined);
   };
@@ -69,7 +66,7 @@ const FourSixPresetManager: React.FC<FourSixPresetManagerProps> = ({
 
     try {
       const result = await importFourSixPresets(file);
-      setPresets(loadPresets());
+      setPresets(presetService.loadFourSixPresets());
       alert(`Successfully imported ${result.imported} preset(s)${result.skipped > 0 ? `. Skipped ${result.skipped} invalid preset(s).` : '.'}`);
     } catch (error) {
       alert('Failed to import presets: ' + (error as Error).message);

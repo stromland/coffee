@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import type { BrewingSession } from '../types/coffee';
-import { saveSession } from '../utils/sessionStorage';
+import { sessionService } from '../core/services';
 import { generateSecureId } from '../shared/utils/idGenerator';
 
 interface SaveSessionFormProps {
@@ -48,7 +48,7 @@ const SaveSessionForm: React.FC<SaveSessionFormProps> = ({
       notes: notes || undefined,
     };
 
-    saveSession(session);
+    sessionService.saveSession(session);
     onSave();
     
     // Reset form
