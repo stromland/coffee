@@ -154,10 +154,9 @@ const BrewingHistory: React.FC<BrewingHistoryProps> = ({ onBrewAgain }) => {
                   )}
                 </div>
 
-                <div className="flex flex-col gap-2">
-                </div>
+                <div className="flex flex-col gap-2"></div>
               </div>
-              
+
               {/* Action buttons at bottom */}
               <div className="mt-4 pt-4 border-t border-caramel/10 flex justify-between">
                 <button
@@ -175,7 +174,7 @@ const BrewingHistory: React.FC<BrewingHistoryProps> = ({ onBrewAgain }) => {
                   </svg>
                   Delete
                 </button>
-                
+
                 {onBrewAgain && (
                   <button
                     onClick={() => handleBrewAgain(session)}
@@ -183,12 +182,7 @@ const BrewingHistory: React.FC<BrewingHistoryProps> = ({ onBrewAgain }) => {
                     aria-label="Brew again"
                     title="Brew again with these settings"
                   >
-                    <svg
-                      className="w-4 h-4"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
+                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path
                         strokeLinecap="round"
                         strokeLinejoin="round"

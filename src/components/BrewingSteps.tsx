@@ -15,6 +15,7 @@ interface BrewingStepsProps {
   creditUrl?: string;
   brewingMethodId?: string;
   onSessionSaved?: () => void;
+  onBrewModeExit?: () => void;
 }
 
 const BrewingSteps: React.FC<BrewingStepsProps> = ({
@@ -26,9 +27,15 @@ const BrewingSteps: React.FC<BrewingStepsProps> = ({
   creditUrl,
   brewingMethodId = "unknown",
   onSessionSaved,
+  onBrewModeExit,
 }) => {
   const [isBrewMode, setIsBrewMode] = useState(false);
   const [showSaveForm, setShowSaveForm] = useState(false);
+
+  const handleExitBrewMode = () => {
+    setIsBrewMode(false);
+    onBrewModeExit?.();
+  };
 
   if (steps.length === 0) {
     return null;
@@ -44,7 +51,7 @@ const BrewingSteps: React.FC<BrewingStepsProps> = ({
             coffeeAmount={coffeeAmount}
             totalBrewTime={totalBrewTime}
             methodName={methodName}
-            onExit={() => setIsBrewMode(false)}
+            onExit={handleExitBrewMode}
           />
         </div>
       </div>,
