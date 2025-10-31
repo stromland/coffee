@@ -153,8 +153,6 @@ const BrewingHistory: React.FC<BrewingHistoryProps> = ({ onBrewAgain }) => {
                     </div>
                   )}
                 </div>
-
-                <div className="flex flex-col gap-2"></div>
               </div>
 
               {/* Action buttons at bottom */}
