@@ -1,40 +1,93 @@
 # ☕ Coffee Brew Dashboard
 
-A modern dark-themed pour-over coffee brewing calculator with customizable presets. Built with React, TypeScript, and Tailwind CSS.
+A modern dark-themed pour-over coffee brewing calculator with customizable presets and brew method management. Built with React, TypeScript, and Tailwind CSS.
 
-🔗 **Live Demo**: [https://stromland.github.io/coffee/](https://stromland.github.io/coffee/)
+🔗 **Try it**: [https://stromland.github.io/coffee/](https://stromland.github.io/coffee/)
 
 ## Features
 
-- **Coffee Calculator** - Calculate water amounts based on coffee weight and ratio
-- **Multiple Brewing Methods**:
-  - **4:6 Method** (Tetsu Kasuya) - Customizable presets with 40/60 split validation
-  - **Hoffman Method** (James Hoffmann) - 1 Cup V60 technique
-  - **Single Pour** - Simple continuous pour
-- **Custom 4:6 Presets** - Create and save your own pour patterns (stored locally)
-- **Step-by-Step Guide** - Clear brewing instructions with timing and pour amounts
-- **Responsive Design** - Optimized for mobile and desktop
-- **Dark Dashboard UI** - Modern interface with clean design
+### ☕ Coffee Calculator
+
+- Calculate water amounts based on coffee weight and ratio
+- Real-time calculations with visual feedback
+- Customizable coffee-to-water ratios
+
+### 📖 Multiple Brewing Methods
+
+- **4:6 Method** (Tetsu Kasuya) - Original, Sweet, and Balanced presets with 40/60 split validation
+- **Hoffman Method** (James Hoffmann) - 1 Cup V60 technique with 5 equal pours
+- **Single Pour** - Simple continuous pour technique
+
+### 🎯 Brew Method Management
+
+- Create and edit custom brew methods
+- Manage pour patterns with percentages and timing
+- Save and delete custom methods (persisted in localStorage)
+- Full editor with validation and error handling
+
+### ⏱️ Brewing Guide
+
+- Step-by-step brewing instructions with timing
+- Interactive brew mode with timer and progress tracking
+- Cumulative water tracking per pour
+- Visual progress indicators
+
+### 📊 Brewing History
+
+- Save and review past brewing sessions
+- Track coffee amount, water amount, method, and timing
+- "Brew Again" feature to replicate previous sessions
+- Session ratings and notes
+
+### 🎨 Modern UI/UX
+
+- Dark-themed dashboard with coffee-inspired color palette
+- Responsive design optimized for mobile and desktop
+- Smooth navigation with React Router
+- Clean, intuitive interface
 
 ## Tech Stack
 
-- React 19 + TypeScript
-- Vite - Build tool
-- Tailwind CSS - Styling
-- LocalStorage - Preset persistence
+- **React 19** - UI framework
+- **TypeScript** - Type safety
+- **React Router** - Client-side routing
+- **Vite** - Build tool and dev server
+- **Tailwind CSS** - Styling
+- **LocalStorage** - Data persistence
 
 ## Quick Start
 
+### Installation
+
 ```bash
 npm install
+```
+
+### Development
+
+```bash
 npm run dev
 ```
 
-## Brewing Methods
+Visit `http://localhost:5173/coffee`
 
-**4:6 Method** - Customizable presets enforcing 40% sweetness / 60% strength split  
-**Hoffman Method** - 5 equal pours with bloom phase  
-**Single Pour** - Continuous pour technique
+### Build
+
+```bash
+npm run build
+```
+
+### Preview Production Build
+
+```bash
+npm run preview
+```
+
+## Routes
+
+- `/coffee` - Dashboard with calculator and brewing steps
+- `/coffee/methods` - Brew method management interface
+- `/coffee/history` - Brewing history and session tracking
 
 ## Credits
 
@@ -44,5 +97,3 @@ npm run dev
 ## License
 
 MIT
-
-
