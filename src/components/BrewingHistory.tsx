@@ -10,7 +10,6 @@ interface BrewingHistoryProps {
 
 const BrewingHistory: React.FC<BrewingHistoryProps> = ({ onBrewAgain }) => {
   const [sessions, setSessions] = useState<BrewingSession[]>([]);
-  const [expandedId, setExpandedId] = useState<string | null>(null);
 
   useEffect(() => {
     setSessions(sessionService.loadSessions());
@@ -147,7 +146,7 @@ const BrewingHistory: React.FC<BrewingHistoryProps> = ({ onBrewAgain }) => {
                     )}
                   </div>
 
-                  {session.notes && expandedId === session.id && (
+                  {session.notes && (
                     <div className="mt-3 p-3 bg-olive/20 rounded-lg">
                       <p className="text-xs text-caramel/60 mb-1">Tasting Notes</p>
                       <p className="text-sm text-cream whitespace-pre-wrap">{session.notes}</p>
@@ -156,66 +155,50 @@ const BrewingHistory: React.FC<BrewingHistoryProps> = ({ onBrewAgain }) => {
                 </div>
 
                 <div className="flex flex-col gap-2">
-                  {onBrewAgain && (
-                    <button
-                      onClick={() => handleBrewAgain(session)}
-                      className="text-coffee hover:text-cream transition-colors"
-                      aria-label="Brew again"
-                      title="Brew again with these settings"
-                    >
-                      <svg
-                        className="w-5 h-5"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth={2}
-                          d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"
-                        />
-                      </svg>
-                    </button>
-                  )}
-                  {session.notes && (
-                    <button
-                      onClick={() => setExpandedId(expandedId === session.id ? null : session.id)}
-                      className="text-caramel hover:text-cream transition-colors"
-                      aria-label={expandedId === session.id ? "Hide notes" : "Show notes"}
-                    >
-                      <svg
-                        className={`w-5 h-5 transition-transform ${
-                          expandedId === session.id ? "rotate-180" : ""
-                        }`}
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth={2}
-                          d="M19 9l-7 7-7-7"
-                        />
-                      </svg>
-                    </button>
-                  )}
+                </div>
+              </div>
+              
+              {/* Action buttons at bottom */}
+              <div className="mt-4 pt-4 border-t border-caramel/10 flex justify-between">
+                <button
+                  onClick={() => handleDelete(session.id)}
+                  className="text-sm text-caramel/60 hover:text-red-400 transition-colors flex items-center gap-2"
+                  aria-label="Delete session"
+                >
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+                    />
+                  </svg>
+                  Delete
+                </button>
+                
+                {onBrewAgain && (
                   <button
-                    onClick={() => handleDelete(session.id)}
-                    className="text-caramel/60 hover:text-red-400 transition-colors"
-                    aria-label="Delete session"
+                    onClick={() => handleBrewAgain(session)}
+                    className="text-sm text-coffee hover:text-cream transition-colors flex items-center gap-2"
+                    aria-label="Brew again"
+                    title="Brew again with these settings"
                   >
-                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg
+                      className="w-4 h-4"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
                       <path
                         strokeLinecap="round"
                         strokeLinejoin="round"
                         strokeWidth={2}
-                        d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+                        d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"
                       />
                     </svg>
+                    Brew Again
                   </button>
-                </div>
+                )}
               </div>
             </div>
           </div>

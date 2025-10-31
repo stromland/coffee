@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { createPortal } from "react-dom";
 import type { BrewStep } from "../types/coffee";
 import BrewMode from "./BrewMode";
+import SaveSessionForm from "./SaveSessionForm";
 import { formatTime } from "../shared/utils";
 import { Section, Button } from "../shared/components";
 
@@ -12,6 +13,8 @@ interface BrewingStepsProps {
   methodName?: string;
   creditName?: string;
   creditUrl?: string;
+  brewingMethodId?: string;
+  onSessionSaved?: () => void;
 }
 
 const BrewingSteps: React.FC<BrewingStepsProps> = ({
@@ -21,8 +24,11 @@ const BrewingSteps: React.FC<BrewingStepsProps> = ({
   methodName,
   creditName,
   creditUrl,
+  brewingMethodId = "unknown",
+  onSessionSaved,
 }) => {
   const [isBrewMode, setIsBrewMode] = useState(false);
+  const [showSaveForm, setShowSaveForm] = useState(false);
 
   if (steps.length === 0) {
     return null;
@@ -48,25 +54,67 @@ const BrewingSteps: React.FC<BrewingStepsProps> = ({
 
   const totalWater = steps.length > 0 ? steps[steps.length - 1].cumulativeWater : 0;
 
+  // Show save session form instead of steps
+  if (showSaveForm) {
+    return (
+      <SaveSessionForm
+        coffeeAmount={coffeeAmount}
+        waterAmount={totalWater}
+        brewingMethodId={brewingMethodId}
+        brewingMethodName={methodName || "Unknown Method"}
+        brewTime={totalBrewTime}
+        onSave={() => {
+          setShowSaveForm(false);
+          onSessionSaved?.();
+        }}
+        onCancel={() => setShowSaveForm(false)}
+      />
+    );
+  }
+
   return (
     <Section
       title="Brewing Steps"
       actions={
-        <Button
-          onClick={() => setIsBrewMode(true)}
-          variant="secondary"
-          size="sm"
-          className="flex items-center gap-2"
-        >
-          <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-            <path
-              fillRule="evenodd"
-              d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z"
-              clipRule="evenodd"
-            />
-          </svg>
-          Enter Brew Mode
-        </Button>
+        <div className="flex gap-2">
+          <Button
+            onClick={() => setIsBrewMode(true)}
+            variant="secondary"
+            size="sm"
+            className="flex items-center gap-2"
+          >
+            <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+              <path
+                fillRule="evenodd"
+                d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z"
+                clipRule="evenodd"
+              />
+            </svg>
+            Enter Brew Mode
+          </Button>
+          <Button
+            onClick={() => setShowSaveForm(true)}
+            variant="primary"
+            size="sm"
+            className="flex items-center gap-2"
+          >
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M7 7h10v10H7z"
+              />
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M9 3h6v5H9V3z"
+              />
+            </svg>
+            Save Session
+          </Button>
+        </div>
       }
     >
       {methodName && (
