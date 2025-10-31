@@ -23,8 +23,8 @@ const BrewMethodEditor: React.FC<BrewMethodEditorProps> = ({ method, onSave, onC
   // UI state for gram-based input
   const [coffeeAmount, setCoffeeAmount] = useState("20");
   const [waterRatio, setWaterRatio] = useState("15");
-  const [pourGrams, setPourGrams] = useState<string[]>([""]);
-  const [pourTimes, setPourTimes] = useState<string[]>([""]);
+  const [pourGrams, setPourGrams] = useState<string[]>(["0"]);
+  const [pourTimes, setPourTimes] = useState<string[]>(["0"]);
 
   useEffect(() => {
     if (method) {
@@ -422,7 +422,7 @@ const BrewMethodEditor: React.FC<BrewMethodEditorProps> = ({ method, onSave, onC
 
                       <div>
                         <label className="block text-xs text-caramel/70 mb-1">
-                          At time (seconds)
+                          Start time (seconds)
                         </label>
                         <input
                           type="text"
