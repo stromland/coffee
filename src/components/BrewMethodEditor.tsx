@@ -422,7 +422,7 @@ const BrewMethodEditor: React.FC<BrewMethodEditorProps> = ({ method, onSave, onC
 
                       <div>
                         <label className="block text-xs text-caramel/70 mb-1">
-                          Start time (seconds)
+                          Pour at time (seconds)
                         </label>
                         <input
                           type="text"
