@@ -69,7 +69,6 @@ const BrewingSteps: React.FC<BrewingStepsProps> = ({
         </Button>
       }
     >
-
       {methodName && (
         <div className="mb-5 p-4 bg-olive-dark/50 rounded-lg">
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">

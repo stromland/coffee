@@ -84,7 +84,6 @@ const BrewingHistory: React.FC<BrewingHistoryProps> = ({ onBrewAgain }) => {
         </span>
       }
     >
-
       <div className="space-y-3">
         {sessions.map((session) => (
           <div
