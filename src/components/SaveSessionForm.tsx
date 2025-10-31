@@ -11,6 +11,7 @@ interface SaveSessionFormProps {
   brewingMethodName: string;
   brewTime?: number;
   onSave: () => void;
+  onCancel?: () => void;
 }
 
 const SaveSessionForm: React.FC<SaveSessionFormProps> = ({
@@ -20,6 +21,7 @@ const SaveSessionForm: React.FC<SaveSessionFormProps> = ({
   brewingMethodName,
   brewTime,
   onSave,
+  onCancel,
 }) => {
   const [coffeeType, setCoffeeType] = useState("");
   const [waterTemperature, setWaterTemperature] = useState("");
@@ -164,9 +166,16 @@ const SaveSessionForm: React.FC<SaveSessionFormProps> = ({
         </div>
       </div>
 
-      <Button onClick={handleSave} disabled={!coffeeType.trim()} fullWidth>
-        Save Session
-      </Button>
+      <div className="flex gap-3">
+        {onCancel && (
+          <Button onClick={onCancel} variant="ghost" fullWidth>
+            Cancel
+          </Button>
+        )}
+        <Button onClick={handleSave} disabled={!coffeeType.trim()} fullWidth>
+          Save Session
+        </Button>
+      </div>
     </Card>
   );
 };

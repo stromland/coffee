@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import CoffeeCalculator from "./components/CoffeeCalculator";
 import BrewingPresets from "./components/BrewingPresets";
 import BrewingSteps from "./components/BrewingSteps";
-import SaveSessionForm from "./components/SaveSessionForm";
 import BrewingHistory from "./components/BrewingHistory";
 import BrewMethodManager from "./components/BrewMethodManager";
 import type { CoffeeSettings, BrewStep, BrewingSession } from "./types/coffee";
@@ -57,6 +56,7 @@ function App() {
 
   const handleSaveSession = () => {
     setHistoryKey((prev) => prev + 1); // Force history to refresh
+    setCurrentPage("history"); // Navigate to history page
   };
 
   const handleBrewAgain = (session: BrewingSession) => {
@@ -182,22 +182,10 @@ function App() {
                     methodName={brewingService.getBrewMethod(selectedMethodId)?.name}
                     creditName={brewingService.getBrewMethod(selectedMethodId)?.creditName}
                     creditUrl={brewingService.getBrewMethod(selectedMethodId)?.creditUrl}
+                    brewingMethodId={selectedMethodId}
+                    onSessionSaved={handleSaveSession}
                   />
                 )}
-
-                <SaveSessionForm
-                  coffeeAmount={settings.coffeeAmount}
-                  waterAmount={settings.totalWater}
-                  brewingMethodId={selectedMethodId}
-                  brewingMethodName={
-                    brewingService.getBrewMethod(selectedMethodId)?.name || selectedMethodId
-                  }
-                  brewTime={calculateTotalBrewTime(
-                    brewSteps,
-                    brewingService.getDrawdownTime(selectedMethodId)
-                  )}
-                  onSave={handleSaveSession}
-                />
               </div>
 
               <div className="hidden lg:block lg:col-span-1 lg:order-2">
