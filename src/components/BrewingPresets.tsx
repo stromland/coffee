@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useMemo } from "react";
 import { brewingService } from "../core/services";
 
 interface BrewingPresetsProps {
@@ -7,7 +7,7 @@ interface BrewingPresetsProps {
 }
 
 const BrewingPresets: React.FC<BrewingPresetsProps> = ({ selectedMethodId, onMethodChange }) => {
-  const brewMethods = brewingService.getAllBrewMethods();
+  const brewMethods = useMemo(() => brewingService.getAllBrewMethods(), []);
   const [expandedCategories, setExpandedCategories] = useState<Set<string>>(new Set());
   const [hasInitialized, setHasInitialized] = useState(false);
 

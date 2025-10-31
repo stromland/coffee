@@ -29,6 +29,9 @@ const SaveSessionForm: React.FC<SaveSessionFormProps> = ({
   const handleSave = () => {
     if (!coffeeType.trim()) return;
 
+    // Note: The brewingPreset field was removed from BrewingSession as presets
+    // are now unified with methods. Legacy sessions with brewingPreset field
+    // will continue to work as the field is simply ignored when loading.
     const session: BrewingSession = {
       id: generateSecureId("session"),
       timestamp: Date.now(),

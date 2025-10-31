@@ -99,37 +99,41 @@ const BrewMethodEditor: React.FC<BrewMethodEditorProps> = ({ method, onSave, onC
     setPours(newPours);
   };
 
-  const handleCoffeeAmountChange = (value: string) => {
-    setCoffeeAmount(value);
-    const coffee = parseFloat(value);
-    const ratio = parseFloat(waterRatio);
-
+  /**
+   * Recalculate pour grams based on coffee amount, water ratio, and current pour grams.
+   * Returns a new array of pour grams as strings.
+   */
+  const recalculatePourGrams = (
+    coffeeAmountValue: string,
+    waterRatioValue: string,
+    currentPourGrams: string[]
+  ): string[] => {
+    const coffee = parseFloat(coffeeAmountValue);
+    const ratio = parseFloat(waterRatioValue);
     if (!isNaN(coffee) && coffee > 0 && !isNaN(ratio) && ratio > 0) {
-      // Keep the same ratio, adjust water amounts
       const totalWater = coffee * ratio;
-      const gramsNumbers = pourGrams.map((g) => parseFloat(g) || 0);
+      const gramsNumbers = currentPourGrams.map((g) => parseFloat(g) || 0);
       const currentTotal = gramsNumbers.reduce((sum, g) => sum + g, 0);
       if (currentTotal > 0) {
-        const newGrams = gramsNumbers.map((g) => ((g / currentTotal) * totalWater).toFixed(1));
-        setPourGrams(newGrams);
+        return gramsNumbers.map((g) => ((g / currentTotal) * totalWater).toFixed(1));
       }
+    }
+    return currentPourGrams;
+  };
+
+  const handleCoffeeAmountChange = (value: string) => {
+    setCoffeeAmount(value);
+    const newGrams = recalculatePourGrams(value, waterRatio, pourGrams);
+    if (newGrams !== pourGrams) {
+      setPourGrams(newGrams);
     }
   };
 
   const handleWaterRatioChange = (value: string) => {
     setWaterRatio(value);
-    const ratio = parseFloat(value);
-    const coffee = parseFloat(coffeeAmount);
-
-    if (!isNaN(ratio) && ratio > 0 && !isNaN(coffee) && coffee > 0) {
-      // Adjust water amounts based on new ratio
-      const totalWater = coffee * ratio;
-      const gramsNumbers = pourGrams.map((g) => parseFloat(g) || 0);
-      const currentTotal = gramsNumbers.reduce((sum, g) => sum + g, 0);
-      if (currentTotal > 0) {
-        const newGrams = gramsNumbers.map((g) => ((g / currentTotal) * totalWater).toFixed(1));
-        setPourGrams(newGrams);
-      }
+    const newGrams = recalculatePourGrams(coffeeAmount, value, pourGrams);
+    if (newGrams !== pourGrams) {
+      setPourGrams(newGrams);
     }
   };
 
