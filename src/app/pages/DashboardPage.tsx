@@ -4,8 +4,9 @@ import BrewingPresets from "../../components/BrewingPresets";
 import BrewingSteps from "../../components/BrewingSteps";
 import { useAppContext } from "../AppContext";
 import { brewingService } from "../../core/services";
+import type { BrewStep } from "../../types/coffee";
 
-const calculateTotalBrewTime = (steps: any[], drawdownTime: number): number => {
+const calculateTotalBrewTime = (steps: BrewStep[], drawdownTime: number): number => {
   if (steps.length === 0) return 0;
   const lastStepTime = steps[steps.length - 1].timeSeconds;
   return lastStepTime + drawdownTime;
