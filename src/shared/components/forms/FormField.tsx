@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 
 export interface FormFieldProps {
   /** Label text */
@@ -28,18 +28,13 @@ export const FormField: React.FC<FormFieldProps> = ({
 }) => {
   return (
     <div className="mb-6">
-      <label
-        htmlFor={htmlFor}
-        className="block text-sm font-medium text-caramel mb-2"
-      >
+      <label htmlFor={htmlFor} className="block text-sm font-medium text-caramel mb-2">
         {label}
         {required && <span className="text-red-500 ml-1">*</span>}
       </label>
       {children}
       {error && <p className="mt-1 text-sm text-red-500">{error}</p>}
-      {helperText && !error && (
-        <p className="mt-1 text-xs text-caramel/70">{helperText}</p>
-      )}
+      {helperText && !error && <p className="mt-1 text-xs text-caramel/70">{helperText}</p>}
     </div>
   );
 };

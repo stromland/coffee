@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 
 export interface SectionProps extends React.HTMLAttributes<HTMLElement> {
   /** Section title */
@@ -19,7 +19,7 @@ export const Section: React.FC<SectionProps> = ({
   description,
   actions,
   children,
-  className = '',
+  className = "",
   ...props
 }) => {
   return (

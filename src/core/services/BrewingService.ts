@@ -1,5 +1,5 @@
-import type { BrewMethod, BrewStep } from '../../types/coffee';
-import { brewMethodService } from './BrewMethodService';
+import type { BrewMethod, BrewStep } from "../../types/coffee";
+import { brewMethodService } from "./BrewMethodService";
 
 /**
  * Brewing calculations service

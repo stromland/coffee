@@ -85,7 +85,11 @@ export const defaultBrewMethods: BrewMethod[] = [
     category: "Simple",
     drawdownTime: 120,
     pours: [
-      { percentage: 100, timeSeconds: 0, description: "Pour all water in a slow, continuous stream" },
+      {
+        percentage: 100,
+        timeSeconds: 0,
+        description: "Pour all water in a slow, continuous stream",
+      },
     ],
     isDefault: true,
     isCustom: false,

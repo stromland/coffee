@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
-import type { BrewingSession } from '../types/coffee';
-import { sessionService, brewingService } from '../core/services';
+import React, { useState, useEffect } from "react";
+import type { BrewingSession } from "../types/coffee";
+import { sessionService, brewingService } from "../core/services";
 
 interface BrewingHistoryProps {
   onBrewAgain?: (session: BrewingSession) => void;
@@ -15,7 +15,7 @@ const BrewingHistory: React.FC<BrewingHistoryProps> = ({ onBrewAgain }) => {
   }, []);
 
   const handleDelete = (sessionId: string) => {
-    if (confirm('Are you sure you want to delete this session?')) {
+    if (confirm("Are you sure you want to delete this session?")) {
       sessionService.deleteSession(sessionId);
       setSessions(sessionService.loadSessions());
     }
@@ -23,20 +23,20 @@ const BrewingHistory: React.FC<BrewingHistoryProps> = ({ onBrewAgain }) => {
 
   const formatDate = (timestamp: number): string => {
     const date = new Date(timestamp);
-    return date.toLocaleDateString('en-US', {
-      year: 'numeric',
-      month: 'short',
-      day: 'numeric',
-      hour: '2-digit',
-      minute: '2-digit',
+    return date.toLocaleDateString("en-US", {
+      year: "numeric",
+      month: "short",
+      day: "numeric",
+      hour: "2-digit",
+      minute: "2-digit",
     });
   };
 
   const formatBrewTime = (seconds?: number): string => {
-    if (!seconds) return 'N/A';
+    if (!seconds) return "N/A";
     const mins = Math.floor(seconds / 60);
     const secs = seconds % 60;
-    return `${mins}:${secs.toString().padStart(2, '0')}`;
+    return `${mins}:${secs.toString().padStart(2, "0")}`;
   };
 
   const getMethodName = (methodId: string): string => {
@@ -47,13 +47,14 @@ const BrewingHistory: React.FC<BrewingHistoryProps> = ({ onBrewAgain }) => {
   const handleBrewAgain = (session: BrewingSession) => {
     // Check if the method still exists
     const method = brewingService.getBrewMethod(session.brewingMethod);
-    
+
     if (!method) {
-      const confirmMessage = 'The brewing method used in this session no longer exists. Please select a different method.';
+      const confirmMessage =
+        "The brewing method used in this session no longer exists. Please select a different method.";
       alert(confirmMessage);
       return;
     }
-    
+
     if (onBrewAgain) {
       onBrewAgain(session);
     }
@@ -95,7 +96,7 @@ const BrewingHistory: React.FC<BrewingHistoryProps> = ({ onBrewAgain }) => {
         <div className="w-1 h-6 bg-coffee rounded-full"></div>
         <h2 className="text-xl font-bold text-cream">Brewing History</h2>
         <span className="ml-auto text-sm text-caramel/70">
-          {sessions.length} session{sessions.length !== 1 ? 's' : ''}
+          {sessions.length} session{sessions.length !== 1 ? "s" : ""}
         </span>
       </div>
 
@@ -116,7 +117,7 @@ const BrewingHistory: React.FC<BrewingHistoryProps> = ({ onBrewAgain }) => {
                           <span
                             key={i}
                             className={`text-sm ${
-                              i < session.rating! ? 'text-coffee' : 'text-caramel/20'
+                              i < session.rating! ? "text-coffee" : "text-caramel/20"
                             }`}
                           >
                             ★
@@ -126,7 +127,7 @@ const BrewingHistory: React.FC<BrewingHistoryProps> = ({ onBrewAgain }) => {
                     )}
                   </div>
                   <p className="text-xs text-caramel/70 mb-3">{formatDate(session.timestamp)}</p>
-                  
+
                   <div className="grid grid-cols-2 sm:grid-cols-3 gap-x-4 gap-y-2 text-sm">
                     <div>
                       <span className="text-caramel/60 text-xs">Method</span>
@@ -178,8 +179,18 @@ const BrewingHistory: React.FC<BrewingHistoryProps> = ({ onBrewAgain }) => {
                       aria-label="Brew again"
                       title="Brew again with these settings"
                     >
-                      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                      <svg
+                        className="w-5 h-5"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"
+                        />
                       </svg>
                     </button>
                   )}
@@ -187,11 +198,11 @@ const BrewingHistory: React.FC<BrewingHistoryProps> = ({ onBrewAgain }) => {
                     <button
                       onClick={() => setExpandedId(expandedId === session.id ? null : session.id)}
                       className="text-caramel hover:text-cream transition-colors"
-                      aria-label={expandedId === session.id ? 'Hide notes' : 'Show notes'}
+                      aria-label={expandedId === session.id ? "Hide notes" : "Show notes"}
                     >
                       <svg
                         className={`w-5 h-5 transition-transform ${
-                          expandedId === session.id ? 'rotate-180' : ''
+                          expandedId === session.id ? "rotate-180" : ""
                         }`}
                         fill="none"
                         stroke="currentColor"

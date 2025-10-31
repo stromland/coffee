@@ -36,9 +36,7 @@ export abstract class BaseRepository<T extends { id: string }> {
     } catch (error) {
       console.error(`Failed to save items to ${this.storageKey}:`, error);
       throw new Error(
-        `Failed to save data: ${
-          error instanceof Error ? error.message : "Unknown error"
-        }`
+        `Failed to save data: ${error instanceof Error ? error.message : "Unknown error"}`
       );
     }
   }
@@ -52,9 +50,7 @@ export abstract class BaseRepository<T extends { id: string }> {
     } catch (error) {
       console.error(`Failed to clear ${this.storageKey}:`, error);
       throw new Error(
-        `Failed to clear storage: ${
-          error instanceof Error ? error.message : "Unknown error"
-        }`
+        `Failed to clear storage: ${error instanceof Error ? error.message : "Unknown error"}`
       );
     }
   }

@@ -9,7 +9,7 @@ export const generateSecureId = (prefix: string): string => {
   window.crypto.getRandomValues(randomBytes);
   // Convert to hex string with consistent length (12 characters for 6 bytes)
   const randomString = Array.from(randomBytes)
-    .map(byte => byte.toString(16).padStart(2, '0'))
-    .join('');
+    .map((byte) => byte.toString(16).padStart(2, "0"))
+    .join("");
   return `${prefix}-${timestamp}-${randomString}`;
 };

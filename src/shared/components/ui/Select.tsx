@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 
 let selectIdCounter = 0;
 
@@ -19,37 +19,22 @@ export interface SelectProps extends React.SelectHTMLAttributes<HTMLSelectElemen
  * Reusable Select component with consistent styling
  */
 export const Select = React.forwardRef<HTMLSelectElement, SelectProps>(
-  (
-    {
-      label,
-      error,
-      helperText,
-      fullWidth = false,
-      options,
-      className = '',
-      id,
-      ...props
-    },
-    ref
-  ) => {
+  ({ label, error, helperText, fullWidth = false, options, className = "", id, ...props }, ref) => {
     const selectId = React.useMemo(() => id || `select-${++selectIdCounter}`, [id]);
-    
+
     const baseStyles =
-      'px-4 py-2 bg-olive-dark/50 border rounded-md text-cream focus:ring-2 focus:ring-coffee transition-colors cursor-pointer';
-    
+      "px-4 py-2 bg-olive-dark/50 border rounded-md text-cream focus:ring-2 focus:ring-coffee transition-colors cursor-pointer";
+
     const borderStyle = error
-      ? 'border-red-500 focus:border-red-500'
-      : 'border-coffee/40 focus:border-coffee';
-    
-    const widthStyle = fullWidth ? 'w-full' : '';
+      ? "border-red-500 focus:border-red-500"
+      : "border-coffee/40 focus:border-coffee";
+
+    const widthStyle = fullWidth ? "w-full" : "";
 
     return (
-      <div className={fullWidth ? 'w-full' : ''}>
+      <div className={fullWidth ? "w-full" : ""}>
         {label && (
-          <label
-            htmlFor={selectId}
-            className="block text-sm font-medium text-caramel mb-2"
-          >
+          <label htmlFor={selectId} className="block text-sm font-medium text-caramel mb-2">
             {label}
           </label>
         )}
@@ -60,24 +45,16 @@ export const Select = React.forwardRef<HTMLSelectElement, SelectProps>(
           {...props}
         >
           {options.map((option) => (
-            <option
-              key={option.value}
-              value={option.value}
-              disabled={option.disabled}
-            >
+            <option key={option.value} value={option.value} disabled={option.disabled}>
               {option.label}
             </option>
           ))}
         </select>
-        {error && (
-          <p className="mt-1 text-sm text-red-500">{error}</p>
-        )}
-        {helperText && !error && (
-          <p className="mt-1 text-xs text-caramel/70">{helperText}</p>
-        )}
+        {error && <p className="mt-1 text-sm text-red-500">{error}</p>}
+        {helperText && !error && <p className="mt-1 text-xs text-caramel/70">{helperText}</p>}
       </div>
     );
   }
 );
 
-Select.displayName = 'Select';
+Select.displayName = "Select";

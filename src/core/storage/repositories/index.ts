@@ -4,10 +4,7 @@
  */
 
 // Interfaces
-export type {
-  IBrewMethodRepository,
-  ISessionRepository,
-} from "./interfaces";
+export type { IBrewMethodRepository, ISessionRepository } from "./interfaces";
 
 // LocalStorage implementations
 export {
