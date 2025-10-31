@@ -96,7 +96,7 @@ export class ImportExportService {
             
             if (existingPreset) {
               // Generate a new ID for the imported preset
-              preset.id = `${preset.id}-imported-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
+              preset.id = this.generateImportedId(preset.id);
               preset.name = `${preset.name} (imported)`;
             }
             
@@ -186,7 +186,7 @@ export class ImportExportService {
             
             if (existingPreset) {
               // Generate a new ID for the imported preset
-              preset.id = `${preset.id}-imported-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
+              preset.id = this.generateImportedId(preset.id);
               preset.name = `${preset.name} (imported)`;
             }
             
@@ -240,7 +240,7 @@ export class ImportExportService {
       Array.isArray(p.pours) &&
       p.pours.length > 0 &&
       p.pours.every(pour => 
-        typeof pour === 'object' &&
+        pour && typeof pour === 'object' &&
         typeof pour.amount === 'number' &&
         typeof pour.timeSeconds === 'number' &&
         pour.amount > 0 &&
@@ -275,7 +275,7 @@ export class ImportExportService {
       Array.isArray(p.pours) &&
       p.pours.length > 0 &&
       p.pours.every(pour => 
-        typeof pour === 'object' &&
+        pour && typeof pour === 'object' &&
         typeof pour.percentage === 'number' &&
         typeof pour.timeSeconds === 'number' &&
         pour.percentage >= 0 &&
@@ -287,6 +287,13 @@ export class ImportExportService {
   }
 
   // ===== Private: Utility Methods =====
+
+  /**
+   * Generate a unique ID for imported presets
+   */
+  private generateImportedId(originalId: string): string {
+    return `${originalId}-imported-${Date.now()}-${Math.random().toString(36).slice(2, 11)}`;
+  }
 
   private sanitizeFilename(filename: string): string {
     return filename.replace(/[^a-z0-9-_]/gi, '-').toLowerCase();
