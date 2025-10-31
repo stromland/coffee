@@ -1,9 +1,7 @@
-import type { ICustomRecipePresetRepository } from "./interfaces/ICustomRecipePresetRepository";
-import type { IFourSixPresetRepository } from "./interfaces/IFourSixPresetRepository";
+import type { IBrewMethodRepository } from "./interfaces/IBrewMethodRepository";
 import type { ISessionRepository } from "./interfaces/ISessionRepository";
 import {
-  LocalStorageCustomRecipePresetRepository,
-  LocalStorageFourSixPresetRepository,
+  LocalStorageBrewMethodRepository,
   LocalStorageSessionRepository,
 } from "./localStorage";
 
@@ -21,18 +19,10 @@ export class RepositoryFactory {
   }
 
   /**
-   * Create a FourSix preset repository instance
-   * @returns FourSix preset repository implementation
+   * Create a brew method repository instance
+   * @returns Brew method repository implementation
    */
-  static createFourSixPresetRepository(): IFourSixPresetRepository {
-    return new LocalStorageFourSixPresetRepository();
-  }
-
-  /**
-   * Create a custom recipe preset repository instance
-   * @returns Custom recipe preset repository implementation
-   */
-  static createCustomRecipePresetRepository(): ICustomRecipePresetRepository {
-    return new LocalStorageCustomRecipePresetRepository();
+  static createBrewMethodRepository(): IBrewMethodRepository {
+    return new LocalStorageBrewMethodRepository();
   }
 }

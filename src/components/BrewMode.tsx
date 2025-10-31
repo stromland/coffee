@@ -6,7 +6,6 @@ interface BrewModeProps {
   coffeeAmount: number;
   totalBrewTime: number;
   methodName?: string;
-  presetName?: string;
   onExit: () => void;
 }
 
@@ -21,7 +20,6 @@ const BrewMode: React.FC<BrewModeProps> = ({
   coffeeAmount,
   totalBrewTime,
   methodName,
-  presetName,
   onExit,
 }) => {
   const [currentStepIndex, setCurrentStepIndex] = useState(0);
@@ -125,13 +123,6 @@ const BrewMode: React.FC<BrewModeProps> = ({
         <p className="text-xs text-caramel text-center">
           <span className="font-semibold text-cream">Method:</span>{" "}
           {methodName || "Unknown"}
-          {presetName && (
-            <>
-              {" | "}
-              <span className="font-semibold text-cream">Preset:</span>{" "}
-              {presetName}
-            </>
-          )}
         </p>
       </div>
 
