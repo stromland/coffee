@@ -1,18 +1,24 @@
-import type { FourSixPreset, CustomRecipePreset } from '../../types/coffee';
-import { FourSixPresetRepository, CustomRecipePresetRepository } from '../storage/repositories';
-import { localStorageAdapter } from '../storage/LocalStorageAdapter';
+import type { CustomRecipePreset, FourSixPreset } from "../../types/coffee";
+import type {
+  ICustomRecipePresetRepository,
+  IFourSixPresetRepository,
+} from "../storage/repositories/interfaces";
+import { RepositoryFactory } from "../storage/repositories/RepositoryFactory";
 
 /**
  * Unified preset management service
  * Consolidates logic from presetStorage.ts and customRecipeStorage.ts
  */
 export class PresetService {
-  private fourSixRepo: FourSixPresetRepository;
-  private customRecipeRepo: CustomRecipePresetRepository;
+  private fourSixRepo: IFourSixPresetRepository;
+  private customRecipeRepo: ICustomRecipePresetRepository;
 
-  constructor() {
-    this.fourSixRepo = new FourSixPresetRepository(localStorageAdapter);
-    this.customRecipeRepo = new CustomRecipePresetRepository(localStorageAdapter);
+  constructor(
+    fourSixRepo: IFourSixPresetRepository,
+    customRecipeRepo: ICustomRecipePresetRepository
+  ) {
+    this.fourSixRepo = fourSixRepo;
+    this.customRecipeRepo = customRecipeRepo;
   }
 
   // ===== FourSix Preset Methods =====
@@ -80,19 +86,30 @@ export class PresetService {
   /**
    * Get any preset by ID (searches both FourSix and Custom Recipe)
    */
-  getPresetById(presetId: string): FourSixPreset | CustomRecipePreset | undefined {
-    return this.getFourSixPresetById(presetId) || this.getCustomRecipePresetById(presetId);
+  getPresetById(
+    presetId: string
+  ): FourSixPreset | CustomRecipePreset | undefined {
+    return (
+      this.getFourSixPresetById(presetId) ||
+      this.getCustomRecipePresetById(presetId)
+    );
   }
 
   /**
    * Check if a preset exists
    */
   presetExists(presetId: string): boolean {
-    return this.fourSixRepo.exists(presetId) || this.customRecipeRepo.exists(presetId);
+    return (
+      this.fourSixRepo.exists(presetId) ||
+      this.customRecipeRepo.exists(presetId)
+    );
   }
 }
 
 /**
  * Singleton instance of PresetService
  */
-export const presetService = new PresetService();
+export const presetService = new PresetService(
+  RepositoryFactory.createFourSixPresetRepository(),
+  RepositoryFactory.createCustomRecipePresetRepository()
+);
