@@ -1,9 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import type { BrewingSession } from '../types/coffee';
-import { loadSessions, deleteSession } from '../utils/sessionStorage';
-import { getBrewMethod } from '../utils/coffeeCalculations';
-import { getPresetById } from '../utils/presetStorage';
-import { getCustomPresetById } from '../utils/customRecipeStorage';
+import { sessionService, brewingService, presetService } from '../core/services';
 
 interface BrewingHistoryProps {
   onBrewAgain?: (session: BrewingSession) => void;
@@ -14,13 +11,13 @@ const BrewingHistory: React.FC<BrewingHistoryProps> = ({ onBrewAgain }) => {
   const [expandedId, setExpandedId] = useState<string | null>(null);
 
   useEffect(() => {
-    setSessions(loadSessions());
+    setSessions(sessionService.loadSessions());
   }, []);
 
   const handleDelete = (sessionId: string) => {
     if (confirm('Are you sure you want to delete this session?')) {
-      deleteSession(sessionId);
-      setSessions(loadSessions());
+      sessionService.deleteSession(sessionId);
+      setSessions(sessionService.loadSessions());
     }
   };
 
@@ -43,13 +40,13 @@ const BrewingHistory: React.FC<BrewingHistoryProps> = ({ onBrewAgain }) => {
   };
 
   const getMethodName = (methodId: string): string => {
-    const method = getBrewMethod(methodId);
+    const method = brewingService.getBrewMethod(methodId);
     return method?.name || methodId;
   };
 
   const getPresetName = (presetId?: string): string | undefined => {
     if (!presetId) return undefined;
-    const preset = getPresetById(presetId);
+    const preset = presetService.getFourSixPresetById(presetId);
     return preset?.name;
   };
 
@@ -57,9 +54,9 @@ const BrewingHistory: React.FC<BrewingHistoryProps> = ({ onBrewAgain }) => {
     // Check if the preset still exists
     if (session.brewingPreset) {
       const preset = session.brewingMethod === '4-6' 
-        ? getPresetById(session.brewingPreset)
+        ? presetService.getFourSixPresetById(session.brewingPreset)
         : session.brewingMethod === 'custom-recipe'
-        ? getCustomPresetById(session.brewingPreset)
+        ? presetService.getCustomRecipePresetById(session.brewingPreset)
         : undefined;
       
       if (!preset) {
