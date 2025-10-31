@@ -1,0 +1,45 @@
+{
+  "name": "Coffee Brew Dashboard",
+  "short_name": "Coffee Brew",
+  "description": "Your digital barista for coffee brewing",
+  "start_url": "/coffee/",
+  "scope": "/coffee/",
+  "display": "standalone",
+  "theme_color": "#2a1f1a",
+  "background_color": "#1a1410",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/coffee/coffee-icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/coffee/coffee-icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/coffee/coffee-icon-192-maskable.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "/coffee/coffee-icon-512-maskable.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "/coffee/screenshot-540x720.png",
+      "sizes": "540x720",
+      "type": "image/png",
+      "form_factor": "narrow"
+    }
+  ]
+}
