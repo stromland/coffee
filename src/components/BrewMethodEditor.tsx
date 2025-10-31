@@ -15,7 +15,7 @@ const BrewMethodEditor: React.FC<BrewMethodEditorProps> = ({ method, onSave, onC
   const [category, setCategory] = useState("Custom");
   const [drawdownTime, setDrawdownTime] = useState(60);
   const [pours, setPours] = useState<Pour[]>([
-    { percentage: 100, timeSeconds: 0, description: "" },
+    { percentage: 0, atTimeSeconds: 0, description: "" },
   ]);
   const [errors, setErrors] = useState<string[]>([]);
   const [showErrorModal, setShowErrorModal] = useState(false);
@@ -23,8 +23,8 @@ const BrewMethodEditor: React.FC<BrewMethodEditorProps> = ({ method, onSave, onC
   // UI state for gram-based input
   const [coffeeAmount, setCoffeeAmount] = useState("20");
   const [waterRatio, setWaterRatio] = useState("15");
-  const [pourGrams, setPourGrams] = useState<string[]>(["300"]);
-  const [pourTimes, setPourTimes] = useState<string[]>(["0"]);
+  const [pourGrams, setPourGrams] = useState<string[]>([""]);
+  const [pourTimes, setPourTimes] = useState<string[]>([""]);
 
   useEffect(() => {
     if (method) {
@@ -40,7 +40,7 @@ const BrewMethodEditor: React.FC<BrewMethodEditorProps> = ({ method, onSave, onC
       const defaultRatio = 15;
       const totalWater = defaultCoffee * defaultRatio;
       const grams = method.pours.map((p) => ((p.percentage / 100) * totalWater).toFixed(0));
-      const times = method.pours.map((p) => p.timeSeconds.toString());
+      const times = method.pours.map((p) => p.atTimeSeconds.toString());
 
       setCoffeeAmount(defaultCoffee.toString());
       setWaterRatio(defaultRatio.toString());
@@ -51,8 +51,8 @@ const BrewMethodEditor: React.FC<BrewMethodEditorProps> = ({ method, onSave, onC
 
   const handleAddPour = () => {
     const lastPour = pours[pours.length - 1];
-    const newTime = lastPour ? lastPour.timeSeconds + 30 : 0;
-    setPours([...pours, { percentage: 0, timeSeconds: newTime, description: "" }]);
+    const newTime = lastPour ? lastPour.atTimeSeconds + 30 : 0;
+    setPours([...pours, { percentage: 0, atTimeSeconds: newTime, description: "" }]);
     setPourGrams([...pourGrams, "0"]);
     setPourTimes([...pourTimes, newTime.toString()]);
   };
@@ -94,7 +94,7 @@ const BrewMethodEditor: React.FC<BrewMethodEditorProps> = ({ method, onSave, onC
     const newPours = [...pours];
     newPours[index] = {
       ...newPours[index],
-      timeSeconds: parseFloat(value) || 0,
+      atTimeSeconds: parseFloat(value) || 0,
     };
     setPours(newPours);
   };
@@ -172,14 +172,14 @@ const BrewMethodEditor: React.FC<BrewMethodEditorProps> = ({ method, onSave, onC
       if (pour.percentage > 100) {
         newErrors.push(`Pour ${i + 1}: percentage cannot exceed 100`);
       }
-      if (pour.timeSeconds < 0) {
+      if (pour.atTimeSeconds < 0) {
         newErrors.push(`Pour ${i + 1}: time cannot be negative`);
       }
     });
 
     // Check times are in ascending order
     for (let i = 1; i < pours.length; i++) {
-      if (pours[i].timeSeconds < pours[i - 1].timeSeconds) {
+      if (pours[i].atTimeSeconds < pours[i - 1].atTimeSeconds) {
         newErrors.push("Pour times must be in ascending order");
         break;
       }
@@ -207,7 +207,7 @@ const BrewMethodEditor: React.FC<BrewMethodEditorProps> = ({ method, onSave, onC
       drawdownTime,
       pours: pours.map((p) => ({
         percentage: p.percentage,
-        timeSeconds: p.timeSeconds,
+        atTimeSeconds: p.atTimeSeconds,
         description: p.description?.trim() || undefined,
       })),
       isDefault: false,
@@ -224,7 +224,7 @@ const BrewMethodEditor: React.FC<BrewMethodEditorProps> = ({ method, onSave, onC
   const expectedTotalWater = coffee * ratio;
   const totalPercentage = pours.reduce((sum, p) => sum + p.percentage, 0);
   const totalBrewTime =
-    pours.length > 0 ? Math.max(...pours.map((p) => p.timeSeconds)) + drawdownTime : drawdownTime;
+    pours.length > 0 ? Math.max(...pours.map((p) => p.atTimeSeconds)) + drawdownTime : drawdownTime;
 
   return (
     <div className="bg-olive/20 backdrop-blur-sm rounded-lg p-6 shadow-2xl">
@@ -262,7 +262,7 @@ const BrewMethodEditor: React.FC<BrewMethodEditorProps> = ({ method, onSave, onC
             />
           </div>
 
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
               <label className="block text-sm font-medium text-cream mb-2">Category</label>
               <input
@@ -291,7 +291,7 @@ const BrewMethodEditor: React.FC<BrewMethodEditorProps> = ({ method, onSave, onC
 
         {/* Coffee and Water Ratio */}
         <div className="p-4 bg-olive-dark/30 rounded-lg border border-coffee/30">
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
               <label className="block text-sm font-medium text-cream mb-2">
                 Coffee Amount (grams)
@@ -324,7 +324,7 @@ const BrewMethodEditor: React.FC<BrewMethodEditorProps> = ({ method, onSave, onC
 
         {/* Summary */}
         <div className="p-4 bg-olive-dark/30 rounded-lg border border-coffee/30">
-          <div className="grid grid-cols-4 gap-4 text-sm">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 text-sm">
             <div>
               <span className="text-caramel/70">Total Water:</span>
               <span
@@ -333,16 +333,6 @@ const BrewMethodEditor: React.FC<BrewMethodEditorProps> = ({ method, onSave, onC
                 }`}
               >
                 {totalWaterGrams.toFixed(0)}g / {expectedTotalWater.toFixed(0)}g
-              </span>
-            </div>
-            <div>
-              <span className="text-caramel/70">Total %:</span>
-              <span
-                className={`ml-2 font-semibold ${
-                  totalPercentage > 100 ? "text-red-400" : "text-cream"
-                }`}
-              >
-                {totalPercentage.toFixed(1)}%
               </span>
             </div>
             <div>
@@ -408,55 +398,59 @@ const BrewMethodEditor: React.FC<BrewMethodEditorProps> = ({ method, onSave, onC
           <div className="space-y-3">
             {pours.map((pour, index) => (
               <div key={index} className="p-4 bg-olive-dark/30 rounded-lg border border-caramel/20">
-                <div className="flex items-start gap-3">
+                <div className="flex flex-col sm:flex-row items-start gap-3">
                   <div className="flex-shrink-0 w-8 h-8 rounded-full bg-coffee/20 flex items-center justify-center text-cream font-semibold text-sm">
                     {index + 1}
                   </div>
 
-                  <div className="flex-1 grid grid-cols-3 gap-3">
-                    <div>
-                      <label className="block text-xs text-caramel/70 mb-1">Water (grams)</label>
-                      <input
-                        type="text"
-                        inputMode="decimal"
-                        value={pourGrams[index]}
-                        onChange={(e) => handlePourGramsChange(index, e.target.value)}
-                        placeholder="0"
-                        className="w-full px-3 py-2 bg-olive-dark/50 border border-caramel/30 rounded text-cream text-sm focus:outline-none focus:border-coffee"
-                      />
-                      <span className="text-xs text-caramel/50 mt-1 block">
-                        {pour.percentage.toFixed(1)}%
-                      </span>
-                    </div>
+                  <div className="flex-1 w-full">
+                    <div className="grid grid-cols-1 gap-3">
+                      <div>
+                        <label className="block text-xs text-caramel/70 mb-1">Water (grams)</label>
+                        <input
+                          type="text"
+                          inputMode="decimal"
+                          value={pourGrams[index]}
+                          onChange={(e) => handlePourGramsChange(index, e.target.value)}
+                          placeholder="0"
+                          className="w-full px-3 py-2 bg-olive-dark/50 border border-caramel/30 rounded text-cream text-sm focus:outline-none focus:border-coffee"
+                        />
+                        <span className="text-xs text-caramel/50 mt-1 block">
+                          {pour.percentage.toFixed(1)}%
+                        </span>
+                      </div>
 
-                    <div>
-                      <label className="block text-xs text-caramel/70 mb-1">Time (seconds)</label>
-                      <input
-                        type="text"
-                        inputMode="decimal"
-                        value={pourTimes[index]}
-                        onChange={(e) => handlePourTimeChange(index, e.target.value)}
-                        placeholder="0"
-                        className="w-full px-3 py-2 bg-olive-dark/50 border border-caramel/30 rounded text-cream text-sm focus:outline-none focus:border-coffee"
-                      />
-                    </div>
+                      <div>
+                        <label className="block text-xs text-caramel/70 mb-1">
+                          At time (seconds)
+                        </label>
+                        <input
+                          type="text"
+                          inputMode="decimal"
+                          value={pourTimes[index]}
+                          onChange={(e) => handlePourTimeChange(index, e.target.value)}
+                          placeholder="0"
+                          className="w-full px-3 py-2 bg-olive-dark/50 border border-caramel/30 rounded text-cream text-sm focus:outline-none focus:border-coffee"
+                        />
+                      </div>
 
-                    <div>
-                      <label className="block text-xs text-caramel/70 mb-1">Description</label>
-                      <input
-                        type="text"
-                        value={pour.description || ""}
-                        onChange={(e) => handlePourChange(index, "description", e.target.value)}
-                        placeholder="Optional"
-                        className="w-full px-3 py-2 bg-olive-dark/50 border border-caramel/30 rounded text-cream text-sm placeholder-caramel/50 focus:outline-none focus:border-coffee"
-                      />
+                      <div>
+                        <label className="block text-xs text-caramel/70 mb-1">Description</label>
+                        <input
+                          type="text"
+                          value={pour.description || ""}
+                          onChange={(e) => handlePourChange(index, "description", e.target.value)}
+                          placeholder="Optional"
+                          className="w-full px-3 py-2 bg-olive-dark/50 border border-caramel/30 rounded text-cream text-sm placeholder-caramel/50 focus:outline-none focus:border-coffee"
+                        />
+                      </div>
                     </div>
                   </div>
 
                   <button
                     onClick={() => handleRemovePour(index)}
                     disabled={pours.length <= 1}
-                    className="flex-shrink-0 p-2 text-red-400 hover:text-red-300 hover:bg-red-900/20 rounded disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
+                    className="flex-shrink-0 p-2 text-red-400 hover:text-red-300 hover:bg-red-900/20 rounded disabled:opacity-30 disabled:cursor-not-allowed transition-colors sm:self-start"
                     title="Remove pour"
                   >
                     <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">

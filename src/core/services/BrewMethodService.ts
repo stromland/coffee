@@ -122,7 +122,7 @@ export class BrewMethodService {
         stepNumber: index + 1,
         waterAmount,
         cumulativeWater,
-        timeSeconds: pour.timeSeconds,
+        timeSeconds: pour.atTimeSeconds,
         description: pour.description || `Pour ${index + 1}`,
       };
     });
@@ -140,7 +140,7 @@ export class BrewMethodService {
       throw new Error(`Method not found: ${methodId}`);
     }
 
-    const lastPourTime = Math.max(...method.pours.map((p) => p.timeSeconds));
+    const lastPourTime = Math.max(...method.pours.map((p) => p.atTimeSeconds));
     return lastPourTime + method.drawdownTime;
   }
 
@@ -176,14 +176,14 @@ export class BrewMethodService {
         throw new Error(`Pour ${index + 1}: percentage must be between 0 and 100`);
       }
 
-      if (pour.timeSeconds < 0) {
+      if (pour.atTimeSeconds < 0) {
         throw new Error(`Pour ${index + 1}: time cannot be negative`);
       }
     });
 
     // Validate times are in ascending order
     for (let i = 1; i < method.pours.length; i++) {
-      if (method.pours[i].timeSeconds < method.pours[i - 1].timeSeconds) {
+      if (method.pours[i].atTimeSeconds < method.pours[i - 1].atTimeSeconds) {
         throw new Error(`Pour times must be in ascending order`);
       }
     }
