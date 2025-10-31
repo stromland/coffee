@@ -3,8 +3,8 @@ import React from "react";
 let inputIdCounter = 0;
 
 export interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
-  /** Label text */
-  label?: string;
+  /** Label text or element */
+  label?: React.ReactNode;
   /** Error message */
   error?: string;
   /** Helper text */

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import type { BrewStep } from "../types/coffee";
+import { formatTime } from "../shared/utils";
 
 interface BrewModeProps {
   steps: BrewStep[];
@@ -8,12 +9,6 @@ interface BrewModeProps {
   methodName?: string;
   onExit: () => void;
 }
-
-const formatTime = (seconds: number): string => {
-  const mins = Math.floor(seconds / 60);
-  const secs = seconds % 60;
-  return `${mins}:${secs.toString().padStart(2, "0")}`;
-};
 
 const BrewMode: React.FC<BrewModeProps> = ({
   steps,

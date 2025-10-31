@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import type { BrewingSession } from "../types/coffee";
 import { sessionService, brewingService } from "../core/services";
+import { formatDate, formatTime } from "../shared/utils";
+import { Section } from "../shared/components";
 
 interface BrewingHistoryProps {
   onBrewAgain?: (session: BrewingSession) => void;
@@ -21,22 +23,9 @@ const BrewingHistory: React.FC<BrewingHistoryProps> = ({ onBrewAgain }) => {
     }
   };
 
-  const formatDate = (timestamp: number): string => {
-    const date = new Date(timestamp);
-    return date.toLocaleDateString("en-US", {
-      year: "numeric",
-      month: "short",
-      day: "numeric",
-      hour: "2-digit",
-      minute: "2-digit",
-    });
-  };
-
   const formatBrewTime = (seconds?: number): string => {
     if (!seconds) return "N/A";
-    const mins = Math.floor(seconds / 60);
-    const secs = seconds % 60;
-    return `${mins}:${secs.toString().padStart(2, "0")}`;
+    return formatTime(seconds);
   };
 
   const getMethodName = (methodId: string): string => {
@@ -62,11 +51,7 @@ const BrewingHistory: React.FC<BrewingHistoryProps> = ({ onBrewAgain }) => {
 
   if (sessions.length === 0) {
     return (
-      <div className="bg-olive/20 backdrop-blur-sm rounded-lg p-6 shadow-2xl">
-        <div className="flex items-center gap-2 mb-6">
-          <div className="w-1 h-6 bg-coffee rounded-full"></div>
-          <h2 className="text-xl font-bold text-cream">Brewing History</h2>
-        </div>
+      <Section title="Brewing History">
         <div className="text-center py-12">
           <svg
             className="w-16 h-16 text-caramel/30 mx-auto mb-4"
@@ -86,19 +71,19 @@ const BrewingHistory: React.FC<BrewingHistoryProps> = ({ onBrewAgain }) => {
             Save your first brewing session to start tracking your coffee journey
           </p>
         </div>
-      </div>
+      </Section>
     );
   }
 
   return (
-    <div className="bg-olive/20 backdrop-blur-sm rounded-lg p-6 shadow-2xl">
-      <div className="flex items-center gap-2 mb-6">
-        <div className="w-1 h-6 bg-coffee rounded-full"></div>
-        <h2 className="text-xl font-bold text-cream">Brewing History</h2>
-        <span className="ml-auto text-sm text-caramel/70">
+    <Section
+      title="Brewing History"
+      actions={
+        <span className="text-sm text-caramel/70">
           {sessions.length} session{sessions.length !== 1 ? "s" : ""}
         </span>
-      </div>
+      }
+    >
 
       <div className="space-y-3">
         {sessions.map((session) => (
@@ -237,7 +222,7 @@ const BrewingHistory: React.FC<BrewingHistoryProps> = ({ onBrewAgain }) => {
           </div>
         ))}
       </div>
-    </div>
+    </Section>
   );
 };
 
