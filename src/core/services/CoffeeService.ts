@@ -1,5 +1,6 @@
 import type { Coffee } from "../../types/coffee";
 import { RepositoryFactory } from "../storage/repositories/RepositoryFactory";
+import { generateSecureId } from "../../shared/utils/idGenerator";
 
 export class CoffeeService {
   private repository = RepositoryFactory.createCoffeeRepository();
@@ -38,7 +39,7 @@ export class CoffeeService {
   addCoffee(coffee: Omit<Coffee, "id">): Coffee {
     const newCoffee: Coffee = {
       ...coffee,
-      id: `coffee-${Date.now()}-${Math.random().toString(36).slice(2, 9)}`,
+      id: generateSecureId('coffee'),
     };
     this.repository.save(newCoffee);
     return newCoffee;
