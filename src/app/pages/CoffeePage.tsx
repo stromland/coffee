@@ -207,7 +207,7 @@ const CoffeeCard: React.FC<CoffeeCardProps> = ({ coffee, onEdit, onDelete, onDup
               {coffee.roast.charAt(0).toUpperCase() + coffee.roast.slice(1)}
             </span>
             <span className="text-xs px-2 py-1 rounded border bg-blue-900/20 text-blue-100 border-blue-900/30">
-              {coffee.type === "beans" ? "Beans" : "Grinded"}
+              {coffee.type === "beans" ? "Beans" : "Ground"}
             </span>
           </div>
         </div>
