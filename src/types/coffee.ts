@@ -47,7 +47,7 @@ export interface BrewingSession {
 }
 
 export type CoffeeRoast = "light" | "medium" | "dark";
-export type CoffeeType = "beans" | "grinded";
+export type CoffeeType = "beans" | "ground";
 
 export interface Coffee {
   id: string;
