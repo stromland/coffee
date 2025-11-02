@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import type { BrewingSession } from "../types/coffee";
-import { sessionService } from "../core/services";
+import { sessionService, coffeeService } from "../core/services";
 import { generateSecureId } from "../shared/utils/idGenerator";
 import { Card, Input, Button } from "../shared/components/ui";
 
@@ -10,6 +10,8 @@ interface SaveSessionFormProps {
   brewingMethodId: string;
   brewingMethodName: string;
   brewTime?: number;
+  waterTemperature?: number | null;
+  selectedCoffeeId?: string | null;
   onSave: () => void;
   onCancel?: () => void;
 }
@@ -20,25 +22,43 @@ const SaveSessionForm: React.FC<SaveSessionFormProps> = ({
   brewingMethodId,
   brewingMethodName,
   brewTime,
+  waterTemperature: initialWaterTemperature,
+  selectedCoffeeId,
   onSave,
   onCancel,
 }) => {
   const [coffeeType, setCoffeeType] = useState("");
-  const [waterTemperature, setWaterTemperature] = useState("");
+  const [waterTemperature, setWaterTemperature] = useState(
+    initialWaterTemperature?.toString() || ""
+  );
   const [grindSize, setGrindSize] = useState("");
   const [rating, setRating] = useState<number | undefined>(undefined);
   const [notes, setNotes] = useState("");
+  const [ratingTouched, setRatingTouched] = useState(false);
+
+  // Get coffee name if selected
+  let selectedCoffeeName = "";
+  if (selectedCoffeeId) {
+    const coffee = coffeeService.getCoffee(selectedCoffeeId);
+    if (coffee) {
+      selectedCoffeeName = `${coffee.brand} - ${coffee.name}`;
+    }
+  }
 
   const handleSave = () => {
-    if (!coffeeType.trim()) return;
+    if (!selectedCoffeeId && !coffeeType.trim()) return;
+    if (!rating) {
+      setRatingTouched(true);
+      return;
+    }
 
-    // Note: The brewingPreset field was removed from BrewingSession as presets
-    // are now unified with methods. Legacy sessions with brewingPreset field
-    // will continue to work as the field is simply ignored when loading.
+    const coffeeName = selectedCoffeeName || coffeeType;
+
     const session: BrewingSession = {
       id: generateSecureId("session"),
       timestamp: Date.now(),
-      coffeeType: coffeeType || "Unknown",
+      coffeeType: coffeeName || "Unknown",
+      coffeeId: selectedCoffeeId || undefined,
       brewingMethod: brewingMethodId,
       coffeeAmount,
       waterAmount,
@@ -57,6 +77,7 @@ const SaveSessionForm: React.FC<SaveSessionFormProps> = ({
     setWaterTemperature("");
     setGrindSize("");
     setRating(undefined);
+    setRatingTouched(false);
     setNotes("");
   };
 
@@ -68,12 +89,22 @@ const SaveSessionForm: React.FC<SaveSessionFormProps> = ({
           <p className="text-sm text-caramel mb-2">
             <span className="font-semibold text-cream">Method:</span> {brewingMethodName}
           </p>
+          {selectedCoffeeName && (
+            <p className="text-sm text-caramel mb-2">
+              <span className="font-semibold text-cream">Coffee Type:</span> {selectedCoffeeName}
+            </p>
+          )}
           <p className="text-sm text-caramel mb-2">
             <span className="font-semibold text-cream">Coffee:</span> {coffeeAmount}g
           </p>
           <p className="text-sm text-caramel mb-2">
             <span className="font-semibold text-cream">Water:</span> {waterAmount}g
           </p>
+          {waterTemperature && (
+            <p className="text-sm text-caramel mb-2">
+              <span className="font-semibold text-cream">Temperature:</span> {waterTemperature}°C
+            </p>
+          )}
           {brewTime && (
             <p className="text-sm text-caramel">
               <span className="font-semibold text-cream">Brew Time:</span>{" "}
@@ -82,36 +113,40 @@ const SaveSessionForm: React.FC<SaveSessionFormProps> = ({
           )}
         </div>
 
-        <Input
-          id="coffee-type"
-          type="text"
-          value={coffeeType}
-          onChange={(e) => setCoffeeType(e.target.value)}
-          label={
-            <>
-              Coffee Type / Beans <span className="text-coffee">*</span>
-            </>
-          }
-          placeholder="e.g., Ethiopian Yirgacheffe"
-          fullWidth
-        />
+        {!selectedCoffeeId && (
+          <Input
+            id="coffee-type"
+            type="text"
+            value={coffeeType}
+            onChange={(e) => setCoffeeType(e.target.value)}
+            label={
+              <>
+                Coffee Type / Beans <span className="text-coffee">*</span>
+              </>
+            }
+            placeholder="e.g., Ethiopian Yirgacheffe"
+            fullWidth
+          />
+        )}
 
-        <Input
-          id="water-temp"
-          type="number"
-          min="0"
-          max="100"
-          step="0.5"
-          value={waterTemperature}
-          onChange={(e) => setWaterTemperature(e.target.value)}
-          label={
-            <>
-              Water Temperature (°C) <span className="text-caramel/50 text-xs">- optional</span>
-            </>
-          }
-          placeholder="e.g., 92"
-          fullWidth
-        />
+        {!initialWaterTemperature && (
+          <Input
+            id="water-temp"
+            type="number"
+            min="0"
+            max="100"
+            step="0.5"
+            value={waterTemperature}
+            onChange={(e) => setWaterTemperature(e.target.value)}
+            label={
+              <>
+                Water Temperature (°C) <span className="text-caramel/50 text-xs">- optional</span>
+              </>
+            }
+            placeholder="e.g., 92"
+            fullWidth
+          />
+        )}
 
         <Input
           id="grind-size"
@@ -127,17 +162,20 @@ const SaveSessionForm: React.FC<SaveSessionFormProps> = ({
           fullWidth
         />
 
-        {/* Rating - Optional */}
+        {/* Rating - Required */}
         <div>
           <label className="block text-sm font-medium text-caramel mb-2">
-            Rating <span className="text-caramel/50 text-xs">- optional</span>
+            Rating <span className="text-coffee">*</span>
           </label>
           <div className="flex gap-2">
             {[1, 2, 3, 4, 5].map((value) => (
               <button
                 key={value}
                 type="button"
-                onClick={() => setRating(rating === value ? undefined : value)}
+                onClick={() => {
+                  setRating(value);
+                  setRatingTouched(true);
+                }}
                 className={`w-12 h-12 rounded-lg border-2 transition-all ${
                   rating && rating >= value
                     ? "border-coffee bg-coffee/20 text-coffee"
@@ -148,6 +186,9 @@ const SaveSessionForm: React.FC<SaveSessionFormProps> = ({
               </button>
             ))}
           </div>
+          {ratingTouched && !rating && (
+            <p className="text-red-400 text-xs mt-1">Please select a rating</p>
+          )}
         </div>
 
         {/* Notes - Optional */}
@@ -172,7 +213,7 @@ const SaveSessionForm: React.FC<SaveSessionFormProps> = ({
             Cancel
           </Button>
         )}
-        <Button onClick={handleSave} disabled={!coffeeType.trim()} fullWidth>
+        <Button onClick={handleSave} disabled={(!selectedCoffeeId && !coffeeType.trim()) || !rating} fullWidth>
           Save Session
         </Button>
       </div>

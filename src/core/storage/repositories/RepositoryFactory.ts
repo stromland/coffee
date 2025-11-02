@@ -1,6 +1,11 @@
 import type { IBrewMethodRepository } from "./interfaces/IBrewMethodRepository";
 import type { ISessionRepository } from "./interfaces/ISessionRepository";
-import { LocalStorageBrewMethodRepository, LocalStorageSessionRepository } from "./localStorage";
+import type { ICoffeeRepository } from "./interfaces/ICoffeeRepository";
+import {
+  LocalStorageBrewMethodRepository,
+  LocalStorageSessionRepository,
+  LocalStorageCoffeeRepository,
+} from "./localStorage";
 
 /**
  * Factory for creating repository instances
@@ -21,5 +26,13 @@ export class RepositoryFactory {
    */
   static createBrewMethodRepository(): IBrewMethodRepository {
     return new LocalStorageBrewMethodRepository();
+  }
+
+  /**
+   * Create a coffee repository instance
+   * @returns Coffee repository implementation
+   */
+  static createCoffeeRepository(): ICoffeeRepository {
+    return new LocalStorageCoffeeRepository();
   }
 }

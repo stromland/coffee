@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import type { BrewingSession } from "../types/coffee";
-import { sessionService, brewingService } from "../core/services";
+import { sessionService, brewingService, coffeeService } from "../core/services";
 import { formatDate, formatTime } from "../shared/utils";
 import { Section } from "../shared/components";
 
@@ -30,6 +30,23 @@ const BrewingHistory: React.FC<BrewingHistoryProps> = ({ onBrewAgain }) => {
   const getMethodName = (methodId: string): string => {
     const method = brewingService.getBrewMethod(methodId);
     return method?.name || methodId;
+  };
+
+  const getCoffeeName = (session: BrewingSession): string => {
+    if (session.coffeeId) {
+      const coffee = coffeeService.getCoffee(session.coffeeId);
+      if (coffee) {
+        return `${coffee.brand} - ${coffee.name}`;
+      }
+    }
+    return session.coffeeType;
+  };
+
+  const getCoffeeDetails = (session: BrewingSession) => {
+    if (session.coffeeId) {
+      return coffeeService.getCoffee(session.coffeeId);
+    }
+    return null;
   };
 
   const handleBrewAgain = (session: BrewingSession) => {
@@ -93,7 +110,17 @@ const BrewingHistory: React.FC<BrewingHistoryProps> = ({ onBrewAgain }) => {
               <div className="flex items-start justify-between gap-4">
                 <div className="flex-1">
                   <div className="flex items-center gap-2 mb-2">
-                    <h3 className="font-bold text-cream text-base">{session.coffeeType}</h3>
+                    <h3 className="font-bold text-cream text-base">{getCoffeeName(session)}</h3>
+                    {getCoffeeDetails(session) && (
+                      <div className="flex items-center gap-1.5">
+                        <span className="px-2 py-0.5 text-xs rounded-full bg-coffee/20 text-coffee border border-coffee/40 capitalize">
+                          {getCoffeeDetails(session)!.roast}
+                        </span>
+                        <span className="px-2 py-0.5 text-xs rounded-full bg-olive/30 text-caramel border border-caramel/40 capitalize">
+                          {getCoffeeDetails(session)!.type}
+                        </span>
+                      </div>
+                    )}
                     {session.rating && (
                       <div className="flex items-center gap-0.5">
                         {[...Array(5)].map((_, i) => (

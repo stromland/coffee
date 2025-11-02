@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import { createPortal } from "react-dom";
+import { coffeeService } from "../core/services";
+import { Button, Section } from "../shared/components";
+import { formatTime } from "../shared/utils";
 import type { BrewStep } from "../types/coffee";
 import BrewMode from "./BrewMode";
 import SaveSessionForm from "./SaveSessionForm";
-import { formatTime } from "../shared/utils";
-import { Section, Button } from "../shared/components";
 
 interface BrewingStepsProps {
   steps: BrewStep[];
@@ -14,6 +15,8 @@ interface BrewingStepsProps {
   creditName?: string;
   creditUrl?: string;
   brewingMethodId?: string;
+  waterTemperature?: number | null;
+  selectedCoffeeId?: string | null;
   onSessionSaved?: () => void;
   onBrewModeExit?: () => void;
 }
@@ -26,6 +29,8 @@ const BrewingSteps: React.FC<BrewingStepsProps> = ({
   creditName,
   creditUrl,
   brewingMethodId = "unknown",
+  waterTemperature,
+  selectedCoffeeId,
   onSessionSaved,
   onBrewModeExit,
 }) => {
@@ -51,6 +56,8 @@ const BrewingSteps: React.FC<BrewingStepsProps> = ({
             coffeeAmount={coffeeAmount}
             totalBrewTime={totalBrewTime}
             methodName={methodName}
+            waterTemperature={waterTemperature}
+            selectedCoffeeId={selectedCoffeeId}
             onExit={handleExitBrewMode}
           />
         </div>
@@ -70,6 +77,8 @@ const BrewingSteps: React.FC<BrewingStepsProps> = ({
         brewingMethodId={brewingMethodId}
         brewingMethodName={methodName || "Unknown Method"}
         brewTime={totalBrewTime}
+        waterTemperature={waterTemperature}
+        selectedCoffeeId={selectedCoffeeId}
         onSave={() => {
           setShowSaveForm(false);
           onSessionSaved?.();
@@ -130,6 +139,17 @@ const BrewingSteps: React.FC<BrewingStepsProps> = ({
             <div>
               <span className="text-xs text-caramel/70 block mb-1">Method</span>
               <span className="text-sm font-semibold text-cream">{methodName}</span>
+              {selectedCoffeeId && (
+                <div className="mt-3 pt-3 border-t border-olive/30">
+                  <span className="text-xs text-caramel/70 block mb-1">Coffee</span>
+                  <span className="text-sm font-semibold text-cream">
+                    {(() => {
+                      const coffee = coffeeService.getCoffee(selectedCoffeeId);
+                      return coffee ? `${coffee.brand} - ${coffee.name}` : "";
+                    })()}
+                  </span>
+                </div>
+              )}
             </div>
             {creditName && creditUrl && (
               <a
@@ -156,8 +176,14 @@ const BrewingSteps: React.FC<BrewingStepsProps> = ({
       <div className="mb-5 p-4 bg-olive-dark/50 rounded-lg">
         <p className="text-sm text-caramel">
           <span className="font-semibold text-cream">Coffee:</span> {coffeeAmount}g |
-          <span className="font-semibold text-cream ml-3">Water:</span> {totalWater.toFixed(0)}g |
-          <span className="font-semibold text-cream ml-3">Total Steps:</span> {steps.length}
+          <span className="font-semibold text-cream ml-2">Water:</span> {totalWater.toFixed(0)}g |
+          {waterTemperature && (
+            <>
+              <span className="font-semibold text-cream ml-2">Temperature:</span> {waterTemperature}
+              °C |
+            </>
+          )}
+          <span className="font-semibold text-cream ml-2">Total Steps:</span> {steps.length}
         </p>
       </div>
 

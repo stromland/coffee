@@ -22,11 +22,9 @@ const AppLayout = ({ children }: AppLayoutProps) => {
               <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
                 <div>
                   <h1 className="text-3xl md:text-4xl font-bold text-cream mb-1 flex items-center gap-3">
-                    ☕ Coffee Brew Dashboard
+                    ☕ Coffee Brew
                   </h1>
-                  <p className="text-caramel/80">
-                    Your digital barista for coffee brewing
-                  </p>
+                  <p className="text-caramel/80">Your digital barista</p>
                 </div>
                 <nav className="flex gap-3">
                   <Link
@@ -64,6 +62,20 @@ const AppLayout = ({ children }: AppLayoutProps) => {
                       />
                     </svg>
                     Methods
+                  </Link>
+                  <Link
+                    to="/coffee"
+                    className={`px-4 py-2 rounded-lg transition-all font-medium text-sm flex items-center gap-2 ${
+                      isActive("/coffee")
+                        ? "bg-coffee text-cream"
+                        : "bg-olive/20 text-caramel hover:text-cream hover:bg-olive/30"
+                    }`}
+                  >
+                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <ellipse cx="12" cy="12" rx="5" ry="7" strokeWidth="2" />
+                      <path d="M9 9.5 Q12 12 15 14.5" strokeWidth="2" strokeLinecap="round" />
+                    </svg>
+                    Coffee
                   </Link>
                   <Link
                     to="/history"

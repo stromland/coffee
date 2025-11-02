@@ -3,6 +3,7 @@ import App from "../App";
 import DashboardPage from "./pages/DashboardPage";
 import MethodsPage from "./pages/MethodsPage";
 import HistoryPage from "./pages/HistoryPage";
+import CoffeePage from "./pages/CoffeePage";
 
 export const router = createBrowserRouter(
   [
@@ -17,6 +18,10 @@ export const router = createBrowserRouter(
         {
           path: "methods",
           element: <MethodsPage />,
+        },
+        {
+          path: "coffee",
+          element: <CoffeePage />,
         },
         {
           path: "history",

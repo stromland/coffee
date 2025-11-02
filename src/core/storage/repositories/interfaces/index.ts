@@ -5,3 +5,4 @@
 
 export type { IBrewMethodRepository } from "./IBrewMethodRepository";
 export type { ISessionRepository } from "./ISessionRepository";
+export type { ICoffeeRepository } from "./ICoffeeRepository";

@@ -35,6 +35,7 @@ export interface BrewingSession {
   id: string;
   timestamp: number; // Unix timestamp in milliseconds
   coffeeType: string; // Name or type of coffee beans
+  coffeeId?: string; // Reference to selected coffee by ID
   brewingMethod: string; // Method ID (e.g., '4-6-original', 'hoffman-1cup', 'single-pour')
   coffeeAmount: number; // Amount in grams
   waterAmount: number; // Amount in ml/g
@@ -43,4 +44,17 @@ export interface BrewingSession {
   grindSize?: string; // Grind size description
   rating?: number; // 1-5 scale
   notes?: string; // Tasting notes or observations
+}
+
+export type CoffeeRoast = "light" | "medium" | "dark";
+export type CoffeeType = "beans" | "grinded";
+
+export interface Coffee {
+  id: string;
+  brand: string;
+  name: string;
+  description?: string;
+  roast: CoffeeRoast;
+  type: CoffeeType;
+  isCustom: boolean;
 }

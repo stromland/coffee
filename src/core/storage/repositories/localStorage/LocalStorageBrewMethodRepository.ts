@@ -9,11 +9,11 @@ export const defaultBrewMethods: BrewMethod[] = [
   // 4:6 Method variants
   {
     id: "4-6-original",
-    name: "Original 4:6",
+    name: "4:6 - Original",
     description: "Tetsu Kasuya's original 4:6 method",
-    category: "4:6 Method",
+    category: "Pour over",
     creditName: "Tetsu Kasuya (2016 World Brewers Cup Champion)",
-    creditUrl: "https://projectbarista.com/4-6-method-recipe/",
+    creditUrl: "https://www.youtube.com/watch?v=wmCW8xSWGZY",
     drawdownTime: 75,
     pours: [
       { percentage: 16.67, atTimeSeconds: 0, description: "40% phase - affects sweetness" },
@@ -26,11 +26,11 @@ export const defaultBrewMethods: BrewMethod[] = [
   },
   {
     id: "4-6-gentle",
-    name: "Gentle (5 pours)",
+    name: "4:6 - Gentle (5 pours)",
     description: "Gentler extraction with 5 equal pours",
-    category: "4:6 Method",
+    category: "Pour over",
     creditName: "Tetsu Kasuya (2016 World Brewers Cup Champion)",
-    creditUrl: "https://projectbarista.com/4-6-method-recipe/",
+    creditUrl: "https://www.youtube.com/watch?v=wmCW8xSWGZY",
     drawdownTime: 90,
     pours: [
       { percentage: 20, atTimeSeconds: 0, description: "40% phase - affects sweetness" },
@@ -44,11 +44,11 @@ export const defaultBrewMethods: BrewMethod[] = [
   },
   {
     id: "4-6-bold",
-    name: "Bold (3 pours)",
+    name: "4:6 - Bold (3 pours)",
     description: "Stronger extraction with 3 larger pours",
-    category: "4:6 Method",
+    category: "Pour over",
     creditName: "Tetsu Kasuya (2016 World Brewers Cup Champion)",
-    creditUrl: "https://projectbarista.com/4-6-method-recipe/",
+    creditUrl: "https://www.youtube.com/watch?v=wmCW8xSWGZY",
     drawdownTime: 60,
     pours: [
       { percentage: 40, atTimeSeconds: 0, description: "40% phase - affects sweetness" },
@@ -61,9 +61,9 @@ export const defaultBrewMethods: BrewMethod[] = [
   // James Hoffmann method
   {
     id: "hoffman-1cup",
-    name: "Hoffman 1 Cup V60",
+    name: "James Hoffmann 1 Cup V60",
     description: "James Hoffmann's 1 Cup V60 method with bloom and progressive pours",
-    category: "James Hoffmann",
+    category: "Pour over",
     creditName: "James Hoffmann",
     creditUrl: "https://www.youtube.com/watch?v=1oB1oDrDkHM",
     drawdownTime: 70,
@@ -81,14 +81,14 @@ export const defaultBrewMethods: BrewMethod[] = [
   {
     id: "single-pour",
     name: "Single Pour",
-    description: "Simple continuous pour method",
-    category: "Simple",
-    drawdownTime: 120,
+    description: "Automated single pour method",
+    category: "Autodrip",
+    drawdownTime: 180,
     pours: [
       {
         percentage: 100,
         atTimeSeconds: 0,
-        description: "Pour all water in a slow, continuous stream",
+        description: "Start your coffee maker's single pour cycle",
       },
     ],
     isDefault: true,

@@ -8,3 +8,4 @@ export {
   LocalStorageBrewMethodRepository,
 } from "./LocalStorageBrewMethodRepository";
 export { LocalStorageSessionRepository } from "./LocalStorageSessionRepository";
+export { defaultCoffees, LocalStorageCoffeeRepository } from "./LocalStorageCoffeeRepository";
