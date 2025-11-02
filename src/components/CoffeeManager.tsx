@@ -115,7 +115,7 @@ const CoffeeEditor: React.FC<CoffeeEditorProps> = ({ coffee, onSave, onCancel, o
             onChange={(e) => setType(e.target.value as CoffeeType)}
             options={[
               { value: "beans", label: "Beans" },
-              { value: "grinded", label: "Grinded" },
+              { value: "ground", label: "Ground" },
             ]}
           />
 
