@@ -157,11 +157,9 @@ const BrewMethodEditor: React.FC<BrewMethodEditorProps> = ({ method, onSave, onC
     }
 
     const totalPercentage = pours.reduce((sum, p) => sum + p.percentage, 0);
-    if (totalPercentage > 100) {
+    if (Math.abs(totalPercentage - 100) > 0.01) {
       newErrors.push(
-        `Total water exceeds 100% (currently ${totalPercentage.toFixed(
-          1
-        )}%). Reduce pour amounts or increase coffee/ratio.`
+        `Total water amount is ${totalPercentage.toFixed(1)}%. It must equal 100% to create a valid brewing recipe.`
       );
     }
 

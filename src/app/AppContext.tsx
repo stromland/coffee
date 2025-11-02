@@ -1,16 +1,20 @@
 import { createContext, useContext, useState, useEffect } from "react";
 import type { ReactNode } from "react";
 import type { CoffeeSettings, BrewStep, BrewingSession } from "../types/coffee";
-import { brewingService } from "../core/services";
+import { brewingService, coffeeService } from "../core/services";
 
 interface AppContextValue {
   settings: CoffeeSettings;
   selectedMethodId: string;
+  selectedCoffeeId: string | null;
+  waterTemperature: number | null;
   brewSteps: BrewStep[];
   historyKey: number;
   handleSettingsChange: (newSettings: CoffeeSettings) => void;
   handleMethodChange: (methodId: string) => void;
   handleMethodSelected: (methodId: string) => void;
+  handleCoffeeChange: (coffeeId: string | null) => void;
+  handleTemperatureChange: (temperature: number | null) => void;
   handleSaveSession: () => void;
   handleBrewAgain: (session: BrewingSession) => void;
 }
@@ -34,8 +38,26 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
   });
 
   const [selectedMethodId, setSelectedMethodId] = useState<string>("4-6-original");
+  const [selectedCoffeeId, setSelectedCoffeeId] = useState<string | null>(null);
+  const [waterTemperature, setWaterTemperature] = useState<number | null>(null);
   const [brewSteps, setBrewSteps] = useState<BrewStep[]>([]);
   const [historyKey, setHistoryKey] = useState(0);
+
+  const getDefaultTemperature = (coffeeId: string | null): number | null => {
+    if (!coffeeId) return null;
+    const coffee = coffeeService.getCoffee(coffeeId);
+    if (!coffee) return null;
+    switch (coffee.roast) {
+      case "light":
+        return 93;
+      case "medium":
+        return 88;
+      case "dark":
+        return 83;
+      default:
+        return null;
+    }
+  };
 
   const updateBrewSteps = (methodId: string, totalWater: number) => {
     const method = brewingService.getBrewMethod(methodId);
@@ -62,6 +84,15 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
     updateBrewSteps(methodId, settings.totalWater);
   };
 
+  const handleCoffeeChange = (coffeeId: string | null) => {
+    setSelectedCoffeeId(coffeeId);
+    setWaterTemperature(getDefaultTemperature(coffeeId));
+  };
+
+  const handleTemperatureChange = (temperature: number | null) => {
+    setWaterTemperature(temperature);
+  };
+
   const handleSaveSession = () => {
     setHistoryKey((prev) => prev + 1);
   };
@@ -76,6 +107,9 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
     });
 
     setSelectedMethodId(session.brewingMethod);
+    if (session.waterTemperature) {
+      setWaterTemperature(session.waterTemperature);
+    }
     updateBrewSteps(session.brewingMethod, session.waterAmount);
   };
 
@@ -89,11 +123,15 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
       value={{
         settings,
         selectedMethodId,
+        selectedCoffeeId,
+        waterTemperature,
         brewSteps,
         historyKey,
         handleSettingsChange,
         handleMethodChange,
         handleMethodSelected,
+        handleCoffeeChange,
+        handleTemperatureChange,
         handleSaveSession,
         handleBrewAgain,
       }}

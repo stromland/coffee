@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import CoffeeCalculator from "../../components/CoffeeCalculator";
+import CoffeeTemperatureSelector from "../../components/CoffeeTemperatureSelector";
 import BrewingPresets from "../../components/BrewingPresets";
 import BrewingSteps from "../../components/BrewingSteps";
 import { useAppContext } from "../AppContext";
@@ -17,9 +18,13 @@ const DashboardPage = () => {
   const {
     settings,
     selectedMethodId,
+    selectedCoffeeId,
+    waterTemperature,
     brewSteps,
     handleSettingsChange,
     handleMethodChange,
+    handleCoffeeChange,
+    handleTemperatureChange,
     handleSaveSession,
   } = useAppContext();
 
@@ -41,6 +46,13 @@ const DashboardPage = () => {
       <div className="lg:col-span-2 lg:order-1 space-y-6">
         <CoffeeCalculator settings={settings} onSettingsChange={handleSettingsChange} />
 
+        <CoffeeTemperatureSelector
+          selectedCoffeeId={selectedCoffeeId}
+          waterTemperature={waterTemperature}
+          onCoffeeChange={handleCoffeeChange}
+          onTemperatureChange={handleTemperatureChange}
+        />
+
         <div className="lg:hidden">
           <BrewingPresets selectedMethodId={selectedMethodId} onMethodChange={handleMethodChange} />
         </div>
@@ -58,6 +70,8 @@ const DashboardPage = () => {
               creditName={brewingService.getBrewMethod(selectedMethodId)?.creditName}
               creditUrl={brewingService.getBrewMethod(selectedMethodId)?.creditUrl}
               brewingMethodId={selectedMethodId}
+              waterTemperature={waterTemperature}
+              selectedCoffeeId={selectedCoffeeId}
               onSessionSaved={onSaveSession}
               onBrewModeExit={handleBrewModeExit}
             />

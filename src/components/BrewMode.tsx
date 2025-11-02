@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from "react";
-import type { BrewStep } from "../types/coffee";
+import { coffeeService } from "../core/services";
 import { formatTime } from "../shared/utils";
+import type { BrewStep } from "../types/coffee";
 
 interface BrewModeProps {
   steps: BrewStep[];
   coffeeAmount: number;
   totalBrewTime: number;
   methodName?: string;
+  waterTemperature?: number | null;
+  selectedCoffeeId?: string | null;
   onExit: () => void;
 }
 
@@ -15,6 +18,8 @@ const BrewMode: React.FC<BrewModeProps> = ({
   coffeeAmount,
   totalBrewTime,
   methodName,
+  waterTemperature,
+  selectedCoffeeId,
   onExit,
 }) => {
   const [currentStepIndex, setCurrentStepIndex] = useState(0);
@@ -108,10 +113,22 @@ const BrewMode: React.FC<BrewModeProps> = ({
       </div>
 
       {/* Info Header */}
-      <div className="mb-5 p-3 bg-olive-dark/30 rounded-lg">
-        <p className="text-xs text-caramel text-center">
-          <span className="font-semibold text-cream">Method:</span> {methodName || "Unknown"}
-        </p>
+      <div className="mb-5 space-y-3">
+        <div className="p-3 bg-olive-dark/30 rounded-lg">
+          <p className="text-xs text-caramel text-center">
+            <span className="font-semibold text-cream">Method:</span> {methodName || "Unknown"}
+            {selectedCoffeeId && (
+              <>
+                <span className="ml-2">|</span>
+                <span className="font-semibold text-cream ml-2 mr-2">Coffee:</span>
+                {(() => {
+                  const coffee = coffeeService.getCoffee(selectedCoffeeId);
+                  return coffee ? `${coffee.brand} - ${coffee.name}` : "";
+                })()}
+              </>
+            )}
+          </p>
+        </div>
       </div>
 
       {/* Show start button before starting */}
@@ -200,9 +217,18 @@ const BrewMode: React.FC<BrewModeProps> = ({
       {/* Info Footer */}
       <div className="p-3 bg-olive-dark/30 rounded-lg">
         <p className="text-xs text-caramel text-center">
-          <span className="font-semibold text-cream">Coffee:</span> {coffeeAmount}g |{" "}
-          <span className="font-semibold text-cream">Water:</span> {totalWater.toFixed(0)}g |{" "}
-          <span className="font-semibold text-cream">Total Time:</span> {formatTime(totalBrewTime)}
+          <span className="font-semibold text-cream">Coffee:</span> {coffeeAmount}g
+          <span className="ml-2">|</span>
+          <span className="font-semibold text-cream ml-2">Water:</span> {totalWater.toFixed(0)}g
+          <span className="ml-2">|</span>
+          {waterTemperature && (
+            <>
+              <span className="font-semibold text-cream ml-2">Temperature:</span> {waterTemperature}
+              °C <span className="ml-2">|</span>
+            </>
+          )}
+          <span className="font-semibold text-cream ml-2">Total Time:</span>{" "}
+          {formatTime(totalBrewTime)}
         </p>
       </div>
     </div>

@@ -104,6 +104,14 @@ src/
 - Add JSDoc comments for exported functions
 - Keep components focused and single-purpose
 
+## UI Component Guidelines
+
+- **Avoid Modal components** unless explicitly requested
+- For forms and editors (adding/editing items), follow the pattern used in **BrewMethodEditor** and **MethodsPage**:
+  - Use inline forms or dedicated pages/sections instead of modals
+  - Keep forms visible and integrated into the page flow
+  - This improves UX by allowing users to see context while filling forms
+
 ## Git Workflow
 
 - **Always ask before committing**: Never commit changes without explicit user confirmation

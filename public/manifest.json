@@ -1,7 +1,7 @@
 {
-  "name": "Coffee Brew Dashboard",
+  "name": "Coffee Brew",
   "short_name": "Coffee Brew",
-  "description": "Your digital barista for coffee brewing",
+  "description": "Your digital barista",
   "start_url": "/coffee/",
   "scope": "/coffee/",
   "display": "standalone",
