@@ -26,7 +26,8 @@ const AppLayout = ({ children }: AppLayoutProps) => {
                   </h1>
                   <p className="text-caramel/80">Your digital barista</p>
                 </div>
-                <nav className="flex gap-3">
+                {/* Desktop Navigation - Hidden on mobile */}
+                <nav className="hidden md:flex gap-3">
                   <Link
                     to="/"
                     className={`px-4 py-2 rounded-lg transition-all font-medium text-sm flex items-center gap-2 ${
@@ -100,7 +101,7 @@ const AppLayout = ({ children }: AppLayoutProps) => {
             </div>
           </header>
 
-          <main>{children}</main>
+          <main className="pb-20 md:pb-0">{children}</main>
 
           <footer className="mt-12 pt-6 border-t border-olive/20">
             <div className="flex justify-center items-center gap-2 text-caramel/60">
@@ -126,6 +127,80 @@ const AppLayout = ({ children }: AppLayoutProps) => {
           </footer>
         </div>
       </div>
+
+      {/* Mobile Bottom Navigation - Visible only on mobile */}
+      <nav className="md:hidden fixed bottom-0 left-0 right-0 bg-olive-dark border-t border-olive/30 z-50">
+        <div className="flex justify-around items-center px-2 py-2">
+          <Link
+            to="/"
+            className={`flex flex-col items-center justify-center px-3 py-2 rounded-lg transition-all min-w-[60px] min-h-[60px] ${
+              isActive("/")
+                ? "bg-coffee/20 text-cream"
+                : "text-caramel hover:text-cream"
+            }`}
+          >
+            <svg className="w-6 h-6 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"
+              />
+            </svg>
+            <span className="text-xs font-medium">Home</span>
+          </Link>
+          <Link
+            to="/methods"
+            className={`flex flex-col items-center justify-center px-3 py-2 rounded-lg transition-all min-w-[60px] min-h-[60px] ${
+              isActive("/methods")
+                ? "bg-coffee/20 text-cream"
+                : "text-caramel hover:text-cream"
+            }`}
+          >
+            <svg className="w-6 h-6 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"
+              />
+            </svg>
+            <span className="text-xs font-medium">Methods</span>
+          </Link>
+          <Link
+            to="/coffee"
+            className={`flex flex-col items-center justify-center px-3 py-2 rounded-lg transition-all min-w-[60px] min-h-[60px] ${
+              isActive("/coffee")
+                ? "bg-coffee/20 text-cream"
+                : "text-caramel hover:text-cream"
+            }`}
+          >
+            <svg className="w-6 h-6 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <ellipse cx="12" cy="12" rx="5" ry="7" strokeWidth="2" />
+              <path d="M9 9.5 Q12 12 15 14.5" strokeWidth="2" strokeLinecap="round" />
+            </svg>
+            <span className="text-xs font-medium">Coffee</span>
+          </Link>
+          <Link
+            to="/history"
+            className={`flex flex-col items-center justify-center px-3 py-2 rounded-lg transition-all min-w-[60px] min-h-[60px] ${
+              isActive("/history")
+                ? "bg-coffee/20 text-cream"
+                : "text-caramel hover:text-cream"
+            }`}
+          >
+            <svg className="w-6 h-6 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
+              />
+            </svg>
+            <span className="text-xs font-medium">History</span>
+          </Link>
+        </div>
+      </nav>
     </div>
   );
 };
