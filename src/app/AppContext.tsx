@@ -107,6 +107,19 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
     });
 
     setSelectedMethodId(session.brewingMethod);
+    
+    // Restore the selected coffee if the session has a coffeeId and the coffee still exists
+    if (session.coffeeId) {
+      const coffee = coffeeService.getCoffee(session.coffeeId);
+      if (coffee) {
+        setSelectedCoffeeId(session.coffeeId);
+        // Set default temperature for the coffee if no temperature was saved
+        if (!session.waterTemperature) {
+          setWaterTemperature(getDefaultTemperature(session.coffeeId));
+        }
+      }
+    }
+    
     if (session.waterTemperature) {
       setWaterTemperature(session.waterTemperature);
     }
