@@ -183,7 +183,9 @@ const BrewMethodEditor: React.FC<BrewMethodEditorProps> = ({ method, onSave, onC
       }
     }
 
-    if (Number(drawdownTime) < 0) {
+    if (isNaN(Number(drawdownTime))) {
+      newErrors.push("Drawdown time must be a valid number");
+    } else if (Number(drawdownTime) < 0) {
       newErrors.push("Drawdown time cannot be negative");
     }
 
