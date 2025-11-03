@@ -111,7 +111,7 @@ const AppLayout = ({ children }: AppLayoutProps) => {
           <main>{children}</main>
 
           <footer className="mt-12 pt-6 pb-20 md:pb-0 border-t border-olive/20">
-            <div className="flex justify-center items-center gap-2 text-caramel/60">
+            <div className="flex flex-col sm:flex-row justify-center items-center gap-2 text-caramel/60">
               <span className="text-sm">Built with ☕</span>
               <span className="text-caramel/40">•</span>
               <a
@@ -130,6 +130,10 @@ const AppLayout = ({ children }: AppLayoutProps) => {
                 </svg>
                 <span>View on GitHub</span>
               </a>
+              <span className="text-caramel/40">•</span>
+              <span className="text-xs text-caramel/50">
+                Built: {new Date(typeof __BUILD_TIME__ !== 'undefined' ? __BUILD_TIME__ : new Date().toISOString()).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric', hour: '2-digit', minute: '2-digit' })}
+              </span>
             </div>
           </footer>
         </div>
