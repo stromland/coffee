@@ -1,3 +1,20 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+  html {
+    height: 100%;
+    overflow-y: auto;
+  }
+
+  body {
+    margin: 0;
+    padding: 0;
+    background-color: #283618;
+  }
+
+  #root {
+    min-height: 100vh;
+  }
+}
