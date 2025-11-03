@@ -37,6 +37,15 @@ const BrewingSteps: React.FC<BrewingStepsProps> = ({
   const [isBrewMode, setIsBrewMode] = useState(false);
   const [showSaveForm, setShowSaveForm] = useState(false);
 
+  const handleSaveSession = () => {
+    setIsBrewMode(false);
+    setShowSaveForm(true);
+    // Scroll to the save form with a small delay to ensure it's rendered
+    setTimeout(() => {
+      document.getElementById('save-session-form')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 0);
+  };
+
   const handleExitBrewMode = () => {
     setIsBrewMode(false);
     onBrewModeExit?.();
@@ -58,7 +67,9 @@ const BrewingSteps: React.FC<BrewingStepsProps> = ({
             methodName={methodName}
             waterTemperature={waterTemperature}
             selectedCoffeeId={selectedCoffeeId}
+            brewingMethodId={brewingMethodId}
             onExit={handleExitBrewMode}
+            onSaveSession={handleSaveSession}
           />
         </div>
       </div>,
@@ -71,20 +82,22 @@ const BrewingSteps: React.FC<BrewingStepsProps> = ({
   // Show save session form instead of steps
   if (showSaveForm) {
     return (
-      <SaveSessionForm
-        coffeeAmount={coffeeAmount}
-        waterAmount={totalWater}
-        brewingMethodId={brewingMethodId}
-        brewingMethodName={methodName || "Unknown Method"}
-        brewTime={totalBrewTime}
-        waterTemperature={waterTemperature}
-        selectedCoffeeId={selectedCoffeeId}
-        onSave={() => {
-          setShowSaveForm(false);
-          onSessionSaved?.();
-        }}
-        onCancel={() => setShowSaveForm(false)}
-      />
+      <div id="save-session-form">
+        <SaveSessionForm
+          coffeeAmount={coffeeAmount}
+          waterAmount={totalWater}
+          brewingMethodId={brewingMethodId}
+          brewingMethodName={methodName || "Unknown Method"}
+          brewTime={totalBrewTime}
+          waterTemperature={waterTemperature}
+          selectedCoffeeId={selectedCoffeeId}
+          onSave={() => {
+            setShowSaveForm(false);
+            onSessionSaved?.();
+          }}
+          onCancel={() => setShowSaveForm(false)}
+        />
+      </div>
     );
   }
 
@@ -114,19 +127,8 @@ const BrewingSteps: React.FC<BrewingStepsProps> = ({
             size="sm"
             className="flex items-center gap-2"
           >
-            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M7 7h10v10H7z"
-              />
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M9 3h6v5H9V3z"
-              />
+            <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M17 3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V7l-4-4zm-5 16c-1.66 0-3-1.34-3-3s1.34-3 3-3 3 1.34 3 3-1.34 3-3 3zm3-10H5V5h10v4z"/>
             </svg>
             Save Session
           </Button>

@@ -76,6 +76,7 @@ const CoffeeEditor: React.FC<CoffeeEditorProps> = ({ coffee, onSave, onCancel, o
             placeholder="e.g., Single Origin, Blend, Local Roaster"
             value={brand}
             onChange={(e) => setBrand(e.target.value)}
+            fullWidth
           />
 
           <Input
@@ -83,6 +84,7 @@ const CoffeeEditor: React.FC<CoffeeEditorProps> = ({ coffee, onSave, onCancel, o
             placeholder="e.g., Ethiopian Yirgacheffe"
             value={name}
             onChange={(e) => setName(e.target.value)}
+            fullWidth
           />
 
           <div>
@@ -93,7 +95,7 @@ const CoffeeEditor: React.FC<CoffeeEditorProps> = ({ coffee, onSave, onCancel, o
               placeholder="Describe the coffee's flavor profile, origin, or characteristics..."
               value={description}
               onChange={(e) => setDescription(e.target.value)}
-              className="w-full px-4 py-2 bg-olive/30 border border-olive/50 rounded-lg text-cream placeholder-caramel/50 focus:outline-none focus:border-caramel focus:ring-2 focus:ring-caramel/20"
+              className="w-full px-4 py-2 bg-olive-dark/50 border border-caramel/30 rounded-lg text-cream placeholder-caramel/50 focus:outline-none focus:border-coffee"
               rows={3}
             />
           </div>
@@ -107,6 +109,7 @@ const CoffeeEditor: React.FC<CoffeeEditorProps> = ({ coffee, onSave, onCancel, o
               { value: "medium", label: "Medium" },
               { value: "dark", label: "Dark" },
             ]}
+            fullWidth
           />
 
           <Select
@@ -117,6 +120,7 @@ const CoffeeEditor: React.FC<CoffeeEditorProps> = ({ coffee, onSave, onCancel, o
               { value: "beans", label: "Beans" },
               { value: "ground", label: "Ground" },
             ]}
+            fullWidth
           />
 
           {errors.length > 0 && (
@@ -133,26 +137,26 @@ const CoffeeEditor: React.FC<CoffeeEditorProps> = ({ coffee, onSave, onCancel, o
           )}
         </div>
 
-        <div className="flex gap-3 border-t border-olive/30 pt-6">
-          <button
-            onClick={handleSave}
-            className="flex-1 px-4 py-2 bg-caramel text-olive-dark rounded-lg font-medium hover:bg-caramel/90 transition-colors"
-          >
-            {coffee?.id ? "Save Changes" : "Add Coffee"}
-          </button>
+        <div className="flex gap-3 pt-4">
           {onDuplicate && (
             <button
               onClick={onDuplicate}
-              className="flex-1 px-4 py-2 bg-olive/30 text-cream rounded-lg font-medium hover:bg-olive/40 transition-colors"
+              className="flex-1 px-6 py-3 bg-olive-dark/50 hover:bg-olive-dark/70 text-caramel hover:text-cream rounded-lg font-semibold transition-colors"
             >
               Duplicate
             </button>
           )}
           <button
             onClick={onCancel}
-            className="flex-1 px-4 py-2 bg-olive/30 text-cream rounded-lg font-medium hover:bg-olive/40 transition-colors"
+            className="flex-1 px-6 py-3 bg-olive-dark/50 hover:bg-olive-dark/70 text-caramel hover:text-cream rounded-lg font-semibold transition-colors"
           >
             Cancel
+          </button>
+          <button
+            onClick={handleSave}
+            className="flex-1 px-6 py-3 bg-coffee hover:bg-coffee/80 text-cream rounded-lg font-semibold transition-colors"
+          >
+            {coffee?.id ? "Save Changes" : "Add Coffee"}
           </button>
         </div>
       </div>
