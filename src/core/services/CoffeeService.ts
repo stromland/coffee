@@ -39,7 +39,7 @@ export class CoffeeService {
   addCoffee(coffee: Omit<Coffee, "id">): Coffee {
     const newCoffee: Coffee = {
       ...coffee,
-      id: generateSecureId('coffee'),
+      id: generateSecureId("coffee"),
     };
     this.repository.save(newCoffee);
     return newCoffee;

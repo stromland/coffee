@@ -15,7 +15,14 @@ const AppLayout = ({ children }: AppLayoutProps) => {
 
   return (
     <div className="min-h-screen bg-olive-dark">
-      <div className="bg-gradient-to-br from-olive-dark via-olive-dark to-olive/20 min-h-screen">
+      <div
+        className="bg-gradient-to-br from-olive-dark via-olive-dark to-olive/20 min-h-screen"
+        style={{
+          paddingTop: "env(safe-area-inset-top)",
+          paddingLeft: "env(safe-area-inset-left)",
+          paddingRight: "env(safe-area-inset-right)",
+        }}
+      >
         <div className="max-w-7xl mx-auto px-4 py-6">
           <header className="mb-8">
             <div className="mb-6">
@@ -101,9 +108,9 @@ const AppLayout = ({ children }: AppLayoutProps) => {
             </div>
           </header>
 
-          <main className="pb-20 md:pb-0">{children}</main>
+          <main>{children}</main>
 
-          <footer className="mt-12 pt-6 border-t border-olive/20">
+          <footer className="mt-12 pt-6 pb-20 md:pb-0 border-t border-olive/20">
             <div className="flex justify-center items-center gap-2 text-caramel/60">
               <span className="text-sm">Built with ☕</span>
               <span className="text-caramel/40">•</span>
@@ -129,14 +136,15 @@ const AppLayout = ({ children }: AppLayoutProps) => {
       </div>
 
       {/* Mobile Bottom Navigation - Visible only on mobile */}
-      <nav className="md:hidden fixed bottom-0 left-0 right-0 bg-olive-dark border-t border-olive/30 z-50">
+      <nav
+        className="md:hidden fixed bottom-0 left-0 right-0 bg-olive-dark border-t border-olive/30 z-50"
+        style={{ paddingBottom: "calc(env(safe-area-inset-bottom) - 1.5rem)" }}
+      >
         <div className="flex justify-around items-center px-2 py-2">
           <Link
             to="/"
             className={`flex flex-col items-center justify-center px-3 py-2 rounded-lg transition-all min-w-[60px] min-h-[60px] ${
-              isActive("/")
-                ? "bg-coffee/20 text-cream"
-                : "text-caramel hover:text-cream"
+              isActive("/") ? "bg-coffee/20 text-cream" : "text-caramel hover:text-cream"
             }`}
           >
             <svg className="w-6 h-6 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -152,9 +160,7 @@ const AppLayout = ({ children }: AppLayoutProps) => {
           <Link
             to="/methods"
             className={`flex flex-col items-center justify-center px-3 py-2 rounded-lg transition-all min-w-[60px] min-h-[60px] ${
-              isActive("/methods")
-                ? "bg-coffee/20 text-cream"
-                : "text-caramel hover:text-cream"
+              isActive("/methods") ? "bg-coffee/20 text-cream" : "text-caramel hover:text-cream"
             }`}
           >
             <svg className="w-6 h-6 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -170,9 +176,7 @@ const AppLayout = ({ children }: AppLayoutProps) => {
           <Link
             to="/coffee"
             className={`flex flex-col items-center justify-center px-3 py-2 rounded-lg transition-all min-w-[60px] min-h-[60px] ${
-              isActive("/coffee")
-                ? "bg-coffee/20 text-cream"
-                : "text-caramel hover:text-cream"
+              isActive("/coffee") ? "bg-coffee/20 text-cream" : "text-caramel hover:text-cream"
             }`}
           >
             <svg className="w-6 h-6 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -184,9 +188,7 @@ const AppLayout = ({ children }: AppLayoutProps) => {
           <Link
             to="/history"
             className={`flex flex-col items-center justify-center px-3 py-2 rounded-lg transition-all min-w-[60px] min-h-[60px] ${
-              isActive("/history")
-                ? "bg-coffee/20 text-cream"
-                : "text-caramel hover:text-cream"
+              isActive("/history") ? "bg-coffee/20 text-cream" : "text-caramel hover:text-cream"
             }`}
           >
             <svg className="w-6 h-6 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">

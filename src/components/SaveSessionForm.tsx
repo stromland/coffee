@@ -213,7 +213,11 @@ const SaveSessionForm: React.FC<SaveSessionFormProps> = ({
             Cancel
           </Button>
         )}
-        <Button onClick={handleSave} disabled={(!selectedCoffeeId && !coffeeType.trim()) || !rating} fullWidth>
+        <Button
+          onClick={handleSave}
+          disabled={(!selectedCoffeeId && !coffeeType.trim()) || !rating}
+          fullWidth
+        >
           Save Session
         </Button>
       </div>
