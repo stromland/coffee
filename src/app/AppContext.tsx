@@ -112,13 +112,13 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
     if (session.coffeeId) {
       const coffee = coffeeService.getCoffee(session.coffeeId);
       if (coffee) {
-        setSelectedCoffeeId(session.coffeeId);
+        setSelectedCoffeeId(coffee.id);
         
         // Set water temperature from session, or default based on coffee if available
         if (session.waterTemperature) {
           setWaterTemperature(session.waterTemperature);
         } else {
-          setWaterTemperature(getDefaultTemperature(session.coffeeId));
+          setWaterTemperature(getDefaultTemperature(coffee.id));
         }
       } else if (session.waterTemperature) {
         // Coffee was deleted but session has temperature, restore it
