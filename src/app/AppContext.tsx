@@ -113,14 +113,17 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
       const coffee = coffeeService.getCoffee(session.coffeeId);
       if (coffee) {
         setSelectedCoffeeId(session.coffeeId);
+        
+        // Set water temperature from session, or default based on coffee if available
+        if (session.waterTemperature) {
+          setWaterTemperature(session.waterTemperature);
+        } else {
+          setWaterTemperature(getDefaultTemperature(session.coffeeId));
+        }
       }
-    }
-    
-    // Set water temperature from session, or default based on coffee if available
-    if (session.waterTemperature) {
+    } else if (session.waterTemperature) {
+      // If no coffeeId but has temperature, restore it
       setWaterTemperature(session.waterTemperature);
-    } else if (session.coffeeId) {
-      setWaterTemperature(getDefaultTemperature(session.coffeeId));
     }
     
     updateBrewSteps(session.brewingMethod, session.waterAmount);
