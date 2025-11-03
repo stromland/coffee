@@ -138,7 +138,13 @@ const AppLayout = ({ children }: AppLayoutProps) => {
       {/* Mobile Bottom Navigation - Visible only on mobile */}
       <nav
         className="md:hidden fixed bottom-0 left-0 right-0 bg-olive-dark border-t border-olive/30 z-50"
-        style={{ paddingBottom: "calc(env(safe-area-inset-bottom) - 1.5rem)" }}
+        // Subtract --nav-padding-y to compensate for existing vertical padding in the navigation bar
+        style={{
+          // Define the custom property for vertical nav padding
+          // If you move nav padding elsewhere, update --nav-padding-y accordingly
+          "--nav-padding-y": "1.5rem",
+          paddingBottom: "calc(env(safe-area-inset-bottom) - var(--nav-padding-y))"
+        }}
       >
         <div className="flex justify-around items-center px-2 py-2">
           <Link
