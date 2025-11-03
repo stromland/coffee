@@ -22,7 +22,6 @@ const BrewMode: React.FC<BrewModeProps> = ({
   methodName,
   waterTemperature,
   selectedCoffeeId,
-  brewingMethodId,
   onExit,
   onSaveSession,
 }) => {

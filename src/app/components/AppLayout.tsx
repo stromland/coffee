@@ -142,7 +142,7 @@ const AppLayout = ({ children }: AppLayoutProps) => {
         style={{
           // Define the custom property for vertical nav padding
           // If you move nav padding elsewhere, update --nav-padding-y accordingly
-          "--nav-padding-y": "1.5rem",
+          ["--nav-padding-y" as any]: "1.5rem",
           paddingBottom: "calc(env(safe-area-inset-bottom) - var(--nav-padding-y))"
         }}
       >
