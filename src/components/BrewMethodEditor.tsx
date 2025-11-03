@@ -340,7 +340,7 @@ const BrewMethodEditor: React.FC<BrewMethodEditorProps> = ({ method, onSave, onC
             <div>
               <span className="text-caramel/70">Total Time:</span>
               <span className="ml-2 font-semibold text-cream">
-                {Math.floor(totalBrewTime / 60)}:{(totalBrewTime % 60).toString().padStart(2, "0")}
+                {Math.floor(Number(totalBrewTime) / 60)}:{(Number(totalBrewTime) % 60).toString().padStart(2, "0")}
               </span>
             </div>
           </div>
