@@ -13,7 +13,7 @@ const BrewMethodEditor: React.FC<BrewMethodEditorProps> = ({ method, onSave, onC
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [category, setCategory] = useState("Custom");
-  const [drawdownTime, setDrawdownTime] = useState(60);
+  const [drawdownTime, setDrawdownTime] = useState("60");
   const [pours, setPours] = useState<Pour[]>([
     { percentage: 0, atTimeSeconds: 0, description: "" },
   ]);
@@ -31,7 +31,7 @@ const BrewMethodEditor: React.FC<BrewMethodEditorProps> = ({ method, onSave, onC
       setName(method.name);
       setDescription(method.description);
       setCategory(method.category || "Custom");
-      setDrawdownTime(method.drawdownTime);
+      setDrawdownTime(method.drawdownTime.toString());
       setPours(method.pours.map((p) => ({ ...p })));
 
       // Convert percentages back to grams for editing
@@ -183,7 +183,7 @@ const BrewMethodEditor: React.FC<BrewMethodEditorProps> = ({ method, onSave, onC
       }
     }
 
-    if (drawdownTime < 0) {
+    if (Number(drawdownTime) < 0) {
       newErrors.push("Drawdown time cannot be negative");
     }
 
@@ -202,7 +202,7 @@ const BrewMethodEditor: React.FC<BrewMethodEditorProps> = ({ method, onSave, onC
       name: name.trim(),
       description: description.trim(),
       category,
-      drawdownTime,
+      drawdownTime: Number(drawdownTime),
       pours: pours.map((p) => ({
         percentage: p.percentage,
         atTimeSeconds: p.atTimeSeconds,
@@ -277,10 +277,10 @@ const BrewMethodEditor: React.FC<BrewMethodEditorProps> = ({ method, onSave, onC
                 Drawdown Time (seconds)
               </label>
               <input
-                type="number"
+                type="text"
                 value={drawdownTime}
-                onChange={(e) => setDrawdownTime(Number(e.target.value))}
-                min="0"
+                onChange={(e) => setDrawdownTime(e.target.value)}
+                placeholder="60"
                 className="w-full px-4 py-2 bg-olive-dark/50 border border-caramel/30 rounded-lg text-cream focus:outline-none focus:border-coffee"
               />
             </div>
@@ -469,16 +469,16 @@ const BrewMethodEditor: React.FC<BrewMethodEditorProps> = ({ method, onSave, onC
         {/* Actions */}
         <div className="flex gap-3 pt-4">
           <button
+            onClick={onCancel}
+            className="flex-1 px-6 py-3 bg-olive-dark/50 hover:bg-olive-dark/70 text-caramel hover:text-cream rounded-lg font-semibold transition-colors"
+          >
+            Cancel
+          </button>
+          <button
             onClick={handleSave}
             className="flex-1 px-6 py-3 bg-coffee hover:bg-coffee/80 text-cream rounded-lg font-semibold transition-colors"
           >
             Save Method
-          </button>
-          <button
-            onClick={onCancel}
-            className="px-6 py-3 bg-olive-dark/50 hover:bg-olive-dark/70 text-caramel hover:text-cream rounded-lg font-semibold transition-colors"
-          >
-            Cancel
           </button>
         </div>
       </div>
