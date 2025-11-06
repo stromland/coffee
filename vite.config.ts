@@ -38,7 +38,7 @@ export default defineConfig({
       },
     }),
   ],
-  base: "/coffee",
+  base: process.env.VITE_BASE_URL || "/coffee",
   define: {
     __BUILD_TIME__: JSON.stringify(new Date().toISOString()),
   },

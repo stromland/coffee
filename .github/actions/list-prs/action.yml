@@ -1,0 +1,47 @@
+name: 'List Pull Requests'
+description: 'Lists open pull requests and creates build matrix'
+inputs:
+  additional-refs:
+    description: 'JSON array of additional refs to build (e.g., [{"ref":"main","name":"latest","base_url":"/coffee/latest"}])'
+    required: false
+    default: '[]'
+outputs:
+  prs:
+    description: 'JSON array of open pull requests'
+    value: ${{ steps.list-prs.outputs.prs }}
+  matrix:
+    description: 'Build matrix with ref, name, and base_url for each branch'
+    value: ${{ steps.create-matrix.outputs.matrix }}
+runs:
+  using: 'composite'
+  steps:
+    - name: List open pull requests
+      id: list-prs
+      shell: bash
+      run: |
+        prs=$(gh pr list --json number,title,headRefName,baseRefName,author,createdAt)
+        echo "prs=$prs" >> $GITHUB_OUTPUT
+        echo "Found $(echo $prs | jq '. | length') open PRs"
+      env:
+        GH_TOKEN: ${{ github.token }}
+    
+    - name: Create build matrix
+      id: create-matrix
+      shell: bash
+      run: |
+        # Convert PRs to matrix format
+        prs=$(echo '${{ steps.list-prs.outputs.prs }}' | jq -c '[.[] | {
+          ref: .headRefName,
+          name: ("pr-" + (.number | tostring)),
+          base_url: ("/coffee/pr-" + (.number | tostring))
+        }]')
+        
+        # Get additional refs
+        additional='${{ inputs.additional-refs }}'
+        
+        # Combine into single matrix
+        matrix=$(jq -c --argjson prs "$prs" --argjson additional "$additional" -n '{include: ($additional + $prs)}')
+        
+        echo "matrix=$matrix" >> $GITHUB_OUTPUT
+        echo "Build matrix:"
+        echo "$matrix" | jq '.'
