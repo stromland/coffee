@@ -4,6 +4,7 @@ import { useLocation } from "react-router-dom";
 interface Version {
   name: string;
   path: string;
+  directory: string;
 }
 
 const VersionSelector = () => {
@@ -12,12 +13,6 @@ const VersionSelector = () => {
   const location = useLocation();
 
   useEffect(() => {
-    // Detect current version from BASE_URL
-    const baseUrl = import.meta.env.BASE_URL;
-    const versionMatch = baseUrl.match(/\/coffee\/([^/]+)/);
-    const detected = versionMatch ? versionMatch[1] : "latest";
-    setCurrentVersion(detected);
-
     // Fetch available versions from the deployment
     fetchVersions();
   }, []);
@@ -27,7 +22,19 @@ const VersionSelector = () => {
       const response = await fetch("/coffee/versions.json");
       if (response.ok) {
         const data = await response.json();
-        setVersions(data.versions || []);
+        const loadedVersions = data.versions || [];
+        setVersions(loadedVersions);
+
+        // Detect current version from BASE_URL after loading versions
+        const baseUrl = import.meta.env.BASE_URL;
+        const versionMatch = baseUrl.match(/\/coffee\/([^/]+)/);
+        const detectedDir = versionMatch ? versionMatch[1] : "latest";
+
+        // Find the matching version by directory name
+        const current = loadedVersions.find((v: Version) => v.directory === detectedDir);
+        if (current) {
+          setCurrentVersion(current.name);
+        }
       }
     } catch (error) {
       console.warn("Failed to load versions.json:", error);
