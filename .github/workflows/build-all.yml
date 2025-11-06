@@ -86,27 +86,13 @@ jobs:
         run: |
           mkdir -p combined
           
-          # Each artifact contains a folder (latest/ or pr-X/)
-          # Copy all into combined, preserving structure
+          # Merge all build artifacts into combined directory
           for artifact in artifacts/build-*; do
             echo "Processing $artifact"
-            # Artifact structure: artifacts/build-latest/latest/* or artifacts/build-pr-1/pr-1/*
-            # We want: combined/coffee/latest/* and combined/coffee/pr-1/*
-            if [ -d "$artifact" ]; then
-              for subdir in "$artifact"/*; do
-                if [ -d "$subdir" ]; then
-                  target="combined/coffee/$(basename "$subdir")"
-                  mkdir -p "$target"
-                  cp -r "$subdir"/* "$target/"
-                  echo "Copied $subdir to $target"
-                fi
-              done
-            fi
+            cp -r "$artifact"/* combined/
           done
           
-          echo "Combined structure:"
-          find combined -type d -maxdepth 3
-          ls -la combined/coffee/ || echo "No coffee directory"
+          ls -la combined/
       
       - name: Create index redirect
         run: |
