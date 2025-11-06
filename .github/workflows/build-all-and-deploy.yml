@@ -1,4 +1,4 @@
-name: Build All Branches
+name: Build All Branches And Deploy to GitHub Pages
 
 on:
   workflow_dispatch:
