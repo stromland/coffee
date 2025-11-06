@@ -118,6 +118,7 @@ jobs:
       - name: Combine artifacts
         run: |
           mkdir -p combined
+          ls -la artifacts/
 
           # Copy latest build contents directly to root of combined
           if [ -d "artifacts/root" ]; then
