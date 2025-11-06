@@ -31,6 +31,6 @@ export const router = createBrowserRouter(
     },
   ],
   {
-    basename: "/coffee",
+    basename: import.meta.env.BASE_URL,
   }
 );
