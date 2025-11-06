@@ -1,0 +1,20 @@
+{
+  "versions": [
+    {
+      "name": "Latest",
+      "path": "/coffee/local",
+      "directory": "local"
+    },
+    {
+      "name": "PR #16",
+      "path": "/coffee/pr-16",
+      "directory": "pr-16"
+    },
+    {
+      "name": "PR #15",
+      "path": "/coffee/pr-15",
+      "directory": "pr-15"
+    }
+  ],
+  "generated": "2025-11-06T22:24:51.128Z"
+}
