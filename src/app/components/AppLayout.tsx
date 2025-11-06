@@ -1,5 +1,6 @@
 import type { ReactNode } from "react";
 import { Link, useLocation } from "react-router-dom";
+import VersionSelector from "./VersionSelector";
 
 interface AppLayoutProps {
   children: ReactNode;
@@ -27,14 +28,19 @@ const AppLayout = ({ children }: AppLayoutProps) => {
           <header className="mb-8">
             <div className="mb-6">
               <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-                <div>
-                  <h1 className="text-3xl md:text-4xl font-bold text-cream mb-1 flex items-center gap-3">
-                    ☕ Coffee Brew
-                  </h1>
-                  <p className="text-caramel/80">Your digital barista</p>
+                <div className="flex items-center justify-between gap-4">
+                  <div>
+                    <h1 className="text-3xl md:text-4xl font-bold text-cream mb-1 flex items-center gap-3">
+                      ☕ Coffee Brew
+                    </h1>
+                    <p className="text-caramel/80">Your digital barista</p>
+                  </div>
+                  <div className="md:hidden">
+                    <VersionSelector />
+                  </div>
                 </div>
                 {/* Desktop Navigation - Hidden on mobile */}
-                <nav className="hidden md:flex gap-3">
+                <nav className="hidden md:flex gap-3 items-center">
                   <Link
                     to="/"
                     className={`px-4 py-2 rounded-lg transition-all font-medium text-sm flex items-center gap-2 ${
@@ -103,6 +109,7 @@ const AppLayout = ({ children }: AppLayoutProps) => {
                     </svg>
                     History
                   </Link>
+                  <VersionSelector />
                 </nav>
               </div>
             </div>
@@ -157,7 +164,7 @@ const AppLayout = ({ children }: AppLayoutProps) => {
       {/* Mobile Bottom Navigation - Visible only on mobile */}
       <nav
         className="md:hidden fixed bottom-0 left-0 right-0 bg-olive-dark border-t border-olive/30 z-50"
-        style={{ paddingBottom: 'max(0.25rem, env(safe-area-inset-bottom))' }}
+        style={{ paddingBottom: "max(0.25rem, env(safe-area-inset-bottom))" }}
       >
         <div className="flex justify-around items-center px-2 py-2">
           <Link

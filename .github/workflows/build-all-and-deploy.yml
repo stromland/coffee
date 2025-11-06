@@ -22,15 +22,33 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       matrix: ${{ steps.list-prs.outputs.matrix }}
+      versions: ${{ steps.create-versions.outputs.versions }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-      
+
       - name: List open PRs and create matrix
         id: list-prs
         uses: ./.github/actions/list-prs
         with:
           additional-refs: '[{"ref":"main","name":"latest","base_url":"/coffee/latest"}]'
+
+      - name: Create versions manifest data
+        id: create-versions
+        run: |
+          # Extract versions from matrix for the manifest
+          versions=$(echo '${{ steps.list-prs.outputs.matrix }}' | jq -c '{
+            versions: [.include[] | {
+              name: (if .name == "latest" then "Latest" else ("PR #" + (.name | split("-")[1])) end),
+              path: .base_url,
+              directory: .name
+            }],
+            generated: (now | todate)
+          }')
+
+          echo "versions=$versions" >> $GITHUB_OUTPUT
+          echo "Versions manifest:"
+          echo "$versions" | jq '.'
 
   build:
     needs: list-branches
@@ -42,13 +60,13 @@ jobs:
         uses: actions/checkout@v4
         with:
           ref: ${{ matrix.ref }}
-      
+
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
-          node-version: '22'
-          cache: 'npm'
-      
+          node-version: "22"
+          cache: "npm"
+
       - name: Install dependencies
         run: npm ci
 
@@ -56,13 +74,13 @@ jobs:
         run: npm run build
         env:
           VITE_BASE_URL: ${{ matrix.base_url }}
-      
+
       - name: Prepare artifact directory
         run: |
           mkdir -p "artifacts/${{ matrix.name }}"
           cp -r dist/* "artifacts/${{ matrix.name }}/"
           echo "Built ${{ matrix.ref }} to ${{ matrix.name }}"
-      
+
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
@@ -71,7 +89,7 @@ jobs:
           retention-days: 1
 
   combine-and-deploy:
-    needs: build
+    needs: [build, list-branches]
     runs-on: ubuntu-latest
     environment:
       name: github-pages
@@ -81,19 +99,28 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           path: artifacts
-      
+
       - name: Combine artifacts
         run: |
           mkdir -p combined
-          
+
           # Merge all build artifacts into combined directory
           for artifact in artifacts/build-*; do
             echo "Processing $artifact"
             cp -r "$artifact"/* combined/
           done
-          
+
           ls -la combined/
-      
+
+      - name: Create versions manifest
+        run: |
+          cat > combined/versions.json << 'EOF'
+          ${{ needs.list-branches.outputs.versions }}
+          EOF
+
+          echo "Created versions.json:"
+          cat combined/versions.json | jq '.'
+
       - name: Create index redirect
         run: |
           cat > combined/index.html << 'EOF'
@@ -108,15 +135,15 @@ jobs:
           </body>
           </html>
           EOF
-      
+
       - name: Setup Pages
         uses: actions/configure-pages@v4
-      
+
       - name: Upload pages artifact
         uses: actions/upload-pages-artifact@v3
         with:
           path: ./combined
-      
+
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
