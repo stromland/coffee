@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 
 interface Version {
@@ -12,21 +12,19 @@ const VersionSelector = () => {
   const [currentVersion, setCurrentVersion] = useState<string>("");
   const location = useLocation();
 
-  useEffect(() => {
-    // Fetch available versions from the deployment
-    fetchVersions();
-  }, []);
-
-  const fetchVersions = async () => {
+  const fetchVersions = useCallback(async () => {
     try {
-      const response = await fetch("/coffee/versions.json");
+      const baseUrl = import.meta.env.BASE_URL;
+      const versionsUrl = baseUrl.endsWith("local")
+        ? `${baseUrl}/local-versions.json`
+        : "/coffee/versions.json";
+      const response = await fetch(versionsUrl);
       if (response.ok) {
         const data = await response.json();
         const loadedVersions = data.versions || [];
         setVersions(loadedVersions);
 
         // Detect current version from BASE_URL after loading versions
-        const baseUrl = import.meta.env.BASE_URL;
         const versionMatch = baseUrl.match(/\/coffee\/([^/]+)/);
         const detectedDir = versionMatch ? versionMatch[1] : "latest";
 
@@ -39,7 +37,12 @@ const VersionSelector = () => {
     } catch (error) {
       console.warn("Failed to load versions.json:", error);
     }
-  };
+  }, []);
+
+  useEffect(() => {
+    // Fetch available versions from the deployment
+    fetchVersions();
+  }, [fetchVersions]);
 
   const handleVersionChange = (versionPath: string) => {
     // Preserve current route when switching versions

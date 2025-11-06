@@ -39,7 +39,15 @@ jobs:
           # Extract versions from matrix for the manifest
           versions=$(echo '${{ steps.list-prs.outputs.matrix }}' | jq -c '{
             versions: [.include[] | {
-              name: (if .name == "latest" then "Latest" else ("PR #" + (.name | split("-")[1])) end),
+              name: (
+                if .name == "latest" then
+                  "Latest"
+                elif (.name | test("^pr-[0-9]+$")) then
+                  "PR #" + ((.name | capture("^pr-(?<num>[0-9]+)$").num))
+                else
+                  .name
+                end
+              ),
               path: .base_url,
               directory: .name
             }],
