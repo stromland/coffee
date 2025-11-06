@@ -3,6 +3,10 @@ name: List Pull Requests
 on:
   workflow_dispatch:
 
+permissions:
+  pull-requests: read
+  contents: read
+
 jobs:
   list-prs:
     runs-on: ubuntu-latest
