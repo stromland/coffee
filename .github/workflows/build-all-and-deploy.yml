@@ -31,7 +31,7 @@ jobs:
         id: list-prs
         uses: ./.github/actions/list-prs
         with:
-          additional-refs: '[{"ref":"main","name":"latest","base_url":"/coffee"}]'
+          additional-refs: '[{"ref":"main","name":"root","base_url":"/coffee"}]'
 
       - name: Create versions manifest data
         id: create-versions
@@ -112,11 +112,17 @@ jobs:
         run: |
           mkdir -p combined
 
-          # Merge all build artifacts into combined directory
-          for artifact in artifacts/build-*; do
-            echo "Processing $artifact"
-            cp -r "$artifact"/* combined/
-          done
+          # Copy latest build contents directly to root of combined
+          if [ -d "artifacts/build-root" ]; then
+            echo "Copying latest build contents to combined root"
+            cp -r artifacts/build-root/* combined/
+          else
+            # Merge all build artifacts into combined directory
+            for artifact in artifacts/build-*; do
+              echo "Processing $artifact"
+              cp -r "$artifact"/* combined/
+            done
+          fi
 
           ls -la combined/
 
@@ -129,20 +135,20 @@ jobs:
           echo "Created versions.json:"
           cat combined/versions.json | jq '.'
 
-      - name: Create index redirect
-        run: |
-          cat > combined/index.html << 'EOF'
-          <!DOCTYPE html>
-          <html>
-          <head>
-            <meta http-equiv="refresh" content="0; url=/coffee/latest/">
-            <title>Redirecting...</title>
-          </head>
-          <body>
-            <p>Redirecting to <a href="/coffee/latest/">latest build</a>...</p>
-          </body>
-          </html>
-          EOF
+      # - name: Create index redirect
+      #   run: |
+      #     cat > combined/index.html << 'EOF'
+      #     <!DOCTYPE html>
+      #     <html>
+      #     <head>
+      #       <meta http-equiv="refresh" content="0; url=/coffee/latest/">
+      #       <title>Redirecting...</title>
+      #     </head>
+      #     <body>
+      #       <p>Redirecting to <a href="/coffee/latest/">latest build</a>...</p>
+      #     </body>
+      #     </html>
+      #     EOF
 
       - name: Setup Pages
         uses: actions/configure-pages@v4
