@@ -118,12 +118,12 @@ jobs:
       - name: Combine artifacts
         run: |
           mkdir -p combined
-          ls -la artifacts/
+          ls -la artifacts/build-root
 
           # Copy latest build contents directly to root of combined
-          if [ -d "artifacts/root" ]; then
+          if [ -d "artifacts/build-root" ]; then
             echo "Copying latest build contents to combined root"
-            cp -r artifacts/root/* combined/
+            cp -r artifacts/build-root/root/* combined/
           else
             # Merge all build artifacts into combined directory
             for artifact in artifacts/build-*; do
