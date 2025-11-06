@@ -155,7 +155,10 @@ const AppLayout = ({ children }: AppLayoutProps) => {
       </div>
 
       {/* Mobile Bottom Navigation - Visible only on mobile */}
-      <nav className="md:hidden fixed bottom-0 left-0 right-0 bg-olive-dark pb-1 border-t border-olive/30 z-50">
+      <nav
+        className="md:hidden fixed bottom-0 left-0 right-0 bg-olive-dark border-t border-olive/30 z-50"
+        style={{ paddingBottom: 'max(0.25rem, env(safe-area-inset-bottom))' }}
+      >
         <div className="flex justify-around items-center px-2 py-2">
           <Link
             to="/"
