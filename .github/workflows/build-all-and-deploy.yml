@@ -120,9 +120,9 @@ jobs:
           mkdir -p combined
 
           # Copy latest build contents directly to root of combined
-          if [ -d "artifacts/build-root" ]; then
+          if [ -d "artifacts/root" ]; then
             echo "Copying latest build contents to combined root"
-            cp -r artifacts/build-root/* combined/
+            cp -r artifacts/root/* combined/
           else
             # Merge all build artifacts into combined directory
             for artifact in artifacts/build-*; do
