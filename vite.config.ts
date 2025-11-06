@@ -2,6 +2,12 @@ import react from "@vitejs/plugin-react";
 import { defineConfig } from "vite";
 import { VitePWA } from "vite-plugin-pwa";
 
+if (!process.env.VITE_BASE_URL) {
+  throw new Error("VITE_BASE_URL is not defined");
+}
+
+const baseUrl = process.env.VITE_BASE_URL;
+
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [
@@ -15,8 +21,8 @@ export default defineConfig({
         theme_color: "#2a1f1a",
         background_color: "#1a1410",
         display: "standalone",
-        scope: "/coffee/",
-        start_url: "/coffee/",
+        scope: baseUrl,
+        start_url: baseUrl,
         icons: [
           {
             src: "/coffee/coffee-icon-192.png",
@@ -38,7 +44,7 @@ export default defineConfig({
       },
     }),
   ],
-  base: process.env.VITE_BASE_URL || "/coffee",
+  base: baseUrl,
   define: {
     __BUILD_TIME__: JSON.stringify(new Date().toISOString()),
   },
