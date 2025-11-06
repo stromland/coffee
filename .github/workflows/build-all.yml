@@ -1,0 +1,122 @@
+name: Build All Branches
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+  pull_request:
+
+permissions:
+  contents: read
+  pull-requests: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  list-branches:
+    runs-on: ubuntu-latest
+    outputs:
+      matrix: ${{ steps.list-prs.outputs.matrix }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      
+      - name: List open PRs and create matrix
+        id: list-prs
+        uses: ./.github/actions/list-prs
+        with:
+          additional-refs: '[{"ref":"main","name":"latest","base_url":"/coffee/latest"}]'
+
+  build:
+    needs: list-branches
+    runs-on: ubuntu-latest
+    strategy:
+      matrix: ${{ fromJson(needs.list-branches.outputs.matrix) }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ matrix.ref }}
+      
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
+      
+      - name: Install dependencies
+        run: npm ci
+      
+      - name: Build with custom base URL
+        run: npm run build
+        env:
+          VITE_BASE_URL: ${{ matrix.base_url }}
+      
+      - name: Prepare artifact directory
+        run: |
+          mkdir -p "artifacts/${{ matrix.name }}"
+          cp -r dist/* "artifacts/${{ matrix.name }}/"
+          echo "Built ${{ matrix.ref }} to ${{ matrix.name }}"
+      
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: build-${{ matrix.name }}
+          path: artifacts/
+          retention-days: 1
+
+  combine-and-deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Download all artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: artifacts
+      
+      - name: Combine artifacts
+        run: |
+          mkdir -p combined/coffee
+          
+          # Merge all build artifacts into combined directory
+          for artifact in artifacts/build-*; do
+            echo "Processing $artifact"
+            cp -r "$artifact"/* combined/coffee/
+          done
+          
+          ls -la combined/coffee/
+      
+      - name: Create index redirect
+        run: |
+          cat > combined/index.html << 'EOF'
+          <!DOCTYPE html>
+          <html>
+          <head>
+            <meta http-equiv="refresh" content="0; url=/coffee/latest/">
+            <title>Redirecting...</title>
+          </head>
+          <body>
+            <p>Redirecting to <a href="/coffee/latest/">latest build</a>...</p>
+          </body>
+          </html>
+          EOF
+      
+      - name: Setup Pages
+        uses: actions/configure-pages@v4
+      
+      - name: Upload pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./combined
+      
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
