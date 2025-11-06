@@ -4,7 +4,7 @@ import { coffeeService } from "../core/services";
 import { Button, Section } from "../shared/components";
 import { formatTime } from "../shared/utils";
 import type { BrewStep } from "../types/coffee";
-import BrewMode from "./BrewMode";
+import BrewModeZen from "./BrewModeZen";
 import SaveSessionForm from "./SaveSessionForm";
 
 interface BrewingStepsProps {
@@ -58,9 +58,8 @@ const BrewingSteps: React.FC<BrewingStepsProps> = ({
   // Show brew mode if active - fullscreen zen mode using portal
   if (isBrewMode) {
     return createPortal(
-      <div className="fixed inset-0 z-[9999] bg-olive-dark flex items-center justify-center p-4 overflow-auto">
-        <div className="w-full max-w-2xl my-auto">
-          <BrewMode
+      <div className="fixed inset-0 z-[9999] bg-gray-50 flex items-center justify-center overflow-auto">
+        <BrewModeZen
             steps={steps}
             coffeeAmount={coffeeAmount}
             totalBrewTime={totalBrewTime}
@@ -71,7 +70,6 @@ const BrewingSteps: React.FC<BrewingStepsProps> = ({
             onExit={handleExitBrewMode}
             onSaveSession={handleSaveSession}
           />
-        </div>
       </div>,
       document.body
     );
