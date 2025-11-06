@@ -48,6 +48,12 @@ const VersionSelector = () => {
     // Preserve current route when switching versions
     const currentRoute = location.pathname.replace(import.meta.env.BASE_URL, "/");
     const newUrl = `${versionPath}${currentRoute === "/" ? "" : currentRoute}`;
+
+    // Store preferred version in localStorage
+    const versionMatch = versionPath.match(/\/coffee\/([^/]+)/);
+    if (versionMatch) {
+      localStorage.setItem("coffee-preferred-version", versionMatch[1]);
+    }
     window.location.href = newUrl;
   };
 

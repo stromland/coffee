@@ -13,14 +13,31 @@ export default defineConfig({
   plugins: [
     react(),
     VitePWA({
-      registerType: "prompt",
+      registerType: "autoUpdate",
       devOptions: {
         enabled: true,
         type: "module",
       },
+      injectRegister: "auto",
+      strategies: "generateSW",
       workbox: {
         globPatterns: ["**/*.{js,css,html,svg,png,ico}"],
         cleanupOutdatedCaches: true,
+        navigateFallback: null,
+        runtimeCaching: [
+          {
+            urlPattern: ({ url }) => url.pathname.startsWith("/coffee/"),
+            handler: "NetworkFirst",
+            options: {
+              cacheName: "coffee-routes",
+              networkTimeoutSeconds: 10,
+              expiration: {
+                maxEntries: 50,
+                maxAgeSeconds: 60 * 60 * 24, // 24 hours
+              },
+            },
+          },
+        ],
       },
       manifest: {
         name: "Coffee Brew Dashboard",
@@ -29,7 +46,7 @@ export default defineConfig({
         theme_color: "#2a1f1a",
         background_color: "#1a1410",
         display: "standalone",
-        scope: baseUrl,
+        scope: "/coffee/",
         start_url: baseUrl,
         icons: [
           {

@@ -103,6 +103,13 @@ jobs:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
+      - name: Checkout (for templates)
+        uses: actions/checkout@v4
+        with:
+          sparse-checkout: |
+            public/templates
+          sparse-checkout-cone-mode: false
+
       - name: Download all artifacts
         uses: actions/download-artifact@v4
         with:
@@ -137,18 +144,8 @@ jobs:
 
       # - name: Create index redirect
       #   run: |
-      #     cat > combined/index.html << 'EOF'
-      #     <!DOCTYPE html>
-      #     <html>
-      #     <head>
-      #       <meta http-equiv="refresh" content="0; url=/coffee/latest/">
-      #       <title>Redirecting...</title>
-      #     </head>
-      #     <body>
-      #       <p>Redirecting to <a href="/coffee/latest/">latest build</a>...</p>
-      #     </body>
-      #     </html>
-      #     EOF
+      #     cp public/templates/root-redirect.html combined/index.html
+      #     echo "Created index.html from template"
 
       - name: Setup Pages
         uses: actions/configure-pages@v4
