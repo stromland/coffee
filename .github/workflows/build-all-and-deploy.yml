@@ -31,7 +31,7 @@ jobs:
         id: list-prs
         uses: ./.github/actions/list-prs
         with:
-          additional-refs: '[{"ref":"main","name":"root","base_url":"/coffee"}]'
+          additional-refs: '[{"ref":"main","name":"latest","base_url":"/coffee/latest"}]'
 
       - name: Create versions manifest data
         id: create-versions
@@ -118,7 +118,6 @@ jobs:
       - name: Combine artifacts
         run: |
           mkdir -p combined
-          ls -la artifacts/build-root
 
           # Copy latest build contents directly to root of combined
           if [ -d "artifacts/build-root" ]; then
@@ -143,10 +142,10 @@ jobs:
           echo "Created versions.json:"
           cat combined/versions.json | jq '.'
 
-      # - name: Create index redirect
-      #   run: |
-      #     cp public/templates/root-redirect.html combined/index.html
-      #     echo "Created index.html from template"
+      - name: Create index redirect
+        run: |
+          cp public/templates/root-redirect.html combined/index.html
+          echo "Created index.html from template"
 
       - name: Setup Pages
         uses: actions/configure-pages@v4
