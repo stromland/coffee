@@ -13,7 +13,15 @@ export default defineConfig({
   plugins: [
     react(),
     VitePWA({
-      registerType: "autoUpdate",
+      registerType: "prompt",
+      devOptions: {
+        enabled: true,
+        type: "module",
+      },
+      workbox: {
+        globPatterns: ["**/*.{js,css,html,svg,png,ico}"],
+        cleanupOutdatedCaches: true,
+      },
       manifest: {
         name: "Coffee Brew Dashboard",
         short_name: "Coffee Brew",
@@ -37,10 +45,6 @@ export default defineConfig({
             purpose: "any",
           },
         ],
-      },
-      workbox: {
-        globPatterns: ["**/*.{js,css,html,svg,png,ico}"],
-        cleanupOutdatedCaches: true,
       },
     }),
   ],

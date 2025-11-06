@@ -31,7 +31,7 @@ jobs:
         id: list-prs
         uses: ./.github/actions/list-prs
         with:
-          additional-refs: '[{"ref":"main","name":"latest","base_url":"/coffee/latest"}]'
+          additional-refs: '[{"ref":"main","name":"latest","base_url":"/coffee"}]'
 
       - name: Create versions manifest data
         id: create-versions
