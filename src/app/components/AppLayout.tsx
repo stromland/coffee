@@ -33,7 +33,7 @@ const AppLayout = ({ children }: AppLayoutProps) => {
                     <h1 className="text-3xl md:text-4xl font-bold text-cream mb-1 flex items-center gap-3">
                       ☕ Coffee Brew
                     </h1>
-                    <p className="text-caramel/80">Your digital barista</p>
+                    <p className="text-caramel/80">Your digital barista!</p>
                   </div>
                   <div className="md:hidden">
                     <VersionSelector />
