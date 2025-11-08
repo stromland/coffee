@@ -14,58 +14,6 @@
 - ✅ **Good**: Create `src/shared/utils/idGenerator.ts` and import `generateSecureId` where needed
 - ❌ **Bad**: Copy the same `generateSecureId` function into multiple component files
 
-## Project Structure
-
-The project follows a clean architecture with clear separation between app routing, business logic, and UI:
-
-```
-src/
-├── app/                        # Application layer (routing & global state)
-│   ├── components/
-│   │   └── AppLayout.tsx      # Main layout with header, nav, footer
-│   ├── pages/
-│   │   ├── DashboardPage.tsx  # Main dashboard route
-│   │   ├── MethodsPage.tsx    # Brew methods management route
-│   │   └── HistoryPage.tsx    # Brewing history route
-│   ├── router.tsx             # React Router configuration (basename: /coffee)
-│   └── AppContext.tsx         # Global state (settings, methods, steps)
-│
-├── components/                 # Feature components (main UI)
-│   ├── CoffeeCalculator.tsx   # Coffee/water ratio calculator
-│   ├── BrewingSteps.tsx       # Brewing instructions display
-│   ├── BrewingPresets.tsx     # Brew method selector
-│   ├── BrewMode.tsx           # Fullscreen brewing timer
-│   ├── BrewMethodManager.tsx  # Method list & CRUD
-│   ├── BrewMethodEditor.tsx   # Create/edit brew methods
-│   ├── BrewingHistory.tsx     # Session history list
-│   └── SaveSessionForm.tsx    # Save brewing session
-│
-├── core/                       # Business logic & data layer
-│   ├── services/
-│   │   ├── BrewingService.ts  # Calculate brew steps from method
-│   │   ├── BrewMethodService.ts # Method CRUD operations
-│   │   └── SessionService.ts  # Session CRUD operations
-│   └── storage/
-│       └── repositories/
-│           ├── interfaces/     # Repository contracts
-│           ├── localStorage/   # LocalStorage implementations
-│           └── RepositoryFactory.ts
-│
-├── shared/                     # Reusable UI & utilities
-│   ├── components/
-│   │   ├── ui/                # Base components (Button, Card, Input, Modal, Select)
-│   │   └── layout/            # Layout components (Section, PageLayout)
-│   └── utils/
-│       ├── formatters.ts      # Time formatting utilities
-│       └── idGenerator.ts     # Secure ID generation
-│
-├── types/                      # TypeScript type definitions
-│   └── coffee.ts              # Core domain types (BrewMethod, Pour, BrewStep, etc.)
-│
-├── App.tsx                     # Root component (wraps Router)
-└── main.tsx                    # Entry point
-```
-
 ### Architecture Principles
 
 - **App Layer** (`src/app/`) - Handles routing, navigation, and global state management
@@ -80,22 +28,6 @@ src/
 - **Service Layer**: Business logic separated from UI
 - **Context API**: Global state without prop drilling
 - **Component Composition**: Reusable UI components
-
-## Routing
-
-- **Base URL**: `/coffee` (configured in vite.config.ts and router basename)
-- **Routes**:
-  - `/coffee` or `/coffee/` - Dashboard (index route)
-  - `/coffee/methods` - Brew method management
-  - `/coffee/history` - Brewing history
-- **Navigation**: Uses React Router with AppLayout containing persistent navigation header
-- **State Management**: AppContext provides global state across routes
-
-## Security Best Practices
-
-- Use cryptographically secure random generation (`window.crypto.getRandomValues()`) for IDs and tokens
-- Never use `Math.random()` for security-sensitive operations
-- Validate and sanitize user inputs
 
 ## Code Style
 
@@ -114,7 +46,7 @@ src/
 
 ## Git Workflow
 
-- **Always ask before committing**: Never commit changes without explicit user confirmation
+- **Always ask before committing**: NEVER commit changes without explicit user confirmation!
 - Present a summary of changes and wait for approval before running `git commit`
 
 ## GitHub Issue Workflow

@@ -83,11 +83,6 @@ jobs:
         env:
           VITE_BASE_URL: ${{ matrix.base_url }}
 
-      - name: Create 404.html for SPA routing
-        run: |
-          cp dist/index.html dist/404.html
-          echo "Created 404.html from index.html"
-
       - name: Prepare artifact directory
         run: |
           mkdir -p "artifacts/${{ matrix.name }}"
