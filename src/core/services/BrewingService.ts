@@ -35,15 +35,7 @@ export class BrewingService {
   }
 
   /**
-   * Get the drawdown time for a method
-   */
-  getDrawdownTime(methodId: string): number {
-    const method = this.getBrewMethod(methodId);
-    return method?.drawdownTime || 60;
-  }
-
-  /**
-   * Calculate total brew time (last pour + drawdown)
+   * Calculate total brew time (sum of all pour durations)
    */
   calculateTotalBrewTime(methodId: string): number {
     return brewMethodService.calculateTotalBrewTime(methodId);

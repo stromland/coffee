@@ -103,7 +103,7 @@ const BrewMode: React.FC<BrewModeProps> = ({
                 <span className="text-caramel/80">Method:</span>
                 <span className="text-cream font-medium">{methodName || "Unknown"}</span>
               </div>
-              
+
               {selectedCoffeeId && (
                 <div className="flex justify-between">
                   <span className="text-caramel/80">Coffee:</span>
@@ -115,34 +115,36 @@ const BrewMode: React.FC<BrewModeProps> = ({
                   </span>
                 </div>
               )}
-              
+
               <div className="flex justify-between">
                 <span className="text-caramel/80">Coffee Amount:</span>
                 <span className="text-cream font-medium">{coffeeAmount}g</span>
               </div>
-              
+
               <div className="flex justify-between">
                 <span className="text-caramel/80">Water Amount:</span>
                 <span className="text-cream font-medium">{totalWater.toFixed(0)}g</span>
               </div>
-              
+
               <div className="flex justify-between">
                 <span className="text-caramel/80">Water Ratio:</span>
-                <span className="text-cream font-medium">1:{(totalWater / coffeeAmount).toFixed(1)}</span>
+                <span className="text-cream font-medium">
+                  1:{(totalWater / coffeeAmount).toFixed(1)}
+                </span>
               </div>
-              
+
               {waterTemperature && (
                 <div className="flex justify-between">
                   <span className="text-caramel/80">Water Temperature:</span>
                   <span className="text-cream font-medium">{waterTemperature}°C</span>
                 </div>
               )}
-              
+
               <div className="flex justify-between">
                 <span className="text-caramel/80">Steps:</span>
                 <span className="text-cream font-medium">{steps.length}</span>
               </div>
-              
+
               <div className="flex justify-between">
                 <span className="text-caramel/80">Total Time:</span>
                 <span className="text-cream font-medium">{formatTime(totalBrewTime)}</span>
@@ -206,14 +208,13 @@ const BrewMode: React.FC<BrewModeProps> = ({
                   {currentStep.waterAmount > 0 ? "Pour to" : "Total Water"}
                 </div>
                 <div className="text-4xl font-bold text-cream">
-                  {currentStep.cumulativeWater.toFixed(1)}<span className="text-2xl text-caramel/70">g</span>
+                  {currentStep.cumulativeWater.toFixed(1)}
+                  <span className="text-2xl text-caramel/70">g</span>
                 </div>
               </div>
               <div className="p-4 border-2 border-coffee/40 rounded-lg">
                 <div className="text-xs text-caramel/70 mb-2">Elapsed Time</div>
-                <div className="text-4xl font-bold text-coffee">
-                  {formatTime(elapsedTime)}
-                </div>
+                <div className="text-4xl font-bold text-coffee">{formatTime(elapsedTime)}</div>
               </div>
             </div>
           </div>
@@ -229,7 +230,9 @@ const BrewMode: React.FC<BrewModeProps> = ({
                     : "Drawdown"}
                 </span>
                 <span className="text-xs text-caramel/60">at</span>
-                <span className="font-mono font-medium text-coffee">{formatTime(nextStep.timeSeconds)}</span>
+                <span className="font-mono font-medium text-coffee">
+                  {formatTime(nextStep.timeSeconds)}
+                </span>
               </div>
             </div>
           )}

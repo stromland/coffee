@@ -25,7 +25,6 @@ export interface BrewMethod {
   category?: string; // e.g., "4:6 Method", "James Hoffmann", "Custom"
   creditName?: string;
   creditUrl?: string;
-  drawdownTime: number; // Time in seconds after last pour for coffee to drip through
   pours: Pour[];
   isDefault: boolean; // Whether this is a built-in default method
   isCustom: boolean; // Whether this was created by the user

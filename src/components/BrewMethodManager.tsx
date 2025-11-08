@@ -81,7 +81,6 @@ const BrewMethodManager: React.FC<BrewMethodManagerProps> = ({ onMethodChange })
       name: "",
       description: "",
       category: "Custom",
-      drawdownTime: 60,
       pours: [{ percentage: 0, durationSeconds: 30, description: "" }],
       isDefault: false,
       isCustom: true,
@@ -170,8 +169,6 @@ const BrewMethodManager: React.FC<BrewMethodManagerProps> = ({ onMethodChange })
                         <p className="text-sm text-caramel/80 mb-2">{method.description}</p>
                         <div className="flex flex-wrap gap-3 text-xs text-caramel/70">
                           <span>{method.pours.length} pours</span>
-                          <span>•</span>
-                          <span>Drawdown: {method.drawdownTime}s</span>
                           {method.creditName && (
                             <>
                               <span>•</span>

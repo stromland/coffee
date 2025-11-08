@@ -132,20 +132,11 @@ export class BrewMethodService {
       return step;
     });
 
-    // Add drawdown step
-    const drawdownStep: BrewStep = {
-      stepNumber: pourSteps.length + 1,
-      waterAmount: 0,
-      cumulativeWater,
-      timeSeconds: cumulativeTime,
-      description: "Drawdown",
-    };
-
-    return [...pourSteps, drawdownStep];
+    return pourSteps;
   }
 
   /**
-   * Calculate total brew time (sum of all pour durations + drawdown)
+   * Calculate total brew time (sum of all pour durations)
    * @param methodId - The method ID
    * @returns Total brew time in seconds
    */
@@ -156,8 +147,7 @@ export class BrewMethodService {
       throw new Error(`Method not found: ${methodId}`);
     }
 
-    const totalPourTime = method.pours.reduce((sum, pour) => sum + pour.durationSeconds, 0);
-    return totalPourTime + method.drawdownTime;
+    return method.pours.reduce((sum, pour) => sum + pour.durationSeconds, 0);
   }
 
   /**
@@ -196,10 +186,6 @@ export class BrewMethodService {
         throw new Error(`Pour ${index + 1}: duration must be greater than 0`);
       }
     });
-
-    if (method.drawdownTime < 0) {
-      throw new Error("Drawdown time cannot be negative");
-    }
   }
 }
 
