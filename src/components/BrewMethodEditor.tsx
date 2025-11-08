@@ -15,7 +15,7 @@ const BrewMethodEditor: React.FC<BrewMethodEditorProps> = ({ method, onSave, onC
   const [category, setCategory] = useState("Custom");
   const [drawdownTime, setDrawdownTime] = useState("60");
   const [pours, setPours] = useState<Pour[]>([
-    { percentage: 0, atTimeSeconds: 0, description: "" },
+    { percentage: 0, durationSeconds: 30, description: "" },
   ]);
   const [errors, setErrors] = useState<string[]>([]);
   const [showErrorModal, setShowErrorModal] = useState(false);
@@ -24,7 +24,7 @@ const BrewMethodEditor: React.FC<BrewMethodEditorProps> = ({ method, onSave, onC
   const [coffeeAmount, setCoffeeAmount] = useState("20");
   const [waterRatio, setWaterRatio] = useState("15");
   const [pourGrams, setPourGrams] = useState<string[]>(["0"]);
-  const [pourTimes, setPourTimes] = useState<string[]>(["0"]);
+  const [pourDurations, setPourDurations] = useState<string[]>(["30"]);
 
   useEffect(() => {
     if (method) {
@@ -40,21 +40,19 @@ const BrewMethodEditor: React.FC<BrewMethodEditorProps> = ({ method, onSave, onC
       const defaultRatio = 15;
       const totalWater = defaultCoffee * defaultRatio;
       const grams = method.pours.map((p) => ((p.percentage / 100) * totalWater).toFixed(0));
-      const times = method.pours.map((p) => p.atTimeSeconds.toString());
+      const durations = method.pours.map((p) => p.durationSeconds.toString());
 
       setCoffeeAmount(defaultCoffee.toString());
       setWaterRatio(defaultRatio.toString());
       setPourGrams(grams);
-      setPourTimes(times);
+      setPourDurations(durations);
     }
   }, [method]);
 
   const handleAddPour = () => {
-    const lastPour = pours[pours.length - 1];
-    const newTime = lastPour ? lastPour.atTimeSeconds + 30 : 0;
-    setPours([...pours, { percentage: 0, atTimeSeconds: newTime, description: "" }]);
+    setPours([...pours, { percentage: 0, durationSeconds: 30, description: "" }]);
     setPourGrams([...pourGrams, "0"]);
-    setPourTimes([...pourTimes, newTime.toString()]);
+    setPourDurations([...pourDurations, "30"]);
   };
 
   const handleRemovePour = (index: number) => {
@@ -64,7 +62,7 @@ const BrewMethodEditor: React.FC<BrewMethodEditorProps> = ({ method, onSave, onC
     }
     setPours(pours.filter((_, i) => i !== index));
     setPourGrams(pourGrams.filter((_, i) => i !== index));
-    setPourTimes(pourTimes.filter((_, i) => i !== index));
+    setPourDurations(pourDurations.filter((_, i) => i !== index));
   };
 
   const handlePourGramsChange = (index: number, value: string) => {
@@ -85,16 +83,16 @@ const BrewMethodEditor: React.FC<BrewMethodEditorProps> = ({ method, onSave, onC
     setPours(newPours);
   };
 
-  const handlePourTimeChange = (index: number, value: string) => {
-    const newTimes = [...pourTimes];
-    newTimes[index] = value;
-    setPourTimes(newTimes);
+  const handlePourDurationChange = (index: number, value: string) => {
+    const newDurations = [...pourDurations];
+    newDurations[index] = value;
+    setPourDurations(newDurations);
 
-    // Update pours with new time
+    // Update pours with new duration
     const newPours = [...pours];
     newPours[index] = {
       ...newPours[index],
-      atTimeSeconds: parseFloat(value) || 0,
+      durationSeconds: parseFloat(value) || 0,
     };
     setPours(newPours);
   };
@@ -170,18 +168,10 @@ const BrewMethodEditor: React.FC<BrewMethodEditorProps> = ({ method, onSave, onC
       if (pour.percentage > 100) {
         newErrors.push(`Pour ${i + 1}: percentage cannot exceed 100`);
       }
-      if (pour.atTimeSeconds < 0) {
-        newErrors.push(`Pour ${i + 1}: time cannot be negative`);
+      if (pour.durationSeconds <= 0) {
+        newErrors.push(`Pour ${i + 1}: duration must be greater than 0`);
       }
     });
-
-    // Check times are in ascending order
-    for (let i = 1; i < pours.length; i++) {
-      if (pours[i].atTimeSeconds < pours[i - 1].atTimeSeconds) {
-        newErrors.push("Pour times must be in ascending order");
-        break;
-      }
-    }
 
     if (isNaN(Number(drawdownTime))) {
       newErrors.push("Drawdown time must be a valid number");
@@ -207,7 +197,7 @@ const BrewMethodEditor: React.FC<BrewMethodEditorProps> = ({ method, onSave, onC
       drawdownTime: Number(drawdownTime),
       pours: pours.map((p) => ({
         percentage: p.percentage,
-        atTimeSeconds: p.atTimeSeconds,
+        durationSeconds: p.durationSeconds,
         description: p.description?.trim() || undefined,
       })),
       isDefault: false,
@@ -223,8 +213,7 @@ const BrewMethodEditor: React.FC<BrewMethodEditorProps> = ({ method, onSave, onC
   const ratio = parseFloat(waterRatio) || 0;
   const expectedTotalWater = coffee * ratio;
   const totalPercentage = pours.reduce((sum, p) => sum + p.percentage, 0);
-  const totalBrewTime =
-    pours.length > 0 ? Math.max(...pours.map((p) => p.atTimeSeconds)) + drawdownTime : drawdownTime;
+  const totalBrewTime = pours.reduce((sum, p) => sum + p.durationSeconds, 0) + Number(drawdownTime);
 
   return (
     <div className="bg-olive/20 backdrop-blur-sm rounded-lg p-6 shadow-2xl">
@@ -423,14 +412,14 @@ const BrewMethodEditor: React.FC<BrewMethodEditorProps> = ({ method, onSave, onC
 
                       <div>
                         <label className="block text-xs text-caramel/70 mb-1">
-                          Pour at time (seconds)
+                          Duration (seconds)
                         </label>
                         <input
                           type="text"
                           inputMode="decimal"
-                          value={pourTimes[index]}
-                          onChange={(e) => handlePourTimeChange(index, e.target.value)}
-                          placeholder="0"
+                          value={pourDurations[index]}
+                          onChange={(e) => handlePourDurationChange(index, e.target.value)}
+                          placeholder="30"
                           className="w-full px-3 py-2 bg-olive-dark/50 border border-caramel/30 rounded text-cream text-sm focus:outline-none focus:border-coffee"
                         />
                       </div>

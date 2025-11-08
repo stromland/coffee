@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { coffeeService } from "../core/services";
+import { Button } from "../shared/components";
 import { formatTime } from "../shared/utils";
 import type { BrewStep } from "../types/coffee";
 
@@ -31,13 +32,7 @@ const BrewMode: React.FC<BrewModeProps> = ({
 
   const currentStep = steps[currentStepIndex];
   const nextStep = currentStepIndex < steps.length - 1 ? steps[currentStepIndex + 1] : null;
-  const isLastStep = currentStepIndex === steps.length - 1;
   const isFinished = elapsedTime >= totalBrewTime;
-
-  // Calculate time until next pour
-  const timeUntilNextPour = nextStep
-    ? nextStep.timeSeconds - elapsedTime
-    : totalBrewTime - elapsedTime;
 
   // Auto-start when component mounts
   useEffect(() => {
@@ -62,6 +57,7 @@ const BrewMode: React.FC<BrewModeProps> = ({
   // Update current step based on elapsed time
   useEffect(() => {
     // Find the correct step index based on elapsed time
+    // Start from the end to prioritize later steps (like drawdown) when times match
     for (let i = steps.length - 1; i >= 0; i--) {
       if (elapsedTime >= steps[i].timeSeconds) {
         if (currentStepIndex !== i) {
@@ -97,108 +93,160 @@ const BrewMode: React.FC<BrewModeProps> = ({
         </button>
       </div>
 
-      {/* Progress Indicator */}
-      <div className="mb-6">
-        <div className="flex justify-between text-xs text-caramel/70 mb-2">
-          <span>
-            Step {currentStepIndex + 1} of {steps.length}
-          </span>
-          <span>{Math.round((elapsedTime / totalBrewTime) * 100)}%</span>
-        </div>
-        <div className="w-full h-2 bg-olive-dark/50 rounded-full overflow-hidden">
-          <div
-            className="h-full bg-gradient-to-r from-coffee to-caramel transition-all duration-1000"
-            style={{
-              width: `${Math.min(100, (elapsedTime / totalBrewTime) * 100)}%`,
-            }}
-          ></div>
-        </div>
-      </div>
-
-      {/* Info Header */}
-      <div className="mb-5 space-y-3">
-        <div className="p-3 bg-olive-dark/30 rounded-lg">
-          <p className="text-xs text-caramel text-center">
-            <span className="font-semibold text-cream">Method:</span> {methodName || "Unknown"}
-            {selectedCoffeeId && (
-              <>
-                <span className="ml-2">|</span>
-                <span className="font-semibold text-cream ml-2 mr-2">Coffee:</span>
-                {(() => {
-                  const coffee = coffeeService.getCoffee(selectedCoffeeId);
-                  return coffee ? `${coffee.brand} - ${coffee.name}` : "";
-                })()}
-              </>
-            )}
-          </p>
-        </div>
-      </div>
-
       {/* Show start button before starting */}
       {!isStarted ? (
-        <div className="mb-6 p-6 bg-olive-dark/50 rounded-lg flex flex-col items-center justify-center">
-          <button
-            onClick={() => setIsStarted(true)}
-            className="px-8 py-6 bg-coffee/30 hover:bg-coffee/40 border-2 border-coffee/50 rounded-xl transition-all flex flex-col items-center justify-center gap-2 hover:scale-105"
-          >
-            <svg className="w-12 h-12 text-cream" fill="currentColor" viewBox="0 0 20 20">
-              <path
-                fillRule="evenodd"
-                d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z"
-                clipRule="evenodd"
-              />
-            </svg>
-            <span className="text-cream font-bold text-xl">Start Brew</span>
-          </button>
-          <p className="text-caramel text-sm mt-4">
-            {steps.length} steps • {formatTime(totalBrewTime)} total time
-          </p>
-        </div>
-      ) : !isFinished ? (
-        <div className="mb-6 p-6 bg-olive-dark/50 rounded-lg">
-          <div className="flex items-center justify-between mb-4">
-            <div className="flex items-center gap-3">
-              <div className="w-12 h-12 bg-gradient-to-br from-coffee to-coffee/70 rounded-lg flex items-center justify-center text-cream font-bold text-xl shadow-lg">
-                {currentStep.stepNumber}
+        <>
+          {/* Brew Information List */}
+          <div className="mb-6 p-4 bg-olive-dark/30 rounded-lg">
+            <div className="space-y-2 text-sm">
+              <div className="flex justify-between">
+                <span className="text-caramel/80">Method:</span>
+                <span className="text-cream font-medium">{methodName || "Unknown"}</span>
               </div>
-              <div>
-                <div className="text-xs text-caramel/70">Current Step</div>
-                <div className="text-lg font-semibold text-cream">{currentStep.description}</div>
+              
+              {selectedCoffeeId && (
+                <div className="flex justify-between">
+                  <span className="text-caramel/80">Coffee:</span>
+                  <span className="text-cream font-medium">
+                    {(() => {
+                      const coffee = coffeeService.getCoffee(selectedCoffeeId);
+                      return coffee ? `${coffee.brand} - ${coffee.name}` : "Unknown";
+                    })()}
+                  </span>
+                </div>
+              )}
+              
+              <div className="flex justify-between">
+                <span className="text-caramel/80">Coffee Amount:</span>
+                <span className="text-cream font-medium">{coffeeAmount}g</span>
+              </div>
+              
+              <div className="flex justify-between">
+                <span className="text-caramel/80">Water Amount:</span>
+                <span className="text-cream font-medium">{totalWater.toFixed(0)}g</span>
+              </div>
+              
+              <div className="flex justify-between">
+                <span className="text-caramel/80">Water Ratio:</span>
+                <span className="text-cream font-medium">1:{(totalWater / coffeeAmount).toFixed(1)}</span>
+              </div>
+              
+              {waterTemperature && (
+                <div className="flex justify-between">
+                  <span className="text-caramel/80">Water Temperature:</span>
+                  <span className="text-cream font-medium">{waterTemperature}°C</span>
+                </div>
+              )}
+              
+              <div className="flex justify-between">
+                <span className="text-caramel/80">Steps:</span>
+                <span className="text-cream font-medium">{steps.length}</span>
+              </div>
+              
+              <div className="flex justify-between">
+                <span className="text-caramel/80">Total Time:</span>
+                <span className="text-cream font-medium">{formatTime(totalBrewTime)}</span>
               </div>
             </div>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <div className="p-3 bg-olive/20 rounded-md">
-              <span className="text-caramel/80 text-xs block mb-1">Pour to</span>
-              <span className="font-bold text-cream text-2xl">
-                {currentStep.cumulativeWater.toFixed(1)}g
-              </span>
-            </div>
-            {!isLastStep && timeUntilNextPour > 0 ? (
-              <div className="p-3 bg-coffee/20 border border-coffee/40 rounded-md">
-                <span className="text-caramel/80 text-xs block mb-1">Next pour in</span>
-                <span className="font-bold text-coffee text-2xl">
-                  {formatTime(Math.max(0, timeUntilNextPour))}
-                </span>
-              </div>
-            ) : isLastStep && timeUntilNextPour > 0 ? (
-              <div className="p-3 bg-coffee/20 border border-coffee/40 rounded-md">
-                <span className="text-caramel/80 text-xs block mb-1">Brew finishes in</span>
-                <span className="font-bold text-coffee text-2xl">
-                  {formatTime(Math.max(0, timeUntilNextPour))}
-                </span>
-              </div>
-            ) : (
-              <div className="p-3 bg-olive/20 rounded-md">
-                <span className="text-caramel/80 text-xs block mb-1">Step Time</span>
-                <span className="font-bold text-cream text-2xl">
-                  {formatTime(currentStep.timeSeconds)}
-                </span>
-              </div>
-            )}
+          {/* Start Button */}
+          <div className="mb-0 flex flex-col items-center justify-center">
+            <Button
+              onClick={() => setIsStarted(true)}
+              variant="primary"
+              size="lg"
+              className="gap-2"
+            >
+              <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
+                <path
+                  fillRule="evenodd"
+                  d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z"
+                  clipRule="evenodd"
+                />
+              </svg>
+              Start Brew
+            </Button>
           </div>
-        </div>
+        </>
+      ) : !isFinished ? (
+        <>
+          {/* Progress Indicator */}
+          <div className="mb-6">
+            <div className="flex justify-between text-xs text-caramel/70 mb-2">
+              <span>
+                Step {currentStepIndex + 1} of {steps.length}
+              </span>
+              <span>{Math.round((elapsedTime / totalBrewTime) * 100)}%</span>
+            </div>
+            <div className="w-full h-2 bg-olive-dark/50 rounded-full overflow-hidden">
+              <div
+                className="h-full bg-gradient-to-r from-coffee to-caramel transition-all duration-1000"
+                style={{
+                  width: `${Math.min(100, (elapsedTime / totalBrewTime) * 100)}%`,
+                }}
+              ></div>
+            </div>
+          </div>
+
+          {/* Current Step */}
+          <div className="mb-6 p-6 bg-olive-dark/50 rounded-lg">
+            <div className="flex items-center justify-between mb-4">
+              <div className="flex items-center gap-3">
+                <div className="w-12 h-12 bg-gradient-to-br from-coffee to-coffee/70 rounded-lg flex items-center justify-center text-cream font-bold text-xl shadow-lg">
+                  {currentStep.stepNumber}
+                </div>
+                <div>
+                  <div className="text-xs text-caramel/70">Current Step</div>
+                  <div className="text-lg font-semibold text-cream">{currentStep.description}</div>
+                </div>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div className="p-3 bg-olive/20 rounded-md">
+                <span className="text-caramel/80 text-xs block mb-1">
+                  {currentStep.waterAmount > 0 ? "Pour to" : "Total Water"}
+                </span>
+                <span className="font-bold text-cream text-2xl">
+                  {currentStep.cumulativeWater.toFixed(1)}g
+                </span>
+              </div>
+              <div className="p-3 bg-coffee/20 border border-coffee/40 rounded-md">
+                <span className="text-caramel/80 text-xs block mb-1">Elapsed Time</span>
+                <span className="font-bold text-coffee text-2xl">{formatTime(elapsedTime)}</span>
+              </div>
+            </div>
+          </div>
+
+          {/* Next Step Preview */}
+          {nextStep && (
+            <div className="mb-6 p-4 bg-olive-dark/30 rounded-lg border border-coffee/30">
+              <div className="text-xs text-caramel/70 mb-2">Next Step</div>
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-3">
+                  <div className="w-8 h-8 bg-gradient-to-br from-coffee/50 to-coffee/30 rounded-lg flex items-center justify-center text-cream font-bold text-sm shadow-lg">
+                    {nextStep.stepNumber}
+                  </div>
+                  <div>
+                    <div className="text-sm font-medium text-cream">{nextStep.description}</div>
+                    <div className="text-xs text-caramel/80">
+                      {nextStep.waterAmount > 0
+                        ? `Pour to ${nextStep.cumulativeWater.toFixed(1)}g`
+                        : "Wait for brew to complete"}
+                    </div>
+                  </div>
+                </div>
+                <div className="text-right">
+                  <div className="text-xs text-caramel/70">At</div>
+                  <div className="text-lg font-mono font-bold text-coffee">
+                    {formatTime(nextStep.timeSeconds)}
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
+        </>
       ) : (
         <div className="mb-6 p-8 bg-gradient-to-br from-coffee/30 to-coffee/10 rounded-lg text-center">
           <svg
@@ -214,35 +262,14 @@ const BrewMode: React.FC<BrewModeProps> = ({
           </svg>
           <h3 className="text-2xl font-bold text-cream mb-2">Brew Complete!</h3>
           <p className="text-caramel mb-6">Enjoy your coffee ☕</p>
-          <button
-            onClick={onSaveSession}
-            className="px-6 py-3 bg-coffee/30 hover:bg-coffee/40 border-2 border-coffee/50 rounded-lg transition-all text-cream font-semibold flex items-center justify-center gap-2 mx-auto"
-          >
+          <Button onClick={onSaveSession} variant="primary" size="lg" className="gap-2 mx-auto">
             <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
               <path d="M17 3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V7l-4-4zm-5 16c-1.66 0-3-1.34-3-3s1.34-3 3-3 3 1.34 3 3-1.34 3-3 3zm3-10H5V5h10v4z" />
             </svg>
             Save Session
-          </button>
+          </Button>
         </div>
       )}
-
-      {/* Info Footer */}
-      <div className="p-3 bg-olive-dark/30 rounded-lg">
-        <p className="text-xs text-caramel text-center">
-          <span className="font-semibold text-cream">Coffee:</span> {coffeeAmount}g
-          <span className="ml-2">|</span>
-          <span className="font-semibold text-cream ml-2">Water:</span> {totalWater.toFixed(0)}g
-          <span className="ml-2">|</span>
-          {waterTemperature && (
-            <>
-              <span className="font-semibold text-cream ml-2">Temperature:</span> {waterTemperature}
-              °C <span className="ml-2">|</span>
-            </>
-          )}
-          <span className="font-semibold text-cream ml-2">Total Time:</span>{" "}
-          {formatTime(totalBrewTime)}
-        </p>
-      </div>
     </div>
   );
 };

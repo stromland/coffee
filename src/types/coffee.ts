@@ -14,7 +14,7 @@ export interface BrewStep {
 
 export interface Pour {
   percentage: number; // percentage of total water (0-100)
-  atTimeSeconds: number;
+  durationSeconds: number; // how long this step lasts
   description?: string; // Optional custom description for the pour
 }
 
