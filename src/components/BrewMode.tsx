@@ -151,23 +151,22 @@ const BrewMode: React.FC<BrewModeProps> = ({
           </div>
 
           {/* Start Button */}
-          <div className="mb-0 flex flex-col items-center justify-center">
-            <Button
-              onClick={() => setIsStarted(true)}
-              variant="primary"
-              size="lg"
-              className="gap-2"
-            >
-              <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
-                <path
-                  fillRule="evenodd"
-                  d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z"
-                  clipRule="evenodd"
-                />
-              </svg>
-              Start Brew
-            </Button>
-          </div>
+          <Button
+            onClick={() => setIsStarted(true)}
+            variant="primary"
+            size="lg"
+            fullWidth
+            className="gap-2"
+          >
+            <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
+              <path
+                fillRule="evenodd"
+                d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z"
+                clipRule="evenodd"
+              />
+            </svg>
+            Start Brew
+          </Button>
         </>
       ) : !isFinished ? (
         <>
@@ -190,59 +189,47 @@ const BrewMode: React.FC<BrewModeProps> = ({
           </div>
 
           {/* Current Step */}
-          <div className="mb-6 p-6 bg-olive-dark/50 rounded-lg">
-            <div className="flex items-center justify-between mb-4">
-              <div className="flex items-center gap-3">
-                <div className="w-12 h-12 bg-gradient-to-br from-coffee to-coffee/70 rounded-lg flex items-center justify-center text-cream font-bold text-xl shadow-lg">
-                  {currentStep.stepNumber}
-                </div>
-                <div>
-                  <div className="text-xs text-caramel/70">Current Step</div>
-                  <div className="text-lg font-semibold text-cream">{currentStep.description}</div>
-                </div>
+          <div className="mb-6">
+            <div className="flex items-center gap-4 mb-6">
+              <div className="w-12 h-12 bg-gradient-to-br from-coffee to-coffee/70 rounded-xl flex items-center justify-center text-cream font-bold text-lg shadow-lg">
+                {currentStep.stepNumber}
+              </div>
+              <div className="flex-1">
+                <div className="text-xs text-caramel/70 mb-1">Current Step</div>
+                <div className="text-base font-medium text-caramel">{currentStep.description}</div>
               </div>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <div className="p-3 bg-olive/20 rounded-md">
-                <span className="text-caramel/80 text-xs block mb-1">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+              <div className="p-4 border-2 border-cream/20 rounded-lg">
+                <div className="text-xs text-caramel/70 mb-2">
                   {currentStep.waterAmount > 0 ? "Pour to" : "Total Water"}
-                </span>
-                <span className="font-bold text-cream text-2xl">
-                  {currentStep.cumulativeWater.toFixed(1)}g
-                </span>
+                </div>
+                <div className="text-4xl font-bold text-cream">
+                  {currentStep.cumulativeWater.toFixed(1)}<span className="text-2xl text-caramel/70">g</span>
+                </div>
               </div>
-              <div className="p-3 bg-coffee/20 border border-coffee/40 rounded-md">
-                <span className="text-caramel/80 text-xs block mb-1">Elapsed Time</span>
-                <span className="font-bold text-coffee text-2xl">{formatTime(elapsedTime)}</span>
+              <div className="p-4 border-2 border-coffee/40 rounded-lg">
+                <div className="text-xs text-caramel/70 mb-2">Elapsed Time</div>
+                <div className="text-4xl font-bold text-coffee">
+                  {formatTime(elapsedTime)}
+                </div>
               </div>
             </div>
           </div>
 
           {/* Next Step Preview */}
           {nextStep && (
-            <div className="mb-6 p-4 bg-olive-dark/30 rounded-lg border border-coffee/30">
-              <div className="text-xs text-caramel/70 mb-2">Next Step</div>
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-3">
-                  <div className="w-8 h-8 bg-gradient-to-br from-coffee/50 to-coffee/30 rounded-lg flex items-center justify-center text-cream font-bold text-sm shadow-lg">
-                    {nextStep.stepNumber}
-                  </div>
-                  <div>
-                    <div className="text-sm font-medium text-cream">{nextStep.description}</div>
-                    <div className="text-xs text-caramel/80">
-                      {nextStep.waterAmount > 0
-                        ? `Pour to ${nextStep.cumulativeWater.toFixed(1)}g`
-                        : "Wait for brew to complete"}
-                    </div>
-                  </div>
-                </div>
-                <div className="text-right">
-                  <div className="text-xs text-caramel/70">At</div>
-                  <div className="text-lg font-mono font-bold text-coffee">
-                    {formatTime(nextStep.timeSeconds)}
-                  </div>
-                </div>
+            <div className="p-4 bg-olive-dark/20 rounded-lg border border-caramel/20">
+              <div className="text-xs text-caramel/60 mb-2">Next Step</div>
+              <div className="flex items-baseline gap-2">
+                <span className="text-base font-medium text-cream">
+                  {nextStep.waterAmount > 0
+                    ? `Pour to ${nextStep.cumulativeWater.toFixed(1)}g`
+                    : "Drawdown"}
+                </span>
+                <span className="text-xs text-caramel/60">at</span>
+                <span className="font-mono font-medium text-coffee">{formatTime(nextStep.timeSeconds)}</span>
               </div>
             </div>
           )}
