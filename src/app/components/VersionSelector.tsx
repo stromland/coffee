@@ -47,7 +47,9 @@ const VersionSelector = () => {
   const handleVersionChange = (versionPath: string) => {
     // Preserve current route when switching versions
     const currentRoute = location.pathname.replace(import.meta.env.BASE_URL, "/");
-    const newUrl = `${versionPath}${currentRoute === "/" ? "" : currentRoute}`;
+    // Remove leading slash from currentRoute to avoid double slashes when combining with versionPath
+    const routePath = currentRoute === "/" ? "" : currentRoute.slice(1);
+    const newUrl = `${versionPath}${routePath}`;
 
     // Store preferred version in localStorage
     const versionMatch = versionPath.match(/\/coffee\/([^/]+)/);
