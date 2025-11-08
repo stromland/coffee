@@ -83,6 +83,11 @@ jobs:
         env:
           VITE_BASE_URL: ${{ matrix.base_url }}
 
+      - name: Create 404.html for SPA routing
+        run: |
+          cp dist/index.html dist/404.html
+          echo "Created 404.html from index.html"
+
       - name: Prepare artifact directory
         run: |
           mkdir -p "artifacts/${{ matrix.name }}"
@@ -146,6 +151,11 @@ jobs:
         run: |
           cp public/templates/root-redirect.html combined/index.html
           echo "Created index.html from template"
+
+      - name: Create root 404.html for SPA routing
+        run: |
+          cp public/templates/root-redirect.html combined/404.html
+          echo "Created 404.html from template for root fallback"
 
       - name: Setup Pages
         uses: actions/configure-pages@v4
