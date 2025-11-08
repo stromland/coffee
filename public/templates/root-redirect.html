@@ -1,34 +1,44 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
-<head>
-  <meta charset="UTF-8">
-  <title>Coffee Brew Dashboard</title>
-  <style>
-    body {
-      margin: 0;
-      font-family: system-ui, -apple-system, sans-serif;
-      background: #283618;
-      color: #fefae0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      height: 100vh;
-    }
-    .loader { text-align: center; }
-  </style>
-</head>
-<body>
-  <div class="loader">
-    <h1>☕ Coffee Brew</h1>
-    <p>Redirecting to your version...</p>
-  </div>
-  <script>
-    // Check for preferred version in localStorage
-    const preferredVersion = localStorage.getItem('coffee-preferred-version');
-    const targetVersion = preferredVersion || 'latest';
-    
-    // Redirect to the version
-    window.location.href = '/coffee/' + targetVersion + '/';
-  </script>
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Coffee Brew Dashboard</title>
+    <style>
+      body {
+        margin: 0;
+        font-family:
+          system-ui,
+          -apple-system,
+          sans-serif;
+        background: #283618;
+        color: #fefae0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+      }
+      .loader {
+        text-align: center;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="loader">
+      <h1>☕ Coffee Brew</h1>
+      <p>Redirecting to your version...</p>
+    </div>
+    <script>
+      // Check for preferred version in localStorage
+      const preferredVersion = localStorage.getItem("coffee-preferred-version");
+      const targetVersion = preferredVersion || "local";
+
+      // Remove the first two segments (/coffee/<version>) from the path
+      const segments = window.location.pathname.split("/");
+      const lastVisited = "/" + segments.slice(3).join("/");
+      localStorage.setItem("coffee-last-visited", lastVisited);
+
+      // Redirect to the version
+      window.location.href = "/coffee/" + targetVersion + "/";
+    </script>
+  </body>
 </html>

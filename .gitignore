@@ -13,6 +13,8 @@ dist-ssr
 *.local
 artifacts
 combined
+coffee
+website
 
 # Editor directories and files
 .vscode/*
