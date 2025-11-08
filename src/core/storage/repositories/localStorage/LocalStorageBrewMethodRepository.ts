@@ -14,7 +14,6 @@ export const defaultBrewMethods: BrewMethod[] = [
     category: "Pour over",
     creditName: "Tetsu Kasuya (2016 World Brewers Cup Champion)",
     creditUrl: "https://www.youtube.com/watch?v=wmCW8xSWGZY",
-    drawdownTime: 75,
     pours: [
       { percentage: 16.67, durationSeconds: 45, description: "40% phase - affects sweetness" },
       { percentage: 23.33, durationSeconds: 45, description: "40% phase - affects sweetness" },
@@ -31,7 +30,6 @@ export const defaultBrewMethods: BrewMethod[] = [
     category: "Pour over",
     creditName: "Tetsu Kasuya (2016 World Brewers Cup Champion)",
     creditUrl: "https://www.youtube.com/watch?v=wmCW8xSWGZY",
-    drawdownTime: 90,
     pours: [
       { percentage: 20, durationSeconds: 45, description: "40% phase - affects sweetness" },
       { percentage: 20, durationSeconds: 45, description: "40% phase - affects sweetness" },
@@ -49,7 +47,6 @@ export const defaultBrewMethods: BrewMethod[] = [
     category: "Pour over",
     creditName: "Tetsu Kasuya (2016 World Brewers Cup Champion)",
     creditUrl: "https://www.youtube.com/watch?v=wmCW8xSWGZY",
-    drawdownTime: 60,
     pours: [
       { percentage: 40, durationSeconds: 60, description: "40% phase - affects sweetness" },
       { percentage: 30, durationSeconds: 60, description: "60% phase - affects strength" },
@@ -66,13 +63,12 @@ export const defaultBrewMethods: BrewMethod[] = [
     category: "Pour over",
     creditName: "James Hoffmann",
     creditUrl: "https://www.youtube.com/watch?v=1oB1oDrDkHM",
-    drawdownTime: 70,
     pours: [
       { percentage: 20, durationSeconds: 45, description: "Bloom - swirl gently at 10-15s" },
-      { percentage: 20, durationSeconds: 25, description: "Continue pouring" },
-      { percentage: 20, durationSeconds: 20, description: "Continue pouring" },
-      { percentage: 20, durationSeconds: 20, description: "Continue pouring" },
-      { percentage: 20, durationSeconds: 20, description: "Final pour - swirl at 2:00" },
+      { percentage: 20, durationSeconds: 30, description: "Continue pouring" },
+      { percentage: 20, durationSeconds: 30, description: "Continue pouring" },
+      { percentage: 20, durationSeconds: 30, description: "Continue pouring" },
+      { percentage: 20, durationSeconds: 30, description: "Final pour - swirl at 2:00" },
     ],
     isDefault: true,
     isCustom: false,
@@ -83,11 +79,10 @@ export const defaultBrewMethods: BrewMethod[] = [
     name: "Single Pour",
     description: "Automated single pour method",
     category: "Autodrip",
-    drawdownTime: 180,
     pours: [
       {
         percentage: 100,
-        durationSeconds: 30,
+        durationSeconds: 210,
         description: "Start your coffee maker's single pour cycle",
       },
     ],

@@ -13,7 +13,6 @@ const BrewMethodEditor: React.FC<BrewMethodEditorProps> = ({ method, onSave, onC
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [category, setCategory] = useState("Custom");
-  const [drawdownTime, setDrawdownTime] = useState("60");
   const [pours, setPours] = useState<Pour[]>([
     { percentage: 0, durationSeconds: 30, description: "" },
   ]);
@@ -31,7 +30,6 @@ const BrewMethodEditor: React.FC<BrewMethodEditorProps> = ({ method, onSave, onC
       setName(method.name);
       setDescription(method.description);
       setCategory(method.category || "Custom");
-      setDrawdownTime(method.drawdownTime.toString());
       setPours(method.pours.map((p) => ({ ...p })));
 
       // Convert percentages back to grams for editing
@@ -173,12 +171,6 @@ const BrewMethodEditor: React.FC<BrewMethodEditorProps> = ({ method, onSave, onC
       }
     });
 
-    if (isNaN(Number(drawdownTime))) {
-      newErrors.push("Drawdown time must be a valid number");
-    } else if (Number(drawdownTime) < 0) {
-      newErrors.push("Drawdown time cannot be negative");
-    }
-
     setErrors(newErrors);
     return newErrors.length === 0;
   };
@@ -194,7 +186,6 @@ const BrewMethodEditor: React.FC<BrewMethodEditorProps> = ({ method, onSave, onC
       name: name.trim(),
       description: description.trim(),
       category,
-      drawdownTime: Number(drawdownTime),
       pours: pours.map((p) => ({
         percentage: p.percentage,
         durationSeconds: p.durationSeconds,
@@ -213,7 +204,7 @@ const BrewMethodEditor: React.FC<BrewMethodEditorProps> = ({ method, onSave, onC
   const ratio = parseFloat(waterRatio) || 0;
   const expectedTotalWater = coffee * ratio;
   const totalPercentage = pours.reduce((sum, p) => sum + p.percentage, 0);
-  const totalBrewTime = pours.reduce((sum, p) => sum + p.durationSeconds, 0) + Number(drawdownTime);
+  const totalBrewTime = pours.reduce((sum, p) => sum + p.durationSeconds, 0);
 
   return (
     <div className="bg-olive/20 backdrop-blur-sm rounded-lg p-6 shadow-2xl">
@@ -251,30 +242,15 @@ const BrewMethodEditor: React.FC<BrewMethodEditorProps> = ({ method, onSave, onC
             />
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <div>
-              <label className="block text-sm font-medium text-cream mb-2">Category</label>
-              <input
-                type="text"
-                value={category}
-                onChange={(e) => setCategory(e.target.value)}
-                placeholder="Custom"
-                className="w-full px-4 py-2 bg-olive-dark/50 border border-caramel/30 rounded-lg text-cream placeholder-caramel/50 focus:outline-none focus:border-coffee"
-              />
-            </div>
-
-            <div>
-              <label className="block text-sm font-medium text-cream mb-2">
-                Drawdown Time (seconds)
-              </label>
-              <input
-                type="text"
-                value={drawdownTime}
-                onChange={(e) => setDrawdownTime(e.target.value)}
-                placeholder="60"
-                className="w-full px-4 py-2 bg-olive-dark/50 border border-caramel/30 rounded-lg text-cream focus:outline-none focus:border-coffee"
-              />
-            </div>
+          <div>
+            <label className="block text-sm font-medium text-cream mb-2">Category</label>
+            <input
+              type="text"
+              value={category}
+              onChange={(e) => setCategory(e.target.value)}
+              placeholder="Custom"
+              className="w-full px-4 py-2 bg-olive-dark/50 border border-caramel/30 rounded-lg text-cream placeholder-caramel/50 focus:outline-none focus:border-coffee"
+            />
           </div>
         </div>
 

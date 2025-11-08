@@ -195,7 +195,7 @@ const BrewingSteps: React.FC<BrewingStepsProps> = ({
         {steps.map((step, index) => {
           const nextStep = steps[index + 1];
           const endTime = nextStep ? nextStep.timeSeconds : totalBrewTime;
-          
+
           return (
             <div key={index} className="relative pl-12 sm:pl-20 pb-6 last:pb-0">
               {index < steps.length - 1 && (

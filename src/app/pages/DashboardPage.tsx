@@ -5,13 +5,6 @@ import BrewingPresets from "../../components/BrewingPresets";
 import BrewingSteps from "../../components/BrewingSteps";
 import { useAppContext } from "../AppContext";
 import { brewingService } from "../../core/services";
-import type { BrewStep } from "../../types/coffee";
-
-const calculateTotalBrewTime = (steps: BrewStep[], drawdownTime: number): number => {
-  if (steps.length === 0) return 0;
-  const lastStepTime = steps[steps.length - 1].timeSeconds;
-  return lastStepTime + drawdownTime;
-};
 
 const DashboardPage = () => {
   const navigate = useNavigate();
@@ -62,10 +55,7 @@ const DashboardPage = () => {
             <BrewingSteps
               steps={brewSteps}
               coffeeAmount={settings.coffeeAmount}
-              totalBrewTime={calculateTotalBrewTime(
-                brewSteps,
-                brewingService.getDrawdownTime(selectedMethodId)
-              )}
+              totalBrewTime={brewingService.calculateTotalBrewTime(selectedMethodId)}
               methodName={brewingService.getBrewMethod(selectedMethodId)?.name}
               creditName={brewingService.getBrewMethod(selectedMethodId)?.creditName}
               creditUrl={brewingService.getBrewMethod(selectedMethodId)?.creditUrl}
