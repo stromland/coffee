@@ -82,7 +82,7 @@ const BrewMethodManager: React.FC<BrewMethodManagerProps> = ({ onMethodChange })
       description: "",
       category: "Custom",
       drawdownTime: 60,
-      pours: [{ percentage: 0, atTimeSeconds: 0, description: "" }],
+      pours: [{ percentage: 0, durationSeconds: 30, description: "" }],
       isDefault: false,
       isCustom: true,
     });

@@ -192,33 +192,40 @@ const BrewingSteps: React.FC<BrewingStepsProps> = ({
       </div>
 
       <div className="space-y-4 mb-6">
-        {steps.map((step, index) => (
-          <div key={index} className="relative pl-12 sm:pl-20 pb-6 last:pb-0">
-            {index < steps.length - 1 && (
-              <div className="absolute left-5 sm:left-8 top-10 sm:top-16 w-0.5 h-full bg-gradient-to-b from-coffee/50 to-transparent"></div>
-            )}
+        {steps.map((step, index) => {
+          const nextStep = steps[index + 1];
+          const endTime = nextStep ? nextStep.timeSeconds : totalBrewTime;
+          
+          return (
+            <div key={index} className="relative pl-12 sm:pl-20 pb-6 last:pb-0">
+              {index < steps.length - 1 && (
+                <div className="absolute left-5 sm:left-8 top-10 sm:top-16 w-0.5 h-full bg-gradient-to-b from-coffee/50 to-transparent"></div>
+              )}
 
-            <div className="absolute left-0 top-0 w-10 h-10 sm:w-16 sm:h-16 bg-gradient-to-br from-coffee to-coffee/70 rounded-lg flex items-center justify-center text-cream font-bold text-base sm:text-xl shadow-lg">
-              {step.stepNumber}
-            </div>
-
-            <div className="bg-olive-dark/40 rounded-lg p-4 hover:bg-olive-dark/50 transition-all">
-              <div className="flex justify-between items-start mb-3">
-                <h3 className="font-semibold text-cream text-base">{step.description}</h3>
-                <span className="text-xl font-mono font-bold text-coffee ml-4 bg-coffee/10 px-3 py-1 rounded-md">
-                  {formatTime(step.timeSeconds)}
-                </span>
+              <div className="absolute left-0 top-0 w-10 h-10 sm:w-16 sm:h-16 bg-gradient-to-br from-coffee to-coffee/70 rounded-lg flex items-center justify-center text-cream font-bold text-base sm:text-xl shadow-lg">
+                {step.stepNumber}
               </div>
 
-              <div className="bg-olive/20 px-4 py-3 rounded-md">
-                <span className="text-caramel/80 text-xs block mb-1">Pour to</span>
-                <span className="font-bold text-cream text-2xl">
-                  {step.cumulativeWater.toFixed(1)}g
-                </span>
+              <div className="bg-olive-dark/40 rounded-lg p-4 hover:bg-olive-dark/50 transition-all">
+                <div className="flex justify-between items-start mb-3">
+                  <h3 className="font-semibold text-cream text-base">{step.description}</h3>
+                  <span className="text-xl font-mono font-bold text-coffee ml-4 bg-coffee/10 px-3 py-1 rounded-md">
+                    {formatTime(step.timeSeconds)} → {formatTime(endTime)}
+                  </span>
+                </div>
+
+                {step.waterAmount > 0 && (
+                  <div className="bg-olive/20 px-4 py-3 rounded-md">
+                    <span className="text-caramel/80 text-xs block mb-1">Pour to</span>
+                    <span className="font-bold text-cream text-2xl">
+                      {step.cumulativeWater.toFixed(1)}g
+                    </span>
+                  </div>
+                )}
               </div>
             </div>
-          </div>
-        ))}
+          );
+        })}
       </div>
 
       <div className="p-4 bg-coffee/20 rounded-lg">

@@ -113,23 +113,39 @@ export class BrewMethodService {
     }
 
     let cumulativeWater = 0;
+    let cumulativeTime = 0;
 
-    return method.pours.map((pour, index) => {
+    const pourSteps = method.pours.map((pour, index) => {
       const waterAmount = (pour.percentage / 100) * totalWater;
       cumulativeWater += waterAmount;
 
-      return {
+      const step = {
         stepNumber: index + 1,
         waterAmount,
         cumulativeWater,
-        timeSeconds: pour.atTimeSeconds,
+        timeSeconds: cumulativeTime,
         description: pour.description || `Pour ${index + 1}`,
       };
+
+      cumulativeTime += pour.durationSeconds;
+
+      return step;
     });
+
+    // Add drawdown step
+    const drawdownStep: BrewStep = {
+      stepNumber: pourSteps.length + 1,
+      waterAmount: 0,
+      cumulativeWater,
+      timeSeconds: cumulativeTime,
+      description: "Drawdown",
+    };
+
+    return [...pourSteps, drawdownStep];
   }
 
   /**
-   * Calculate total brew time (last pour + drawdown)
+   * Calculate total brew time (sum of all pour durations + drawdown)
    * @param methodId - The method ID
    * @returns Total brew time in seconds
    */
@@ -140,8 +156,8 @@ export class BrewMethodService {
       throw new Error(`Method not found: ${methodId}`);
     }
 
-    const lastPourTime = Math.max(...method.pours.map((p) => p.atTimeSeconds));
-    return lastPourTime + method.drawdownTime;
+    const totalPourTime = method.pours.reduce((sum, pour) => sum + pour.durationSeconds, 0);
+    return totalPourTime + method.drawdownTime;
   }
 
   /**
@@ -176,17 +192,10 @@ export class BrewMethodService {
         throw new Error(`Pour ${index + 1}: percentage must be between 0 and 100`);
       }
 
-      if (pour.atTimeSeconds < 0) {
-        throw new Error(`Pour ${index + 1}: time cannot be negative`);
+      if (pour.durationSeconds <= 0) {
+        throw new Error(`Pour ${index + 1}: duration must be greater than 0`);
       }
     });
-
-    // Validate times are in ascending order
-    for (let i = 1; i < method.pours.length; i++) {
-      if (method.pours[i].atTimeSeconds < method.pours[i - 1].atTimeSeconds) {
-        throw new Error(`Pour times must be in ascending order`);
-      }
-    }
 
     if (method.drawdownTime < 0) {
       throw new Error("Drawdown time cannot be negative");
