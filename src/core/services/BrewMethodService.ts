@@ -179,7 +179,7 @@ export class BrewMethodService {
     // Validate each pour
     method.pours.forEach((pour, index) => {
       if (pour.percentage <= 0 || pour.percentage > 100) {
-        throw new Error(`Pour ${index + 1}: percentage must be between 0 and 100`);
+        throw new Error(`Pour ${index + 1}: percentage must be greater than 0 and at most 100`);
       }
 
       if (pour.durationSeconds <= 0) {
