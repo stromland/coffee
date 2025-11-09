@@ -436,21 +436,17 @@ const BrewMethodEditor: React.FC<BrewMethodEditorProps> = ({ method, onSave, onC
 
             <div>
               <label className="block text-sm font-medium text-cream mb-2">Category *</label>
-              <div className="relative">
-                <input
-                  type="text"
-                  value={category}
-                  onChange={(e) => setCategory(e.target.value)}
-                  list="categories"
-                  placeholder="Select or type a category"
-                  className="w-full px-4 py-2 bg-olive-dark/50 border border-caramel/30 rounded-lg text-cream placeholder-caramel/50 focus:outline-none focus:border-coffee"
-                />
-                <datalist id="categories">
-                  {getCategories().map((cat) => (
-                    <option key={cat} value={cat} />
-                  ))}
-                </datalist>
-              </div>
+              <select
+                value={category}
+                onChange={(e) => setCategory(e.target.value)}
+                className="w-full px-4 py-2 bg-olive-dark/50 border border-caramel/30 rounded-lg text-cream focus:outline-none focus:border-coffee cursor-pointer"
+              >
+                {getCategories().map((cat) => (
+                  <option key={cat} value={cat}>
+                    {cat}
+                  </option>
+                ))}
+              </select>
               <p className="text-xs text-caramel/70 mt-1">
                 Select from existing categories or type to create a new one
               </p>
