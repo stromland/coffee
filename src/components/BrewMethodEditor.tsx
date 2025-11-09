@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { generateSecureId } from "../shared/utils/idGenerator";
 import { brewMethodService } from "../core/services";
+import { generateSecureId } from "../shared/utils/idGenerator";
 import type { BrewMethod, Pour } from "../types/coffee";
 
 interface BrewMethodEditorProps {
@@ -30,6 +30,8 @@ const BrewMethodEditor: React.FC<BrewMethodEditorProps> = ({ method, onSave, onC
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [category, setCategory] = useState("Custom");
+  const [isAddingCategory, setIsAddingCategory] = useState(false);
+  const [newCategoryName, setNewCategoryName] = useState("");
 
   // Step 2: Helper Values
   const [coffeeAmount, setCoffeeAmount] = useState("20");
@@ -55,7 +57,7 @@ const BrewMethodEditor: React.FC<BrewMethodEditorProps> = ({ method, onSave, onC
       const defaultCoffee = 20;
       const defaultRatio = 15;
       const totalWater = defaultCoffee * defaultRatio;
-      
+
       const steps = method.pours.map((p) => ({
         waterGrams: ((p.percentage / 100) * totalWater).toFixed(0),
         durationSeconds: p.durationSeconds.toString(),
@@ -86,7 +88,17 @@ const BrewMethodEditor: React.FC<BrewMethodEditorProps> = ({ method, onSave, onC
       };
       localStorage.setItem(DRAFT_STORAGE_KEY, JSON.stringify(draft));
     }
-  }, [name, description, category, coffeeAmount, waterRatio, brewingSteps, currentStep, currentBrewingStepIndex, method]);
+  }, [
+    name,
+    description,
+    category,
+    coffeeAmount,
+    waterRatio,
+    brewingSteps,
+    currentStep,
+    currentBrewingStepIndex,
+    method,
+  ]);
 
   const loadDraft = () => {
     const draftJson = localStorage.getItem(DRAFT_STORAGE_KEY);
@@ -98,7 +110,9 @@ const BrewMethodEditor: React.FC<BrewMethodEditorProps> = ({ method, onSave, onC
         setCategory(draft.category || "Custom");
         setCoffeeAmount(draft.coffeeAmount || "20");
         setWaterRatio(draft.waterRatio || "15");
-        setBrewingSteps(draft.brewingSteps || [{ waterGrams: "0", durationSeconds: "30", description: "" }]);
+        setBrewingSteps(
+          draft.brewingSteps || [{ waterGrams: "0", durationSeconds: "30", description: "" }]
+        );
         setCurrentStep(draft.currentStep || "basic");
         setCurrentBrewingStepIndex(draft.currentBrewingStepIndex || 0);
       } catch (e) {
@@ -115,10 +129,6 @@ const BrewMethodEditor: React.FC<BrewMethodEditorProps> = ({ method, onSave, onC
   const getCategories = (): string[] => {
     const allCategories = brewMethodService.getCategories();
     const uniqueCategories = new Set(allCategories);
-    uniqueCategories.add("Custom");
-    uniqueCategories.add("Pour over");
-    uniqueCategories.add("4:6 Method");
-    uniqueCategories.add("James Hoffmann");
     return Array.from(uniqueCategories).sort();
   };
 
@@ -127,13 +137,13 @@ const BrewMethodEditor: React.FC<BrewMethodEditorProps> = ({ method, onSave, onC
     const coffee = parseFloat(coffeeAmount) || 0;
     const ratio = parseFloat(waterRatio) || 0;
     const expectedTotalWater = coffee * ratio;
-    
+
     const gramsNumbers = brewingSteps.map((s) => parseFloat(s.waterGrams) || 0);
     const totalWaterGrams = gramsNumbers.reduce((sum, g) => sum + g, 0);
-    
+
     const durationsNumbers = brewingSteps.map((s) => parseFloat(s.durationSeconds) || 0);
     const totalBrewTime = durationsNumbers.reduce((sum, d) => sum + d, 0);
-    
+
     return {
       expectedTotalWater,
       totalWaterGrams,
@@ -411,7 +421,7 @@ const BrewMethodEditor: React.FC<BrewMethodEditorProps> = ({ method, onSave, onC
         {currentStep === "basic" && (
           <div className="space-y-4">
             <h3 className="text-lg font-semibold text-cream mb-4">Basic Information</h3>
-            
+
             <div>
               <label className="block text-sm font-medium text-cream mb-2">Method Name *</label>
               <input
@@ -436,19 +446,95 @@ const BrewMethodEditor: React.FC<BrewMethodEditorProps> = ({ method, onSave, onC
 
             <div>
               <label className="block text-sm font-medium text-cream mb-2">Category *</label>
-              <select
-                value={category}
-                onChange={(e) => setCategory(e.target.value)}
-                className="w-full px-4 py-2 bg-olive-dark/50 border border-caramel/30 rounded-lg text-cream focus:outline-none focus:border-coffee cursor-pointer"
-              >
-                {getCategories().map((cat) => (
-                  <option key={cat} value={cat}>
-                    {cat}
-                  </option>
-                ))}
-              </select>
+              {!isAddingCategory ? (
+                <div className="relative">
+                  <select
+                    value={category}
+                    onChange={(e) => setCategory(e.target.value)}
+                    className="w-full px-4 py-2 bg-olive-dark/50 border border-caramel/30 rounded-lg text-cream focus:outline-none focus:border-coffee cursor-pointer pr-24 appearance-none"
+                  >
+                    {getCategories().map((cat) => (
+                      <option key={cat} value={cat}>
+                        {cat}
+                      </option>
+                    ))}
+                  </select>
+                  <div className="absolute right-2 top-1/2 -translate-y-1/2 flex items-center gap-1 pointer-events-none">
+                    <svg
+                      className="w-4 h-4 text-caramel"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M19 9l-7 7-7-7"
+                      />
+                    </svg>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setIsAddingCategory(true);
+                      setNewCategoryName("");
+                    }}
+                    className="absolute right-10 top-1/2 -translate-y-1/2 px-3 py-1 bg-coffee/30 hover:bg-coffee/40 text-cream text-sm rounded transition-colors flex items-center gap-1"
+                  >
+                    <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M12 4v16m8-8H4"
+                      />
+                    </svg>
+                    New
+                  </button>
+                </div>
+              ) : (
+                <div className="space-y-2">
+                  <input
+                    type="text"
+                    value={newCategoryName}
+                    onChange={(e) => setNewCategoryName(e.target.value)}
+                    placeholder="Enter new category name"
+                    className="w-full px-4 py-2 bg-olive-dark/50 border border-caramel/30 rounded-lg text-cream placeholder-caramel/50 focus:outline-none focus:border-coffee"
+                    autoFocus
+                  />
+                  <div className="flex gap-2">
+                    <button
+                      type="button"
+                      onClick={() => {
+                        if (newCategoryName.trim()) {
+                          setCategory(newCategoryName.trim());
+                          setIsAddingCategory(false);
+                          setNewCategoryName("");
+                        }
+                      }}
+                      disabled={!newCategoryName.trim()}
+                      className="flex-1 px-4 py-2 bg-coffee hover:bg-coffee/80 text-cream rounded-lg font-semibold transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
+                    >
+                      Add
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setIsAddingCategory(false);
+                        setNewCategoryName("");
+                      }}
+                      className="flex-1 px-4 py-2 bg-olive-dark/50 hover:bg-olive-dark/70 text-caramel hover:text-cream rounded-lg font-semibold transition-colors"
+                    >
+                      Cancel
+                    </button>
+                  </div>
+                </div>
+              )}
               <p className="text-xs text-caramel/70 mt-1">
-                Select from existing categories or type to create a new one
+                {isAddingCategory
+                  ? "Enter a name for the new category"
+                  : "Select a category or create a new one"}
               </p>
             </div>
           </div>
@@ -458,7 +544,7 @@ const BrewMethodEditor: React.FC<BrewMethodEditorProps> = ({ method, onSave, onC
         {currentStep === "helper" && (
           <div className="space-y-4">
             <h3 className="text-lg font-semibold text-cream mb-4">Helper Values</h3>
-            
+
             <div className="p-4 bg-olive-dark/30 rounded-lg border border-coffee/30">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
@@ -475,7 +561,9 @@ const BrewMethodEditor: React.FC<BrewMethodEditorProps> = ({ method, onSave, onC
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-cream mb-2">Water Ratio (1:X) *</label>
+                  <label className="block text-sm font-medium text-cream mb-2">
+                    Water Ratio (1:X) *
+                  </label>
                   <input
                     type="text"
                     inputMode="decimal"
@@ -486,7 +574,7 @@ const BrewMethodEditor: React.FC<BrewMethodEditorProps> = ({ method, onSave, onC
                   />
                 </div>
               </div>
-              
+
               <div className="mt-4 pt-4 border-t border-caramel/20">
                 <div className="flex items-center justify-between">
                   <span className="text-sm text-caramel/70">Total Water</span>
@@ -495,7 +583,8 @@ const BrewMethodEditor: React.FC<BrewMethodEditorProps> = ({ method, onSave, onC
                   </span>
                 </div>
                 <p className="text-xs text-caramel/70 mt-2">
-                  This is calculated as coffee amount × water ratio. You can navigate back to adjust these values at any time.
+                  This is calculated as coffee amount × water ratio. You can navigate back to adjust
+                  these values at any time.
                 </p>
               </div>
             </div>
@@ -752,12 +841,7 @@ const BrewMethodEditor: React.FC<BrewMethodEditorProps> = ({ method, onSave, onC
             disabled={currentStep === "basic"}
             className="flex-1 px-6 py-3 bg-olive-dark/50 hover:bg-olive-dark/70 text-caramel hover:text-cream rounded-lg font-semibold transition-colors disabled:opacity-30 disabled:cursor-not-allowed flex items-center justify-center gap-2"
           >
-            <svg
-              className="w-4 h-4"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path
                 strokeLinecap="round"
                 strokeLinejoin="round"
@@ -784,12 +868,7 @@ const BrewMethodEditor: React.FC<BrewMethodEditorProps> = ({ method, onSave, onC
                 disabled={!isCurrentStepValid()}
                 className="flex-1 px-6 py-3 bg-coffee/30 hover:bg-coffee/40 text-cream rounded-lg font-semibold transition-colors disabled:opacity-30 disabled:cursor-not-allowed flex items-center justify-center gap-2"
               >
-                <svg
-                  className="w-4 h-4"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path
                     strokeLinecap="round"
                     strokeLinejoin="round"
@@ -817,12 +896,7 @@ const BrewMethodEditor: React.FC<BrewMethodEditorProps> = ({ method, onSave, onC
               className="flex-1 px-6 py-3 bg-coffee hover:bg-coffee/80 text-cream rounded-lg font-semibold transition-colors disabled:opacity-30 disabled:cursor-not-allowed flex items-center justify-center gap-2"
             >
               Next
-              <svg
-                className="w-4 h-4"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path
                   strokeLinecap="round"
                   strokeLinejoin="round"
