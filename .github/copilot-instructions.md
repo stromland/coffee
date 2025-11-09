@@ -43,6 +43,10 @@
   - Use inline forms or dedicated pages/sections instead of modals
   - Keep forms visible and integrated into the page flow
   - This improves UX by allowing users to see context while filling forms
+- **Mobile-first responsive design**: All features and UI changes must be fully functional and visually appropriate on smaller screens
+  - Test layouts on mobile viewports (use responsive Tailwind classes like `sm:`, `md:`, `lg:`)
+  - Ensure buttons, inputs, and interactive elements are accessible and not cut off on small screens
+  - Stack elements vertically on mobile when horizontal layouts become cramped
 
 ## Git Workflow
 
