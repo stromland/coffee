@@ -29,14 +29,21 @@ const BrewMode: React.FC<BrewModeProps> = ({
   const [currentStepIndex, setCurrentStepIndex] = useState(0);
   const [elapsedTime, setElapsedTime] = useState(0);
   const [isStarted, setIsStarted] = useState(false);
+  const [startTime, setStartTime] = useState<Date | null>(null);
 
   const currentStep = steps[currentStepIndex];
   const nextStep = currentStepIndex < steps.length - 1 ? steps[currentStepIndex + 1] : null;
   const isFinished = elapsedTime >= totalBrewTime;
+  const isLastStep = currentStepIndex === steps.length - 1;
+  const remainingTime = totalBrewTime - elapsedTime;
 
   // Auto-start when component mounts
   useEffect(() => {
     if (!isStarted) return;
+
+    if (!startTime) {
+      setStartTime(new Date());
+    }
 
     const interval = setInterval(() => {
       setElapsedTime((prev) => {
@@ -52,7 +59,7 @@ const BrewMode: React.FC<BrewModeProps> = ({
     }, 1000);
 
     return () => clearInterval(interval);
-  }, [totalBrewTime, isStarted]);
+  }, [totalBrewTime, isStarted, startTime]);
 
   // Update current step based on elapsed time
   useEffect(() => {
@@ -220,7 +227,7 @@ const BrewMode: React.FC<BrewModeProps> = ({
           </div>
 
           {/* Next Step Preview */}
-          {nextStep && (
+          {nextStep ? (
             <div className="p-4 bg-olive-dark/20 rounded-lg border border-caramel/20">
               <div className="text-xs text-caramel/60 mb-2">Next Step</div>
               <div className="flex items-baseline gap-2">
@@ -232,6 +239,18 @@ const BrewMode: React.FC<BrewModeProps> = ({
                 <span className="text-xs text-caramel/60">at</span>
                 <span className="font-mono font-medium text-coffee">
                   {formatTime(nextStep.timeSeconds)}
+                </span>
+              </div>
+            </div>
+          ) : (
+            <div className="p-4 bg-olive-dark/20 rounded-lg border border-caramel/20">
+              <div className="text-xs text-caramel/60 mb-2">Final Step</div>
+              <div className="flex items-baseline gap-2">
+                <span className="text-base font-medium text-cream">
+                  Finishing at
+                </span>
+                <span className="font-mono font-medium text-coffee">
+                  {formatTime(totalBrewTime)}
                 </span>
               </div>
             </div>
