@@ -34,8 +34,6 @@ const BrewMode: React.FC<BrewModeProps> = ({
   const currentStep = steps[currentStepIndex];
   const nextStep = currentStepIndex < steps.length - 1 ? steps[currentStepIndex + 1] : null;
   const isFinished = elapsedTime >= totalBrewTime;
-  const isLastStep = currentStepIndex === steps.length - 1;
-  const remainingTime = totalBrewTime - elapsedTime;
 
   // Auto-start when component mounts
   useEffect(() => {
@@ -246,9 +244,7 @@ const BrewMode: React.FC<BrewModeProps> = ({
             <div className="p-4 bg-olive-dark/20 rounded-lg border border-caramel/20">
               <div className="text-xs text-caramel/60 mb-2">Final Step</div>
               <div className="flex items-baseline gap-2">
-                <span className="text-base font-medium text-cream">
-                  Finishing at
-                </span>
+                <span className="text-base font-medium text-cream">Finishing at</span>
                 <span className="font-mono font-medium text-coffee">
                   {formatTime(totalBrewTime)}
                 </span>
