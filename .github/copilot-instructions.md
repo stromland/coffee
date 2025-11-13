@@ -68,3 +68,10 @@ When instructed to start working on a GitHub issue:
    - Detailed description of changes
    - Reference to the issue (e.g., "Closes #16")
    - Update the issue with the PR link
+
+## Active Technologies
+- TypeScript 5.9.3 with React 19.1.1 + React, Vite 7.1.12 (build tool), Tailwind CSS 3.4.18 (001-coffee-calculator)
+- LocalStorage via repository pattern (not needed for calculator state - ephemeral) (001-coffee-calculator)
+
+## Recent Changes
+- 001-coffee-calculator: Added TypeScript 5.9.3 with React 19.1.1 + React, Vite 7.1.12 (build tool), Tailwind CSS 3.4.18

@@ -1,7 +1,7 @@
-import { createContext, useContext, useState, useEffect } from "react";
 import type { ReactNode } from "react";
-import type { CoffeeSettings, BrewStep, BrewingSession } from "../types/coffee";
+import { createContext, useContext, useEffect, useState } from "react";
 import { brewingService, coffeeService } from "../core/services";
+import type { BrewStep, BrewingSession, CoffeeSettings } from "../types/coffee";
 
 interface AppContextValue {
   settings: CoffeeSettings;
@@ -33,8 +33,8 @@ export const useAppContext = () => {
 export const AppProvider = ({ children }: { children: ReactNode }) => {
   const [settings, setSettings] = useState<CoffeeSettings>({
     coffeeAmount: 20,
-    waterRatio: 15,
-    totalWater: 300,
+    waterRatio: 16,
+    totalWater: 320,
   });
 
   const [selectedMethodId, setSelectedMethodId] = useState<string>("4-6-original");

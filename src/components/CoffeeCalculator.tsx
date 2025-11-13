@@ -1,7 +1,7 @@
 import React from "react";
-import type { CoffeeSettings } from "../types/coffee";
 import { brewingService } from "../core/services";
-import { Input, Select, Card } from "../shared/components/ui";
+import { Card, Input, Select } from "../shared/components/ui";
+import type { CoffeeSettings } from "../types/coffee";
 
 interface CoffeeCalculatorProps {
   settings: CoffeeSettings;
@@ -10,7 +10,9 @@ interface CoffeeCalculatorProps {
 
 const CoffeeCalculator: React.FC<CoffeeCalculatorProps> = ({ settings, onSettingsChange }) => {
   const handleCoffeeAmountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const coffeeAmount = parseFloat(e.target.value) || 0;
+    const inputValue = parseFloat(e.target.value);
+    // Prevent negative values
+    const coffeeAmount = inputValue < 0 ? 0 : inputValue || 0;
     const totalWater = brewingService.calculateTotalWater(coffeeAmount, settings.waterRatio);
     onSettingsChange({ ...settings, coffeeAmount, totalWater });
   };
@@ -27,7 +29,7 @@ const CoffeeCalculator: React.FC<CoffeeCalculatorProps> = ({ settings, onSetting
         <Input
           id="coffee-amount"
           type="number"
-          min="1"
+          min="0"
           step="0.5"
           value={settings.coffeeAmount || ""}
           onChange={handleCoffeeAmountChange}
@@ -45,10 +47,10 @@ const CoffeeCalculator: React.FC<CoffeeCalculatorProps> = ({ settings, onSetting
             { value: 12, label: "1:12 (Strong)" },
             { value: 13, label: "1:13" },
             { value: 14, label: "1:14" },
-            { value: 15, label: "1:15 (Balanced)" },
-            { value: 16, label: "1:16" },
-            { value: 17, label: "1:17 (Light)" },
-            { value: 18, label: "1:18" },
+            { value: 15, label: "1:15" },
+            { value: 16, label: "1:16 (Balanced)" },
+            { value: 17, label: "1:17" },
+            { value: 18, label: "1:18 (Light)" },
             { value: 19, label: "1:19" },
             { value: 20, label: "1:20 (Very Light)" },
           ]}
