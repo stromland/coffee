@@ -29,13 +29,42 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
     ref
   ) => {
     const baseStyles =
-      "inline-flex items-center justify-center rounded-md font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-coffee focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed";
+      "inline-flex items-center justify-center rounded-md font-medium " +
+      "transition-all duration-200 ease-in-out " +
+      "focus:outline-none focus:ring-2 focus:ring-coffee/50 focus:ring-offset-2 " +
+      "focus:ring-offset-olive-dark dark:focus:ring-offset-olive-dark " +
+      "disabled:opacity-50 disabled:cursor-not-allowed " +
+      "transform hover:-translate-y-0.5 active:translate-y-0 " +
+      "hover:scale-105 active:scale-95";
 
     const variantStyles = {
-      primary: "bg-coffee text-cream hover:bg-coffee/90",
-      secondary: "bg-coffee/30 hover:bg-coffee/40 border border-coffee/50 text-cream",
-      danger: "bg-red-600 text-white hover:bg-red-700",
-      ghost: "bg-transparent text-caramel hover:text-cream hover:bg-olive/20",
+      primary:
+        "bg-gradient-to-r from-coffee to-coffee/90 dark:from-coffee dark:to-coffee/90 " +
+        "text-cream dark:text-cream " +
+        "shadow-depth-2 dark:shadow-depth-2 " +
+        "hover:from-coffee/90 hover:to-coffee dark:hover:from-coffee/90 dark:hover:to-coffee " +
+        "hover:shadow-depth-3 dark:hover:shadow-depth-3 " +
+        "active:shadow-depth-1 dark:active:shadow-depth-1",
+      secondary:
+        "bg-olive/30 dark:bg-olive/30 " +
+        "hover:bg-olive/40 dark:hover:bg-olive/40 " +
+        "border border-coffee/50 dark:border-coffee/50 " +
+        "text-cream dark:text-cream " +
+        "shadow-depth-1 dark:shadow-depth-1 " +
+        "hover:shadow-depth-2 dark:hover:shadow-depth-2 " +
+        "backdrop-blur-sm",
+      danger:
+        "bg-gradient-to-r from-red-600 to-red-700 dark:from-red-600 dark:to-red-700 " +
+        "text-white dark:text-white " +
+        "shadow-depth-2 dark:shadow-depth-2 " +
+        "hover:from-red-700 hover:to-red-800 dark:hover:from-red-700 dark:hover:to-red-800 " +
+        "hover:shadow-depth-3 dark:hover:shadow-depth-3",
+      ghost:
+        "bg-transparent dark:bg-transparent " +
+        "text-caramel dark:text-caramel " +
+        "hover:text-cream dark:hover:text-cream " +
+        "hover:bg-olive/20 dark:hover:bg-olive/20 " +
+        "backdrop-blur-sm",
     };
 
     const sizeStyles = {

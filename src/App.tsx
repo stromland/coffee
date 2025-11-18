@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import { AppProvider } from "./app/AppContext";
 import AppLayout from "./app/components/AppLayout";
+import { ThemeProvider } from "./shared/context/ThemeContext";
 
 function App() {
   const navigate = useNavigate();
@@ -19,11 +20,13 @@ function App() {
   }, [navigate, location]);
 
   return (
-    <AppProvider>
-      <AppLayout>
-        <Outlet />
-      </AppLayout>
-    </AppProvider>
+    <ThemeProvider>
+      <AppProvider>
+        <AppLayout>
+          <Outlet />
+        </AppLayout>
+      </AppProvider>
+    </ThemeProvider>
   );
 }
 

@@ -72,7 +72,10 @@ export const Modal: React.FC<ModalProps> = ({
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm"
+      className="fixed inset-0 z-50 flex items-center justify-center p-4
+                 bg-black/70 dark:bg-black/80
+                 backdrop-blur-md
+                 animate-fade-in"
       onClick={handleBackdropClick}
       role="dialog"
       aria-modal="true"
@@ -80,19 +83,34 @@ export const Modal: React.FC<ModalProps> = ({
     >
       <div
         ref={modalRef}
-        className={`bg-olive/95 backdrop-blur-sm rounded-lg shadow-2xl w-full ${sizeStyles[size]} max-h-[90vh] overflow-hidden flex flex-col`}
+        className={`bg-gradient-to-br from-olive/95 via-olive-dark/90 to-olive/95
+                    dark:from-olive/95 dark:via-olive-dark/90 dark:to-olive/95
+                    backdrop-blur-xl backdrop-saturate-150
+                    border border-white/10 dark:border-white/10
+                    rounded-lg
+                    shadow-depth-4 dark:shadow-depth-4
+                    w-full ${sizeStyles[size]}
+                    max-h-[90vh]
+                    overflow-hidden
+                    flex flex-col
+                    animate-scale-in`}
       >
         {title && (
-          <div className="flex items-center justify-between p-6 border-b border-coffee/20">
+          <div className="flex items-center justify-between p-6 border-b border-coffee/20 dark:border-coffee/20">
             <div className="flex items-center gap-2">
-              <div className="w-1 h-6 bg-coffee rounded-full"></div>
-              <h2 id={titleId} className="text-2xl font-bold text-cream">
+              <div className="w-1 h-6 bg-gradient-to-b from-coffee via-caramel to-coffee rounded-full shadow-glow-coffee"></div>
+              <h2 id={titleId} className="text-2xl font-bold text-cream dark:text-cream">
                 {title}
               </h2>
             </div>
             <button
               onClick={onClose}
-              className="text-caramel hover:text-cream transition-colors"
+              className="text-caramel dark:text-caramel
+                         hover:text-cream dark:hover:text-cream
+                         hover:bg-olive/20 dark:hover:bg-olive/20
+                         rounded-md p-1
+                         transition-all duration-200
+                         hover:scale-110 active:scale-95"
               aria-label="Close modal"
             >
               <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -106,8 +124,14 @@ export const Modal: React.FC<ModalProps> = ({
             </button>
           </div>
         )}
-        <div className="flex-1 overflow-y-auto p-6">{children}</div>
-        {footer && <div className="p-6 border-t border-coffee/20 bg-olive-dark/30">{footer}</div>}
+        <div className="flex-1 overflow-y-auto p-6 text-cream dark:text-cream">{children}</div>
+        {footer && (
+          <div className="p-6 border-t border-coffee/20 dark:border-coffee/20
+                          bg-olive-dark/30 dark:bg-olive-dark/30
+                          backdrop-blur-sm">
+            {footer}
+          </div>
+        )}
       </div>
     </div>
   );
