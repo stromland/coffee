@@ -40,12 +40,12 @@ export const PageLayout: React.FC<PageLayoutProps> = ({
             {title && (
               <div className="flex items-center gap-3">
                 <div className="w-1 h-8 bg-gradient-to-b from-coffee via-caramel to-coffee rounded-full shadow-glow-coffee"></div>
-                <h1 className="text-3xl font-bold text-cream dark:text-cream">{title}</h1>
+                <h1 className="text-3xl font-bold text-olive-dark dark:text-cream">{title}</h1>
               </div>
             )}
             {actions && <div className="flex gap-2">{actions}</div>}
           </div>
-          {description && <p className="text-caramel dark:text-caramel ml-7">{description}</p>}
+          {description && <p className="text-olive dark:text-caramel ml-7">{description}</p>}
         </div>
       )}
       {children}

@@ -24,13 +24,13 @@ export const Section: React.FC<SectionProps> = ({
 }) => {
   return (
     <section
-      className={`bg-gradient-to-br from-olive/30 via-olive-dark/40 to-olive/20
+      className={`bg-gradient-to-br from-white/70 via-white/60 to-white/50
                   dark:from-olive/30 dark:via-olive-dark/40 dark:to-olive/20
                   backdrop-blur-xl backdrop-saturate-150
-                  border border-white/10 dark:border-white/10
+                  border border-olive/10 dark:border-white/10
                   rounded-lg p-6
-                  shadow-depth-2 dark:shadow-depth-2
-                  hover:shadow-depth-3 dark:hover:shadow-depth-3
+                  shadow-depth-2-light dark:shadow-depth-2
+                  hover:shadow-depth-3-light dark:hover:shadow-depth-3
                   transition-all duration-300 ease-in-out
                   mb-8
                   animate-fade-in
@@ -43,12 +43,12 @@ export const Section: React.FC<SectionProps> = ({
             {title && (
               <div className="flex items-center gap-2">
                 <div className="w-1 h-6 bg-gradient-to-b from-coffee via-caramel to-coffee rounded-full shadow-glow-coffee"></div>
-                <h2 className="text-xl font-bold text-cream dark:text-cream">{title}</h2>
+                <h2 className="text-xl font-bold text-olive-dark dark:text-cream">{title}</h2>
               </div>
             )}
             {actions && <div className="flex gap-2">{actions}</div>}
           </div>
-          {description && <p className="text-sm text-caramel/70 dark:text-caramel/70 ml-6">{description}</p>}
+          {description && <p className="text-sm text-olive/80 dark:text-caramel/70 ml-6">{description}</p>}
         </div>
       )}
       {children}

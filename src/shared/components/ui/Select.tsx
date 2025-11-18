@@ -24,16 +24,16 @@ export const Select = React.forwardRef<HTMLSelectElement, SelectProps>(
 
     const baseStyles =
       "px-4 py-2 " +
-      "bg-olive-dark/50 dark:bg-olive-dark/50 " +
+      "bg-white/80 dark:bg-olive-dark/50 " +
       "backdrop-blur-sm " +
       "border rounded-md " +
-      "text-cream dark:text-cream " +
-      "shadow-depth-1 dark:shadow-depth-1 " +
-      "focus:shadow-depth-2 dark:focus:shadow-depth-2 " +
+      "text-olive-dark dark:text-cream " +
+      "shadow-depth-1-light dark:shadow-depth-1 " +
+      "focus:shadow-depth-2-light dark:focus:shadow-depth-2 " +
       "focus:ring-2 focus:ring-coffee/50 focus:ring-offset-2 " +
-      "focus:ring-offset-olive-dark dark:focus:ring-offset-olive-dark " +
+      "focus:ring-offset-cream-light dark:focus:ring-offset-olive-dark " +
       "transition-all duration-200 ease-in-out " +
-      "hover:bg-olive-dark/60 dark:hover:bg-olive-dark/60 " +
+      "hover:bg-white dark:hover:bg-olive-dark/60 " +
       "cursor-pointer";
 
     const borderStyle = error
@@ -45,7 +45,7 @@ export const Select = React.forwardRef<HTMLSelectElement, SelectProps>(
     return (
       <div className={fullWidth ? "w-full" : ""}>
         {label && (
-          <label htmlFor={selectId} className="block text-sm font-medium text-caramel dark:text-caramel mb-2">
+          <label htmlFor={selectId} className="block text-sm font-medium text-olive dark:text-caramel mb-2">
             {label}
           </label>
         )}
@@ -62,7 +62,7 @@ export const Select = React.forwardRef<HTMLSelectElement, SelectProps>(
           ))}
         </select>
         {error && <p className="mt-1 text-sm text-red-500 dark:text-red-400">{error}</p>}
-        {helperText && !error && <p className="mt-1 text-xs text-caramel/70 dark:text-caramel/70">{helperText}</p>}
+        {helperText && !error && <p className="mt-1 text-xs text-olive/70 dark:text-caramel/70">{helperText}</p>}
       </div>
     );
   }

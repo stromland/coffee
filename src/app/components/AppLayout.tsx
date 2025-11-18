@@ -16,7 +16,7 @@ const AppLayout = ({ children }: AppLayoutProps) => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-olive-dark via-background-tertiary to-olive-dark dark:from-olive-dark dark:via-background-tertiary dark:to-olive-dark">
+    <div className="min-h-screen bg-gradient-to-br from-cream-light via-cream to-cream-light dark:from-olive-dark dark:via-background-tertiary dark:to-olive-dark">
       <div
         className="min-h-screen"
         style={{
@@ -31,10 +31,10 @@ const AppLayout = ({ children }: AppLayoutProps) => {
               <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
                 <div className="flex items-center justify-between gap-4">
                   <div>
-                    <h1 className="text-3xl md:text-4xl font-bold text-cream dark:text-cream mb-1 flex items-center gap-3">
+                    <h1 className="text-3xl md:text-4xl font-bold text-olive-dark dark:text-cream mb-1 flex items-center gap-3">
                       ☕ Coffee Brew
                     </h1>
-                    <p className="text-caramel/80 dark:text-caramel/80">Your digital barista</p>
+                    <p className="text-olive dark:text-caramel/80">Your digital barista</p>
                   </div>
                   <div className="md:hidden">
                     <VersionSelector />
@@ -45,10 +45,10 @@ const AppLayout = ({ children }: AppLayoutProps) => {
                   <Link
                     to="/"
                     className={`px-4 py-2 rounded-lg transition-all duration-200 font-medium text-sm flex items-center gap-2
-                                shadow-depth-1 dark:shadow-depth-1 hover:shadow-depth-2 dark:hover:shadow-depth-2 ${
+                                shadow-depth-1-light dark:shadow-depth-1 hover:shadow-depth-2-light dark:hover:shadow-depth-2 ${
                       isActive("/")
-                        ? "bg-gradient-to-r from-coffee to-coffee/90 dark:from-coffee dark:to-coffee/90 text-cream dark:text-cream"
-                        : "bg-olive/20 dark:bg-olive/20 text-caramel dark:text-caramel hover:text-cream dark:hover:text-cream hover:bg-olive/30 dark:hover:bg-olive/30 backdrop-blur-sm"
+                        ? "bg-gradient-to-r from-coffee to-coffee/90 text-white dark:text-cream"
+                        : "bg-white/60 dark:bg-olive/20 text-olive-dark dark:text-caramel hover:text-coffee dark:hover:text-cream hover:bg-white/80 dark:hover:bg-olive/30 backdrop-blur-sm"
                     }`}
                   >
                     <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -64,10 +64,10 @@ const AppLayout = ({ children }: AppLayoutProps) => {
                   <Link
                     to="/methods"
                     className={`px-4 py-2 rounded-lg transition-all duration-200 font-medium text-sm flex items-center gap-2
-                                shadow-depth-1 dark:shadow-depth-1 hover:shadow-depth-2 dark:hover:shadow-depth-2 ${
+                                shadow-depth-1-light dark:shadow-depth-1 hover:shadow-depth-2-light dark:hover:shadow-depth-2 ${
                       isActive("/methods")
-                        ? "bg-gradient-to-r from-coffee to-coffee/90 dark:from-coffee dark:to-coffee/90 text-cream dark:text-cream"
-                        : "bg-olive/20 dark:bg-olive/20 text-caramel dark:text-caramel hover:text-cream dark:hover:text-cream hover:bg-olive/30 dark:hover:bg-olive/30 backdrop-blur-sm"
+                        ? "bg-gradient-to-r from-coffee to-coffee/90 text-white dark:text-cream"
+                        : "bg-white/60 dark:bg-olive/20 text-olive-dark dark:text-caramel hover:text-coffee dark:hover:text-cream hover:bg-white/80 dark:hover:bg-olive/30 backdrop-blur-sm"
                     }`}
                   >
                     <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -83,10 +83,10 @@ const AppLayout = ({ children }: AppLayoutProps) => {
                   <Link
                     to="/coffee"
                     className={`px-4 py-2 rounded-lg transition-all duration-200 font-medium text-sm flex items-center gap-2
-                                shadow-depth-1 dark:shadow-depth-1 hover:shadow-depth-2 dark:hover:shadow-depth-2 ${
+                                shadow-depth-1-light dark:shadow-depth-1 hover:shadow-depth-2-light dark:hover:shadow-depth-2 ${
                       isActive("/coffee")
-                        ? "bg-gradient-to-r from-coffee to-coffee/90 dark:from-coffee dark:to-coffee/90 text-cream dark:text-cream"
-                        : "bg-olive/20 dark:bg-olive/20 text-caramel dark:text-caramel hover:text-cream dark:hover:text-cream hover:bg-olive/30 dark:hover:bg-olive/30 backdrop-blur-sm"
+                        ? "bg-gradient-to-r from-coffee to-coffee/90 text-white dark:text-cream"
+                        : "bg-white/60 dark:bg-olive/20 text-olive-dark dark:text-caramel hover:text-coffee dark:hover:text-cream hover:bg-white/80 dark:hover:bg-olive/30 backdrop-blur-sm"
                     }`}
                   >
                     <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -98,10 +98,10 @@ const AppLayout = ({ children }: AppLayoutProps) => {
                   <Link
                     to="/history"
                     className={`px-4 py-2 rounded-lg transition-all duration-200 font-medium text-sm flex items-center gap-2
-                                shadow-depth-1 dark:shadow-depth-1 hover:shadow-depth-2 dark:hover:shadow-depth-2 ${
+                                shadow-depth-1-light dark:shadow-depth-1 hover:shadow-depth-2-light dark:hover:shadow-depth-2 ${
                       isActive("/history")
-                        ? "bg-gradient-to-r from-coffee to-coffee/90 dark:from-coffee dark:to-coffee/90 text-cream dark:text-cream"
-                        : "bg-olive/20 dark:bg-olive/20 text-caramel dark:text-caramel hover:text-cream dark:hover:text-cream hover:bg-olive/30 dark:hover:bg-olive/30 backdrop-blur-sm"
+                        ? "bg-gradient-to-r from-coffee to-coffee/90 text-white dark:text-cream"
+                        : "bg-white/60 dark:bg-olive/20 text-olive-dark dark:text-caramel hover:text-coffee dark:hover:text-cream hover:bg-white/80 dark:hover:bg-olive/30 backdrop-blur-sm"
                     }`}
                   >
                     <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -124,15 +124,15 @@ const AppLayout = ({ children }: AppLayoutProps) => {
           <main>{children}</main>
 
           <footer className="mt-12 pt-6 pb-20 md:pb-0 border-t border-olive/20 dark:border-olive/20">
-            <div className="flex flex-col justify-center items-center gap-2 text-caramel/60 dark:text-caramel/60">
+            <div className="flex flex-col justify-center items-center gap-2 text-olive/70 dark:text-caramel/60">
               <div className="flex justify-center items-center gap-2">
                 <span className="text-sm">Built with ☕</span>
-                <span className="text-caramel/40 dark:text-caramel/40">•</span>
+                <span className="text-olive/50 dark:text-caramel/40">•</span>
                 <a
                   href="https://github.com/stromland/coffee"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center gap-2 text-sm hover:text-cream dark:hover:text-cream transition-colors duration-200"
+                  className="flex items-center gap-2 text-sm hover:text-coffee dark:hover:text-cream transition-colors duration-200"
                   aria-label="View source on GitHub"
                 >
                   <svg
@@ -150,7 +150,7 @@ const AppLayout = ({ children }: AppLayoutProps) => {
                   <span>View on GitHub</span>
                 </a>
               </div>
-              <span className="text-xs text-caramel/50 dark:text-caramel/50">
+              <span className="text-xs text-olive/60 dark:text-caramel/50">
                 Built:{" "}
                 {new Date(
                   typeof __BUILD_TIME__ !== "undefined" ? __BUILD_TIME__ : new Date().toISOString()
@@ -170,10 +170,10 @@ const AppLayout = ({ children }: AppLayoutProps) => {
       {/* Mobile Bottom Navigation - Visible only on mobile */}
       <nav
         className="md:hidden fixed bottom-0 left-0 right-0
-                   bg-olive-dark/95 dark:bg-olive-dark/95
+                   bg-white/95 dark:bg-olive-dark/95
                    backdrop-blur-xl backdrop-saturate-150
-                   border-t border-olive/30 dark:border-olive/30
-                   shadow-depth-3 dark:shadow-depth-3
+                   border-t border-olive/20 dark:border-olive/30
+                   shadow-depth-3-light dark:shadow-depth-3
                    z-50"
         style={{ paddingBottom: "max(0.25rem, env(safe-area-inset-bottom))" }}
       >
@@ -184,8 +184,8 @@ const AppLayout = ({ children }: AppLayoutProps) => {
                         transition-all duration-200 min-w-[60px] min-h-[60px]
                         ${
               isActive("/")
-                ? "bg-coffee/30 dark:bg-coffee/30 text-cream dark:text-cream shadow-depth-1 dark:shadow-depth-1"
-                : "text-caramel dark:text-caramel hover:text-cream dark:hover:text-cream hover:bg-olive/20 dark:hover:bg-olive/20"
+                ? "bg-coffee/30 text-white dark:text-cream shadow-depth-1-light dark:shadow-depth-1"
+                : "text-olive dark:text-caramel hover:text-coffee dark:hover:text-cream hover:bg-olive/10 dark:hover:bg-olive/20"
             }`}
           >
             <svg className="w-6 h-6 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -204,8 +204,8 @@ const AppLayout = ({ children }: AppLayoutProps) => {
                         transition-all duration-200 min-w-[60px] min-h-[60px]
                         ${
               isActive("/methods")
-                ? "bg-coffee/30 dark:bg-coffee/30 text-cream dark:text-cream shadow-depth-1 dark:shadow-depth-1"
-                : "text-caramel dark:text-caramel hover:text-cream dark:hover:text-cream hover:bg-olive/20 dark:hover:bg-olive/20"
+                ? "bg-coffee/30 text-white dark:text-cream shadow-depth-1-light dark:shadow-depth-1"
+                : "text-olive dark:text-caramel hover:text-coffee dark:hover:text-cream hover:bg-olive/10 dark:hover:bg-olive/20"
             }`}
           >
             <svg className="w-6 h-6 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -224,8 +224,8 @@ const AppLayout = ({ children }: AppLayoutProps) => {
                         transition-all duration-200 min-w-[60px] min-h-[60px]
                         ${
               isActive("/coffee")
-                ? "bg-coffee/30 dark:bg-coffee/30 text-cream dark:text-cream shadow-depth-1 dark:shadow-depth-1"
-                : "text-caramel dark:text-caramel hover:text-cream dark:hover:text-cream hover:bg-olive/20 dark:hover:bg-olive/20"
+                ? "bg-coffee/30 text-white dark:text-cream shadow-depth-1-light dark:shadow-depth-1"
+                : "text-olive dark:text-caramel hover:text-coffee dark:hover:text-cream hover:bg-olive/10 dark:hover:bg-olive/20"
             }`}
           >
             <svg className="w-6 h-6 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -240,8 +240,8 @@ const AppLayout = ({ children }: AppLayoutProps) => {
                         transition-all duration-200 min-w-[60px] min-h-[60px]
                         ${
               isActive("/history")
-                ? "bg-coffee/30 dark:bg-coffee/30 text-cream dark:text-cream shadow-depth-1 dark:shadow-depth-1"
-                : "text-caramel dark:text-caramel hover:text-cream dark:hover:text-cream hover:bg-olive/20 dark:hover:bg-olive/20"
+                ? "bg-coffee/30 text-white dark:text-cream shadow-depth-1-light dark:shadow-depth-1"
+                : "text-olive dark:text-caramel hover:text-coffee dark:hover:text-cream hover:bg-olive/10 dark:hover:bg-olive/20"
             }`}
           >
             <svg className="w-6 h-6 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
