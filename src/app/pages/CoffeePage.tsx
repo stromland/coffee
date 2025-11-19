@@ -103,15 +103,15 @@ const CoffeePage: React.FC = () => {
   });
 
   return (
-    <div className="bg-olive/20 backdrop-blur-sm rounded-lg p-6 shadow-2xl">
+    <div className="bg-white/60 dark:bg-olive/20 backdrop-blur-sm rounded-lg p-6 shadow-2xl">
       <div className="flex items-center justify-between mb-6">
         <div className="flex items-center gap-2">
           <div className="w-1 h-6 bg-coffee rounded-full"></div>
-          <h2 className="text-xl font-bold text-cream">Coffee Library</h2>
+          <h2 className="text-xl font-bold text-olive-dark dark:text-cream">Coffee Library</h2>
         </div>
         <button
           onClick={handleCreateNew}
-          className="px-4 py-2 bg-coffee hover:bg-coffee/80 text-cream rounded-lg transition-all font-medium text-sm flex items-center gap-2"
+          className="px-4 py-2 bg-coffee hover:bg-coffee/80 text-white dark:text-cream rounded-lg transition-all font-medium text-sm flex items-center gap-2"
         >
           <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
@@ -121,7 +121,7 @@ const CoffeePage: React.FC = () => {
       </div>
 
       {coffees.length === 0 ? (
-        <div className="mt-6 p-6 bg-olive-dark/30 rounded-lg text-center">
+        <div className="mt-6 p-6 bg-white/80 dark:bg-olive-dark/30 rounded-lg text-center">
           <p className="text-caramel/70 text-sm">
             No coffees yet. Click "Add Coffee" to start building your library.
           </p>
@@ -129,18 +129,18 @@ const CoffeePage: React.FC = () => {
       ) : (
         <div className="space-y-4">
           {Array.from(brands.entries()).map(([brand, brandCoffees]) => (
-            <div key={brand} className="border border-caramel/20 rounded-lg overflow-hidden">
+            <div key={brand} className="border border-coffee/40 dark:border-caramel/20 rounded-lg overflow-hidden">
               <button
                 onClick={() => setExpandedBrand(expandedBrand === brand ? null : brand)}
-                className="w-full px-4 py-3 bg-olive-dark/30 hover:bg-olive-dark/50 transition-colors flex items-center justify-between"
+                className="w-full px-4 py-3 bg-white/80 dark:bg-olive-dark/30 hover:bg-white dark:hover:bg-olive-dark/50 transition-colors flex items-center justify-between"
               >
-                <span className="font-semibold text-cream">{brand}</span>
+                <span className="font-semibold text-olive-dark dark:text-cream">{brand}</span>
                 <div className="flex items-center gap-2">
                   <span className="text-xs text-caramel/70">
                     {brandCoffees.length} {brandCoffees.length === 1 ? "coffee" : "coffees"}
                   </span>
                   <svg
-                    className={`w-5 h-5 text-caramel transition-transform ${
+                    className={`w-5 h-5 text-olive dark:text-caramel transition-transform ${
                       expandedBrand === brand ? "rotate-180" : ""
                     }`}
                     fill="none"
@@ -193,11 +193,11 @@ const CoffeeCard: React.FC<CoffeeCardProps> = ({ coffee, onEdit, onDelete, onDup
   };
 
   return (
-    <div className="p-4 bg-olive-dark/20 hover:bg-olive-dark/30 transition-colors">
+    <div className="p-4 bg-white/80 dark:bg-olive-dark/20 hover:bg-white dark:hover:bg-olive-dark/30 transition-colors">
       <div className="flex items-start justify-between gap-4">
         <div className="flex-1">
           <div className="mb-1">
-            <h3 className="font-semibold text-cream">{coffee.name}</h3>
+            <h3 className="font-semibold text-olive-dark dark:text-cream">{coffee.name}</h3>
           </div>
           {coffee.description && (
             <p className="text-sm text-caramel/80 mb-3 line-clamp-2">{coffee.description}</p>
@@ -217,7 +217,7 @@ const CoffeeCard: React.FC<CoffeeCardProps> = ({ coffee, onEdit, onDelete, onDup
             <>
               <button
                 onClick={onEdit}
-                className="p-2 text-caramel hover:text-cream hover:bg-olive-dark/50 rounded transition-colors"
+                className="p-2 text-olive dark:text-caramel hover:text-coffee dark:hover:text-cream hover:bg-white dark:hover:bg-olive-dark/50 rounded transition-colors"
                 title="Edit"
               >
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -247,7 +247,7 @@ const CoffeeCard: React.FC<CoffeeCardProps> = ({ coffee, onEdit, onDelete, onDup
           ) : (
             <button
               onClick={onDuplicate}
-              className="p-2 text-caramel hover:text-cream hover:bg-olive-dark/50 rounded transition-colors"
+              className="p-2 text-olive dark:text-caramel hover:text-coffee dark:hover:text-cream hover:bg-white dark:hover:bg-olive-dark/50 rounded transition-colors"
               title="Duplicate"
             >
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">

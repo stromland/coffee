@@ -104,19 +104,19 @@ const BrewingHistory: React.FC<BrewingHistoryProps> = ({ onBrewAgain }) => {
         {sessions.map((session) => (
           <div
             key={session.id}
-            className="bg-olive-dark/40 rounded-lg overflow-hidden border border-caramel/10 hover:border-coffee/30 transition-all"
+            className="bg-white/80 dark:bg-olive-dark/40 rounded-lg overflow-hidden border border-coffee/40 dark:border-caramel/10 hover:border-coffee/30 transition-all"
           >
             <div className="p-4">
               <div className="flex items-start justify-between gap-4">
                 <div className="flex-1">
                   <div className="flex items-center gap-2 mb-2">
-                    <h3 className="font-bold text-cream text-base">{getCoffeeName(session)}</h3>
+                    <h3 className="font-bold text-olive-dark dark:text-cream text-base">{getCoffeeName(session)}</h3>
                     {getCoffeeDetails(session) && (
                       <div className="flex items-center gap-1.5">
                         <span className="px-2 py-0.5 text-xs rounded-full bg-coffee/20 text-coffee border border-coffee/40 capitalize">
                           {getCoffeeDetails(session)!.roast}
                         </span>
-                        <span className="px-2 py-0.5 text-xs rounded-full bg-olive/30 text-caramel border border-caramel/40 capitalize">
+                        <span className="px-2 py-0.5 text-xs rounded-full bg-white/60 dark:bg-olive/30 text-olive dark:text-caramel border border-coffee/40 dark:border-caramel/40 capitalize">
                           {getCoffeeDetails(session)!.type}
                         </span>
                       </div>
@@ -141,49 +141,49 @@ const BrewingHistory: React.FC<BrewingHistoryProps> = ({ onBrewAgain }) => {
                   <div className="grid grid-cols-2 sm:grid-cols-3 gap-x-4 gap-y-2 text-sm">
                     <div>
                       <span className="text-caramel/60 text-xs">Method</span>
-                      <p className="text-cream font-medium">
+                      <p className="text-olive-dark dark:text-cream font-medium">
                         {getMethodName(session.brewingMethod)}
                       </p>
                     </div>
                     <div>
                       <span className="text-caramel/60 text-xs">Coffee</span>
-                      <p className="text-cream font-medium">{session.coffeeAmount}g</p>
+                      <p className="text-olive-dark dark:text-cream font-medium">{session.coffeeAmount}g</p>
                     </div>
                     <div>
                       <span className="text-caramel/60 text-xs">Water</span>
-                      <p className="text-cream font-medium">{session.waterAmount}g</p>
+                      <p className="text-olive-dark dark:text-cream font-medium">{session.waterAmount}g</p>
                     </div>
                     {session.waterTemperature && (
                       <div>
                         <span className="text-caramel/60 text-xs">Temp</span>
-                        <p className="text-cream font-medium">{session.waterTemperature}°C</p>
+                        <p className="text-olive-dark dark:text-cream font-medium">{session.waterTemperature}°C</p>
                       </div>
                     )}
                     {session.brewTime && (
                       <div>
                         <span className="text-caramel/60 text-xs">Time</span>
-                        <p className="text-cream font-medium">{formatBrewTime(session.brewTime)}</p>
+                        <p className="text-olive-dark dark:text-cream font-medium">{formatBrewTime(session.brewTime)}</p>
                       </div>
                     )}
                     {session.grindSize && (
                       <div>
                         <span className="text-caramel/60 text-xs">Grind</span>
-                        <p className="text-cream font-medium">{session.grindSize}</p>
+                        <p className="text-olive-dark dark:text-cream font-medium">{session.grindSize}</p>
                       </div>
                     )}
                   </div>
 
                   {session.notes && (
-                    <div className="mt-3 p-3 bg-olive/20 rounded-lg">
+                    <div className="mt-3 p-3 bg-white/60 dark:bg-olive/20 rounded-lg">
                       <p className="text-xs text-caramel/60 mb-1">Tasting Notes</p>
-                      <p className="text-sm text-cream whitespace-pre-wrap">{session.notes}</p>
+                      <p className="text-sm text-olive-dark dark:text-cream whitespace-pre-wrap">{session.notes}</p>
                     </div>
                   )}
                 </div>
               </div>
 
               {/* Action buttons at bottom */}
-              <div className="mt-4 pt-4 border-t border-caramel/10 flex justify-between">
+              <div className="mt-4 pt-4 border-t border-coffee/40 dark:border-caramel/10 flex justify-between">
                 <button
                   onClick={() => handleDelete(session.id)}
                   className="text-sm text-caramel/60 hover:text-red-400 transition-colors flex items-center gap-2"
@@ -203,7 +203,7 @@ const BrewingHistory: React.FC<BrewingHistoryProps> = ({ onBrewAgain }) => {
                 {onBrewAgain && (
                   <button
                     onClick={() => handleBrewAgain(session)}
-                    className="text-sm text-coffee hover:text-cream transition-colors flex items-center gap-2"
+                    className="text-sm text-coffee hover:text-coffee dark:hover:text-cream transition-colors flex items-center gap-2"
                     aria-label="Brew again"
                     title="Brew again with these settings"
                   >

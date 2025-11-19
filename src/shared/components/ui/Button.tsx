@@ -32,7 +32,7 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       "inline-flex items-center justify-center rounded-md font-medium " +
       "transition-all duration-200 ease-in-out " +
       "focus:outline-none focus:ring-2 focus:ring-coffee/50 focus:ring-offset-2 " +
-      "focus:ring-offset-olive-dark dark:focus:ring-offset-olive-dark " +
+      "focus:ring-offset-cream-light dark:focus:ring-offset-olive-dark " +
       "disabled:opacity-50 disabled:cursor-not-allowed " +
       "transform hover:-translate-y-0.5 active:translate-y-0 " +
       "hover:scale-105 active:scale-95";
@@ -40,30 +40,30 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
     const variantStyles = {
       primary:
         "bg-gradient-to-r from-coffee to-coffee/90 dark:from-coffee dark:to-coffee/90 " +
-        "text-cream dark:text-cream " +
-        "shadow-depth-2 dark:shadow-depth-2 " +
+        "text-white dark:text-cream " +
+        "shadow-depth-2-light dark:shadow-depth-2 " +
         "hover:from-coffee/90 hover:to-coffee dark:hover:from-coffee/90 dark:hover:to-coffee " +
-        "hover:shadow-depth-3 dark:hover:shadow-depth-3 " +
-        "active:shadow-depth-1 dark:active:shadow-depth-1",
+        "hover:shadow-depth-3-light dark:hover:shadow-depth-3 " +
+        "active:shadow-depth-1-light dark:active:shadow-depth-1",
       secondary:
-        "bg-olive/30 dark:bg-olive/30 " +
-        "hover:bg-olive/40 dark:hover:bg-olive/40 " +
+        "bg-white/60 dark:bg-olive/30 " +
+        "hover:bg-white/80 dark:hover:bg-olive/40 " +
         "border border-coffee/50 dark:border-coffee/50 " +
-        "text-cream dark:text-cream " +
-        "shadow-depth-1 dark:shadow-depth-1 " +
-        "hover:shadow-depth-2 dark:hover:shadow-depth-2 " +
+        "text-olive-dark dark:text-cream " +
+        "shadow-depth-1-light dark:shadow-depth-1 " +
+        "hover:shadow-depth-2-light dark:hover:shadow-depth-2 " +
         "backdrop-blur-sm",
       danger:
         "bg-gradient-to-r from-red-600 to-red-700 dark:from-red-600 dark:to-red-700 " +
         "text-white dark:text-white " +
-        "shadow-depth-2 dark:shadow-depth-2 " +
+        "shadow-depth-2-light dark:shadow-depth-2 " +
         "hover:from-red-700 hover:to-red-800 dark:hover:from-red-700 dark:hover:to-red-800 " +
-        "hover:shadow-depth-3 dark:hover:shadow-depth-3",
+        "hover:shadow-depth-3-light dark:hover:shadow-depth-3",
       ghost:
         "bg-transparent dark:bg-transparent " +
-        "text-caramel dark:text-caramel " +
-        "hover:text-cream dark:hover:text-cream " +
-        "hover:bg-olive/20 dark:hover:bg-olive/20 " +
+        "text-olive dark:text-caramel " +
+        "hover:text-coffee dark:hover:text-cream " +
+        "hover:bg-olive/10 dark:hover:bg-olive/20 " +
         "backdrop-blur-sm",
     };
 

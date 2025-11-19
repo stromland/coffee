@@ -86,28 +86,28 @@ const SaveSessionForm: React.FC<SaveSessionFormProps> = ({
       <div className="space-y-4 mb-6">
         {/* Auto-filled info */}
         <div className="p-4 bg-coffee/10 rounded-lg border border-coffee/30">
-          <p className="text-sm text-caramel mb-2">
-            <span className="font-semibold text-cream">Method:</span> {brewingMethodName}
+          <p className="text-sm text-olive dark:text-caramel mb-2">
+            <span className="font-semibold text-olive-dark dark:text-cream">Method:</span> {brewingMethodName}
           </p>
           {selectedCoffeeName && (
-            <p className="text-sm text-caramel mb-2">
-              <span className="font-semibold text-cream">Coffee Type:</span> {selectedCoffeeName}
+            <p className="text-sm text-olive dark:text-caramel mb-2">
+              <span className="font-semibold text-olive-dark dark:text-cream">Coffee Type:</span> {selectedCoffeeName}
             </p>
           )}
-          <p className="text-sm text-caramel mb-2">
-            <span className="font-semibold text-cream">Coffee:</span> {coffeeAmount}g
+          <p className="text-sm text-olive dark:text-caramel mb-2">
+            <span className="font-semibold text-olive-dark dark:text-cream">Coffee:</span> {coffeeAmount}g
           </p>
-          <p className="text-sm text-caramel mb-2">
-            <span className="font-semibold text-cream">Water:</span> {waterAmount}g
+          <p className="text-sm text-olive dark:text-caramel mb-2">
+            <span className="font-semibold text-olive-dark dark:text-cream">Water:</span> {waterAmount}g
           </p>
           {waterTemperature && (
-            <p className="text-sm text-caramel mb-2">
-              <span className="font-semibold text-cream">Temperature:</span> {waterTemperature}°C
+            <p className="text-sm text-olive dark:text-caramel mb-2">
+              <span className="font-semibold text-olive-dark dark:text-cream">Temperature:</span> {waterTemperature}°C
             </p>
           )}
           {brewTime && (
-            <p className="text-sm text-caramel">
-              <span className="font-semibold text-cream">Brew Time:</span>{" "}
+            <p className="text-sm text-olive dark:text-caramel">
+              <span className="font-semibold text-olive-dark dark:text-cream">Brew Time:</span>{" "}
               {Math.floor(brewTime / 60)}:{(brewTime % 60).toString().padStart(2, "0")}
             </p>
           )}
@@ -164,7 +164,7 @@ const SaveSessionForm: React.FC<SaveSessionFormProps> = ({
 
         {/* Rating - Required */}
         <div>
-          <label className="block text-sm font-medium text-caramel mb-2">
+          <label className="block text-sm font-medium text-olive dark:text-caramel mb-2">
             Rating <span className="text-coffee">*</span>
           </label>
           <div className="flex gap-2">
@@ -179,7 +179,7 @@ const SaveSessionForm: React.FC<SaveSessionFormProps> = ({
                 className={`w-12 h-12 rounded-lg border-2 transition-all ${
                   rating && rating >= value
                     ? "border-coffee bg-coffee/20 text-coffee"
-                    : "border-caramel/30 hover:border-coffee/50 text-caramel/50"
+                    : "border-coffee/40 dark:border-caramel/30 hover:border-coffee/50 text-caramel/50"
                 }`}
               >
                 ★
@@ -193,7 +193,7 @@ const SaveSessionForm: React.FC<SaveSessionFormProps> = ({
 
         {/* Notes - Optional */}
         <div>
-          <label htmlFor="notes" className="block text-sm font-medium text-caramel mb-2">
+          <label htmlFor="notes" className="block text-sm font-medium text-olive dark:text-caramel mb-2">
             Tasting Notes <span className="text-caramel/50 text-xs">- optional</span>
           </label>
           <textarea
@@ -201,7 +201,7 @@ const SaveSessionForm: React.FC<SaveSessionFormProps> = ({
             value={notes}
             onChange={(e) => setNotes(e.target.value)}
             rows={4}
-            className="w-full px-4 py-2 border border-coffee/40 rounded-md focus:ring-2 focus:ring-coffee focus:border-coffee bg-olive/20 text-cream placeholder-caramel/50 resize-none"
+            className="w-full px-4 py-2 border border-coffee/40 rounded-md focus:ring-2 focus:ring-coffee focus:border-coffee bg-white/60 dark:bg-olive/20 text-olive-dark dark:text-cream placeholder-olive/50 dark:placeholder-caramel/50 resize-none"
             placeholder="Notes about the taste, aroma, body, acidity..."
           />
         </div>

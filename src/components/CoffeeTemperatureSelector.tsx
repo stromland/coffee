@@ -35,11 +35,11 @@ const CoffeeTemperatureSelector: React.FC<CoffeeTemperatureSelectorProps> = ({
     <Card title="Coffee & Water Temperature">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div>
-          <label className="block text-sm font-medium text-cream mb-2">Coffee</label>
+          <label className="block text-sm font-medium text-olive-dark dark:text-cream mb-2">Coffee</label>
           <select
             value={selectedCoffeeId || ""}
             onChange={(e) => onCoffeeChange(e.target.value || null)}
-            className="w-full px-4 py-2 bg-olive-dark/50 border border-caramel/30 rounded-lg text-cream placeholder-caramel/50 focus:outline-none focus:border-coffee focus:ring-2 focus:ring-coffee/20"
+            className="w-full px-4 py-2 bg-white/80 dark:bg-olive-dark/50 border border-coffee/40 dark:border-caramel/30 rounded-lg text-olive-dark dark:text-cream placeholder-olive/50 dark:placeholder-caramel/50 focus:outline-none focus:border-coffee focus:ring-2 focus:ring-coffee/20"
           >
             <option value="">Select a coffee...</option>
             {Array.from(coffeesByBrand.entries()).map(([brand, brandCoffees]) => [
@@ -58,7 +58,7 @@ const CoffeeTemperatureSelector: React.FC<CoffeeTemperatureSelectorProps> = ({
                 <span className="px-2 py-0.5 text-xs rounded-full bg-coffee/20 text-coffee border border-coffee/40 capitalize">
                   {coffeeService.getCoffee(selectedCoffeeId)!.roast}
                 </span>
-                <span className="px-2 py-0.5 text-xs rounded-full bg-olive/30 text-caramel border border-caramel/40 capitalize">
+                <span className="px-2 py-0.5 text-xs rounded-full bg-white/60 dark:bg-olive/30 text-olive dark:text-caramel border border-coffee/40 dark:border-caramel/40 capitalize">
                   {coffeeService.getCoffee(selectedCoffeeId)!.type}
                 </span>
               </div>

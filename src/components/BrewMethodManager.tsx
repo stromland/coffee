@@ -102,15 +102,15 @@ const BrewMethodManager: React.FC<BrewMethodManagerProps> = ({ onMethodChange })
   });
 
   return (
-    <div className="bg-olive/20 backdrop-blur-sm rounded-lg p-6 shadow-2xl">
+    <div className="bg-white/60 dark:bg-olive/20 backdrop-blur-sm rounded-lg p-6 shadow-2xl">
       <div className="flex items-center justify-between mb-6">
         <div className="flex items-center gap-2">
           <div className="w-1 h-6 bg-coffee rounded-full"></div>
-          <h2 className="text-xl font-bold text-cream">Brew Methods</h2>
+          <h2 className="text-xl font-bold text-olive-dark dark:text-cream">Brew Methods</h2>
         </div>
         <button
           onClick={handleCreateNew}
-          className="px-4 py-2 bg-coffee hover:bg-coffee/80 text-cream rounded-lg transition-all font-medium text-sm flex items-center gap-2"
+          className="px-4 py-2 bg-coffee hover:bg-coffee/80 text-white dark:text-cream rounded-lg transition-all font-medium text-sm flex items-center gap-2"
         >
           <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
@@ -121,18 +121,18 @@ const BrewMethodManager: React.FC<BrewMethodManagerProps> = ({ onMethodChange })
 
       <div className="space-y-4">
         {Array.from(categories.entries()).map(([category, categoryMethods]) => (
-          <div key={category} className="border border-caramel/20 rounded-lg overflow-hidden">
+          <div key={category} className="border border-coffee/40 dark:border-caramel/20 rounded-lg overflow-hidden">
             <button
               onClick={() => setExpandedCategory(expandedCategory === category ? null : category)}
-              className="w-full px-4 py-3 bg-olive-dark/30 hover:bg-olive-dark/50 transition-colors flex items-center justify-between"
+              className="w-full px-4 py-3 bg-white/80 dark:bg-olive-dark/30 hover:bg-white dark:hover:bg-olive-dark/50 transition-colors flex items-center justify-between"
             >
-              <span className="font-semibold text-cream">{category}</span>
+              <span className="font-semibold text-olive-dark dark:text-cream">{category}</span>
               <div className="flex items-center gap-2">
                 <span className="text-xs text-caramel/70">
                   {categoryMethods.length} {categoryMethods.length === 1 ? "method" : "methods"}
                 </span>
                 <svg
-                  className={`w-5 h-5 text-caramel transition-transform ${
+                  className={`w-5 h-5 text-olive dark:text-caramel transition-transform ${
                     expandedCategory === category ? "rotate-180" : ""
                   }`}
                   fill="none"
@@ -154,12 +154,12 @@ const BrewMethodManager: React.FC<BrewMethodManagerProps> = ({ onMethodChange })
                 {categoryMethods.map((method) => (
                   <div
                     key={method.id}
-                    className="p-4 bg-olive-dark/20 hover:bg-olive-dark/30 transition-colors"
+                    className="p-4 bg-white/80 dark:bg-olive-dark/20 hover:bg-white dark:hover:bg-olive-dark/30 transition-colors"
                   >
                     <div className="flex items-start justify-between gap-4">
                       <div className="flex-1">
                         <div className="flex items-center gap-2 mb-1">
-                          <h3 className="font-semibold text-cream">{method.name}</h3>
+                          <h3 className="font-semibold text-olive-dark dark:text-cream">{method.name}</h3>
                           {method.isDefault && (
                             <span className="px-2 py-0.5 bg-coffee/20 text-coffee text-xs rounded-full border border-coffee/30">
                               Default
@@ -181,7 +181,7 @@ const BrewMethodManager: React.FC<BrewMethodManagerProps> = ({ onMethodChange })
                       <div className="flex items-center gap-2">
                         <button
                           onClick={() => handleDuplicate(method)}
-                          className="p-2 text-caramel hover:text-cream hover:bg-olive-dark/50 rounded transition-colors"
+                          className="p-2 text-olive dark:text-caramel hover:text-coffee dark:hover:text-cream hover:bg-white dark:hover:bg-olive-dark/50 rounded transition-colors"
                           title="Duplicate"
                         >
                           <svg
@@ -203,7 +203,7 @@ const BrewMethodManager: React.FC<BrewMethodManagerProps> = ({ onMethodChange })
                           <>
                             <button
                               onClick={() => handleEdit(method)}
-                              className="p-2 text-caramel hover:text-cream hover:bg-olive-dark/50 rounded transition-colors"
+                              className="p-2 text-olive dark:text-caramel hover:text-coffee dark:hover:text-cream hover:bg-white dark:hover:bg-olive-dark/50 rounded transition-colors"
                               title="Edit"
                             >
                               <svg
@@ -252,7 +252,7 @@ const BrewMethodManager: React.FC<BrewMethodManagerProps> = ({ onMethodChange })
       </div>
 
       {customMethods.length === 0 && (
-        <div className="mt-6 p-6 bg-olive-dark/30 rounded-lg text-center">
+        <div className="mt-6 p-6 bg-white/80 dark:bg-olive-dark/30 rounded-lg text-center">
           <p className="text-caramel/70 text-sm">
             No custom methods yet. Click "Create Method" to add your own brewing recipe.
           </p>

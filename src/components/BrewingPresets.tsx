@@ -60,13 +60,13 @@ const BrewingPresets: React.FC<BrewingPresetsProps> = ({ selectedMethodId, onMet
             : null;
 
           return (
-            <div key={category} className="border border-caramel/20 rounded-lg overflow-hidden">
+            <div key={category} className="border border-coffee/40 dark:border-caramel/20 rounded-lg overflow-hidden">
               <button
                 onClick={() => toggleCategory(category)}
-                className="w-full px-4 py-2.5 bg-olive-dark/30 hover:bg-olive-dark/50 transition-colors flex items-center justify-between"
+                className="w-full px-4 py-2.5 bg-white/80 dark:bg-olive-dark/30 hover:bg-white dark:hover:bg-olive-dark/50 transition-colors flex items-center justify-between"
               >
                 <div className="flex items-center gap-2">
-                  <span className="font-semibold text-cream text-sm">{category}</span>
+                  <span className="font-semibold text-olive-dark dark:text-cream text-sm">{category}</span>
                   {!isExpanded && hasSelection && selectedMethod && (
                     <span className="text-xs text-coffee">• {selectedMethod.name}</span>
                   )}
@@ -74,7 +74,7 @@ const BrewingPresets: React.FC<BrewingPresetsProps> = ({ selectedMethodId, onMet
                 <div className="flex items-center gap-2">
                   <span className="text-xs text-caramel/70">{categoryMethods.length}</span>
                   <svg
-                    className={`w-4 h-4 text-caramel transition-transform ${
+                    className={`w-4 h-4 text-olive dark:text-caramel transition-transform ${
                       isExpanded ? "rotate-180" : ""
                     }`}
                     fill="none"
@@ -92,7 +92,7 @@ const BrewingPresets: React.FC<BrewingPresetsProps> = ({ selectedMethodId, onMet
               </button>
 
               {isExpanded && (
-                <div className="bg-olive-dark/10">
+                <div className="bg-white/80 dark:bg-olive-dark/10">
                   {categoryMethods.map((method) => (
                     <button
                       key={method.id}
@@ -100,12 +100,12 @@ const BrewingPresets: React.FC<BrewingPresetsProps> = ({ selectedMethodId, onMet
                       className={`w-full p-3 transition-all text-left border-l-4 ${
                         selectedMethodId === method.id
                           ? "bg-coffee/20 border-coffee"
-                          : "bg-transparent hover:bg-olive-dark/30 border-transparent"
+                          : "bg-transparent hover:bg-white dark:hover:bg-olive-dark/30 border-transparent"
                       }`}
                     >
                       <div className="flex items-start justify-between">
                         <div className="flex-1">
-                          <h3 className="font-semibold text-sm text-cream">{method.name}</h3>
+                          <h3 className="font-semibold text-sm text-olive-dark dark:text-cream">{method.name}</h3>
                           <p className="text-xs text-caramel/70 mt-0.5 leading-relaxed">
                             {method.description}
                           </p>

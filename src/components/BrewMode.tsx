@@ -76,15 +76,15 @@ const BrewMode: React.FC<BrewModeProps> = ({
   const totalWater = steps[steps.length - 1].cumulativeWater;
 
   return (
-    <div className="bg-olive/20 backdrop-blur-sm rounded-lg p-6 shadow-2xl">
+    <div className="bg-white/60 dark:bg-olive/20 backdrop-blur-sm rounded-lg p-6 shadow-2xl">
       <div className="flex items-center justify-between mb-6">
         <div className="flex items-center gap-2">
           <div className="w-1 h-6 bg-coffee rounded-full"></div>
-          <h2 className="text-xl font-bold text-cream">Brew Mode</h2>
+          <h2 className="text-xl font-bold text-olive-dark dark:text-cream">Brew Mode</h2>
         </div>
         <button
           onClick={onExit}
-          className="text-caramel hover:text-cream transition-colors"
+          className="text-olive dark:text-caramel hover:text-coffee dark:hover:text-cream transition-colors"
           title="Exit Brew Mode"
         >
           <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -102,17 +102,17 @@ const BrewMode: React.FC<BrewModeProps> = ({
       {!isStarted ? (
         <>
           {/* Brew Information List */}
-          <div className="mb-6 p-4 bg-olive-dark/30 rounded-lg">
+          <div className="mb-6 p-4 bg-white/80 dark:bg-olive-dark/30 rounded-lg">
             <div className="space-y-2 text-sm">
               <div className="flex justify-between">
                 <span className="text-caramel/80">Method:</span>
-                <span className="text-cream font-medium">{methodName || "Unknown"}</span>
+                <span className="text-olive-dark dark:text-cream font-medium">{methodName || "Unknown"}</span>
               </div>
 
               {selectedCoffeeId && (
                 <div className="flex justify-between">
                   <span className="text-caramel/80">Coffee:</span>
-                  <span className="text-cream font-medium">
+                  <span className="text-olive-dark dark:text-cream font-medium">
                     {(() => {
                       const coffee = coffeeService.getCoffee(selectedCoffeeId);
                       return coffee ? `${coffee.brand} - ${coffee.name}` : "Unknown";
@@ -123,17 +123,17 @@ const BrewMode: React.FC<BrewModeProps> = ({
 
               <div className="flex justify-between">
                 <span className="text-caramel/80">Coffee Amount:</span>
-                <span className="text-cream font-medium">{coffeeAmount}g</span>
+                <span className="text-olive-dark dark:text-cream font-medium">{coffeeAmount}g</span>
               </div>
 
               <div className="flex justify-between">
                 <span className="text-caramel/80">Water Amount:</span>
-                <span className="text-cream font-medium">{totalWater.toFixed(0)}g</span>
+                <span className="text-olive-dark dark:text-cream font-medium">{totalWater.toFixed(0)}g</span>
               </div>
 
               <div className="flex justify-between">
                 <span className="text-caramel/80">Water Ratio:</span>
-                <span className="text-cream font-medium">
+                <span className="text-olive-dark dark:text-cream font-medium">
                   1:{(totalWater / coffeeAmount).toFixed(1)}
                 </span>
               </div>
@@ -141,18 +141,18 @@ const BrewMode: React.FC<BrewModeProps> = ({
               {waterTemperature && (
                 <div className="flex justify-between">
                   <span className="text-caramel/80">Water Temperature:</span>
-                  <span className="text-cream font-medium">{waterTemperature}°C</span>
+                  <span className="text-olive-dark dark:text-cream font-medium">{waterTemperature}°C</span>
                 </div>
               )}
 
               <div className="flex justify-between">
                 <span className="text-caramel/80">Steps:</span>
-                <span className="text-cream font-medium">{steps.length}</span>
+                <span className="text-olive-dark dark:text-cream font-medium">{steps.length}</span>
               </div>
 
               <div className="flex justify-between">
                 <span className="text-caramel/80">Total Time:</span>
-                <span className="text-cream font-medium">{formatTime(totalBrewTime)}</span>
+                <span className="text-olive-dark dark:text-cream font-medium">{formatTime(totalBrewTime)}</span>
               </div>
             </div>
           </div>
@@ -185,7 +185,7 @@ const BrewMode: React.FC<BrewModeProps> = ({
               </span>
               <span>{Math.round((elapsedTime / totalBrewTime) * 100)}%</span>
             </div>
-            <div className="w-full h-2 bg-olive-dark/50 rounded-full overflow-hidden">
+            <div className="w-full h-2 bg-white/80 dark:bg-olive-dark/50 rounded-full overflow-hidden">
               <div
                 className="h-full bg-gradient-to-r from-coffee to-caramel transition-all duration-1000"
                 style={{
@@ -198,12 +198,12 @@ const BrewMode: React.FC<BrewModeProps> = ({
           {/* Current Step */}
           <div className="mb-6">
             <div className="flex items-center gap-4 mb-6">
-              <div className="w-12 h-12 bg-gradient-to-br from-coffee to-coffee/70 rounded-xl flex items-center justify-center text-cream font-bold text-lg shadow-lg">
+              <div className="w-12 h-12 bg-gradient-to-br from-coffee to-coffee/70 rounded-xl flex items-center justify-center text-olive-dark dark:text-cream font-bold text-lg shadow-lg">
                 {currentStep.stepNumber}
               </div>
               <div className="flex-1">
                 <div className="text-xs text-caramel/70 mb-1">Current Step</div>
-                <div className="text-base font-medium text-caramel">{currentStep.description}</div>
+                <div className="text-base font-medium text-olive dark:text-caramel">{currentStep.description}</div>
               </div>
             </div>
 
@@ -212,7 +212,7 @@ const BrewMode: React.FC<BrewModeProps> = ({
                 <div className="text-xs text-caramel/70 mb-2">
                   {currentStep.waterAmount > 0 ? "Pour to" : "Total Water"}
                 </div>
-                <div className="text-4xl font-bold text-cream">
+                <div className="text-4xl font-bold text-olive-dark dark:text-cream">
                   {currentStep.cumulativeWater.toFixed(1)}
                   <span className="text-2xl text-caramel/70">g</span>
                 </div>
@@ -226,10 +226,10 @@ const BrewMode: React.FC<BrewModeProps> = ({
 
           {/* Next Step Preview */}
           {nextStep ? (
-            <div className="p-4 bg-olive-dark/20 rounded-lg border border-caramel/20">
+            <div className="p-4 bg-white/80 dark:bg-olive-dark/20 rounded-lg border border-coffee/40 dark:border-caramel/20">
               <div className="text-xs text-caramel/60 mb-2">Next Step</div>
               <div className="flex items-baseline gap-2">
-                <span className="text-base font-medium text-cream">
+                <span className="text-base font-medium text-olive-dark dark:text-cream">
                   {nextStep.waterAmount > 0
                     ? `Pour to ${nextStep.cumulativeWater.toFixed(1)}g`
                     : "Drawdown"}
@@ -241,10 +241,10 @@ const BrewMode: React.FC<BrewModeProps> = ({
               </div>
             </div>
           ) : (
-            <div className="p-4 bg-olive-dark/20 rounded-lg border border-caramel/20">
+            <div className="p-4 bg-white/80 dark:bg-olive-dark/20 rounded-lg border border-coffee/40 dark:border-caramel/20">
               <div className="text-xs text-caramel/60 mb-2">Final Step</div>
               <div className="flex items-baseline gap-2">
-                <span className="text-base font-medium text-cream">Finishing at</span>
+                <span className="text-base font-medium text-olive-dark dark:text-cream">Finishing at</span>
                 <span className="font-mono font-medium text-coffee">
                   {formatTime(totalBrewTime)}
                 </span>
@@ -265,8 +265,8 @@ const BrewMode: React.FC<BrewModeProps> = ({
               clipRule="evenodd"
             />
           </svg>
-          <h3 className="text-2xl font-bold text-cream mb-2">Brew Complete!</h3>
-          <p className="text-caramel mb-6">Enjoy your coffee ☕</p>
+          <h3 className="text-2xl font-bold text-olive-dark dark:text-cream mb-2">Brew Complete!</h3>
+          <p className="text-olive dark:text-caramel mb-6">Enjoy your coffee ☕</p>
           <Button onClick={onSaveSession} variant="primary" size="lg" className="gap-2 mx-auto">
             <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
               <path d="M17 3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V7l-4-4zm-5 16c-1.66 0-3-1.34-3-3s1.34-3 3-3 3 1.34 3 3-1.34 3-3 3zm3-10H5V5h10v4z" />
