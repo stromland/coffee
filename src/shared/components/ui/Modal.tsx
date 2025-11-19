@@ -83,12 +83,12 @@ export const Modal: React.FC<ModalProps> = ({
     >
       <div
         ref={modalRef}
-        className={`bg-gradient-to-br from-white via-cream-light/95 to-white
-                    dark:from-olive/95 dark:via-olive-dark/90 dark:to-olive/95
+        className={`bg-white dark:from-olive/95 dark:via-olive-dark/90 dark:to-olive/95
+                    dark:bg-gradient-to-br
                     backdrop-blur-xl backdrop-saturate-150
-                    border border-olive/20 dark:border-white/10
+                    border-2 border-olive/30 dark:border-white/10
                     rounded-lg
-                    shadow-depth-4-light dark:shadow-depth-4
+                    shadow-depth-5-light dark:shadow-depth-4
                     w-full ${sizeStyles[size]}
                     max-h-[90vh]
                     overflow-hidden

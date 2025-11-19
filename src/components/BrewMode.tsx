@@ -76,7 +76,7 @@ const BrewMode: React.FC<BrewModeProps> = ({
   const totalWater = steps[steps.length - 1].cumulativeWater;
 
   return (
-    <div className="bg-white/60 dark:bg-olive/20 backdrop-blur-sm rounded-lg p-6 shadow-2xl">
+    <div className="bg-white dark:bg-olive/20 backdrop-blur-sm rounded-lg p-6 shadow-2xl">
       <div className="flex items-center justify-between mb-6">
         <div className="flex items-center gap-2">
           <div className="w-1 h-6 bg-coffee rounded-full"></div>
@@ -102,7 +102,7 @@ const BrewMode: React.FC<BrewModeProps> = ({
       {!isStarted ? (
         <>
           {/* Brew Information List */}
-          <div className="mb-6 p-4 bg-white/80 dark:bg-olive-dark/30 rounded-lg">
+          <div className="mb-6 p-4 bg-white dark:bg-olive-dark/30 rounded-lg">
             <div className="space-y-2 text-sm">
               <div className="flex justify-between">
                 <span className="text-caramel/80">Method:</span>
@@ -179,13 +179,13 @@ const BrewMode: React.FC<BrewModeProps> = ({
         <>
           {/* Progress Indicator */}
           <div className="mb-6">
-            <div className="flex justify-between text-xs text-caramel/70 mb-2">
+            <div className="flex justify-between text-xs text-olive/80 dark:text-caramel/70 mb-2">
               <span>
                 Step {currentStepIndex + 1} of {steps.length}
               </span>
               <span>{Math.round((elapsedTime / totalBrewTime) * 100)}%</span>
             </div>
-            <div className="w-full h-2 bg-white/80 dark:bg-olive-dark/50 rounded-full overflow-hidden">
+            <div className="w-full h-2 bg-white dark:bg-olive-dark/50 rounded-full overflow-hidden">
               <div
                 className="h-full bg-gradient-to-r from-coffee to-caramel transition-all duration-1000"
                 style={{
@@ -202,23 +202,23 @@ const BrewMode: React.FC<BrewModeProps> = ({
                 {currentStep.stepNumber}
               </div>
               <div className="flex-1">
-                <div className="text-xs text-caramel/70 mb-1">Current Step</div>
+                <div className="text-xs text-olive/80 dark:text-caramel/70 mb-1">Current Step</div>
                 <div className="text-base font-medium text-olive dark:text-caramel">{currentStep.description}</div>
               </div>
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
               <div className="p-4 border-2 border-cream/20 rounded-lg">
-                <div className="text-xs text-caramel/70 mb-2">
+                <div className="text-xs text-olive/80 dark:text-caramel/70 mb-2">
                   {currentStep.waterAmount > 0 ? "Pour to" : "Total Water"}
                 </div>
                 <div className="text-4xl font-bold text-olive-dark dark:text-cream">
                   {currentStep.cumulativeWater.toFixed(1)}
-                  <span className="text-2xl text-caramel/70">g</span>
+                  <span className="text-2xl text-olive/80 dark:text-caramel/70">g</span>
                 </div>
               </div>
               <div className="p-4 border-2 border-coffee/40 rounded-lg">
-                <div className="text-xs text-caramel/70 mb-2">Elapsed Time</div>
+                <div className="text-xs text-olive/80 dark:text-caramel/70 mb-2">Elapsed Time</div>
                 <div className="text-4xl font-bold text-coffee">{formatTime(elapsedTime)}</div>
               </div>
             </div>
@@ -226,23 +226,23 @@ const BrewMode: React.FC<BrewModeProps> = ({
 
           {/* Next Step Preview */}
           {nextStep ? (
-            <div className="p-4 bg-white/80 dark:bg-olive-dark/20 rounded-lg border border-coffee/40 dark:border-caramel/20">
-              <div className="text-xs text-caramel/60 mb-2">Next Step</div>
+            <div className="p-4 bg-white dark:bg-olive-dark/20 rounded-lg border-2 border-coffee/50 dark:border-caramel/20">
+              <div className="text-xs text-olive/70 dark:text-caramel/60 mb-2">Next Step</div>
               <div className="flex items-baseline gap-2">
                 <span className="text-base font-medium text-olive-dark dark:text-cream">
                   {nextStep.waterAmount > 0
                     ? `Pour to ${nextStep.cumulativeWater.toFixed(1)}g`
                     : "Drawdown"}
                 </span>
-                <span className="text-xs text-caramel/60">at</span>
+                <span className="text-xs text-olive/70 dark:text-caramel/60">at</span>
                 <span className="font-mono font-medium text-coffee">
                   {formatTime(nextStep.timeSeconds)}
                 </span>
               </div>
             </div>
           ) : (
-            <div className="p-4 bg-white/80 dark:bg-olive-dark/20 rounded-lg border border-coffee/40 dark:border-caramel/20">
-              <div className="text-xs text-caramel/60 mb-2">Final Step</div>
+            <div className="p-4 bg-white dark:bg-olive-dark/20 rounded-lg border-2 border-coffee/50 dark:border-caramel/20">
+              <div className="text-xs text-olive/70 dark:text-caramel/60 mb-2">Final Step</div>
               <div className="flex items-baseline gap-2">
                 <span className="text-base font-medium text-olive-dark dark:text-cream">Finishing at</span>
                 <span className="font-mono font-medium text-coffee">

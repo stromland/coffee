@@ -201,7 +201,7 @@ const SaveSessionForm: React.FC<SaveSessionFormProps> = ({
             value={notes}
             onChange={(e) => setNotes(e.target.value)}
             rows={4}
-            className="w-full px-4 py-2 border border-coffee/40 rounded-md focus:ring-2 focus:ring-coffee focus:border-coffee bg-white/60 dark:bg-olive/20 text-olive-dark dark:text-cream placeholder-olive/50 dark:placeholder-caramel/50 resize-none"
+            className="w-full px-4 py-2 border border-coffee/40 rounded-md focus:ring-2 focus:ring-coffee focus:border-coffee bg-white dark:bg-olive/20 text-olive-dark dark:text-cream placeholder-olive/50 dark:placeholder-caramel/50 resize-none"
             placeholder="Notes about the taste, aroma, body, acidity..."
           />
         </div>

@@ -60,10 +60,10 @@ const BrewingPresets: React.FC<BrewingPresetsProps> = ({ selectedMethodId, onMet
             : null;
 
           return (
-            <div key={category} className="border border-coffee/40 dark:border-caramel/20 rounded-lg overflow-hidden">
+            <div key={category} className="border-2 border-coffee/50 dark:border-caramel/20 rounded-lg overflow-hidden">
               <button
                 onClick={() => toggleCategory(category)}
-                className="w-full px-4 py-2.5 bg-white/80 dark:bg-olive-dark/30 hover:bg-white dark:hover:bg-olive-dark/50 transition-colors flex items-center justify-between"
+                className="w-full px-4 py-2.5 bg-white dark:bg-olive-dark/30 hover:bg-white dark:hover:bg-olive-dark/50 transition-colors flex items-center justify-between"
               >
                 <div className="flex items-center gap-2">
                   <span className="font-semibold text-olive-dark dark:text-cream text-sm">{category}</span>
@@ -72,7 +72,7 @@ const BrewingPresets: React.FC<BrewingPresetsProps> = ({ selectedMethodId, onMet
                   )}
                 </div>
                 <div className="flex items-center gap-2">
-                  <span className="text-xs text-caramel/70">{categoryMethods.length}</span>
+                  <span className="text-xs text-olive/80 dark:text-caramel/70">{categoryMethods.length}</span>
                   <svg
                     className={`w-4 h-4 text-olive dark:text-caramel transition-transform ${
                       isExpanded ? "rotate-180" : ""
@@ -92,7 +92,7 @@ const BrewingPresets: React.FC<BrewingPresetsProps> = ({ selectedMethodId, onMet
               </button>
 
               {isExpanded && (
-                <div className="bg-white/80 dark:bg-olive-dark/10">
+                <div className="bg-white dark:bg-olive-dark/10">
                   {categoryMethods.map((method) => (
                     <button
                       key={method.id}
@@ -106,7 +106,7 @@ const BrewingPresets: React.FC<BrewingPresetsProps> = ({ selectedMethodId, onMet
                       <div className="flex items-start justify-between">
                         <div className="flex-1">
                           <h3 className="font-semibold text-sm text-olive-dark dark:text-cream">{method.name}</h3>
-                          <p className="text-xs text-caramel/70 mt-0.5 leading-relaxed">
+                          <p className="text-xs text-olive/80 dark:text-caramel/70 mt-0.5 leading-relaxed">
                             {method.description}
                           </p>
                         </div>

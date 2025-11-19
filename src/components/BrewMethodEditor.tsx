@@ -393,7 +393,7 @@ const BrewMethodEditor: React.FC<BrewMethodEditorProps> = ({ method, onSave, onC
   const progressPercentage = (currentStepNumber / totalSteps) * 100;
 
   return (
-    <div className="bg-white/60 dark:bg-olive/20 backdrop-blur-sm rounded-lg p-6 shadow-2xl">
+    <div className="bg-white dark:bg-olive/20 backdrop-blur-sm rounded-lg p-6 shadow-2xl">
       <div className="flex items-center justify-between mb-6">
         <div className="flex items-center gap-2">
           <div className="w-1 h-6 bg-coffee rounded-full"></div>
@@ -401,14 +401,14 @@ const BrewMethodEditor: React.FC<BrewMethodEditorProps> = ({ method, onSave, onC
             {method?.id ? "Edit Method" : "Create New Method"}
           </h2>
         </div>
-        <div className="text-sm text-caramel/70">
+        <div className="text-sm text-olive/80 dark:text-caramel/70">
           Step {currentStepNumber} of {totalSteps}
         </div>
       </div>
 
       {/* Progress bar */}
       <div className="mb-6">
-        <div className="h-2 bg-white/80 dark:bg-olive-dark/30 rounded-full overflow-hidden">
+        <div className="h-2 bg-white dark:bg-olive-dark/30 rounded-full overflow-hidden">
           <div
             className="h-full bg-coffee transition-all duration-300"
             style={{ width: `${progressPercentage}%` }}
@@ -429,7 +429,7 @@ const BrewMethodEditor: React.FC<BrewMethodEditorProps> = ({ method, onSave, onC
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 placeholder="e.g., My Custom Recipe"
-                className="w-full px-4 py-2 bg-white/80 dark:bg-olive-dark/50 border border-coffee/40 dark:border-caramel/30 rounded-lg text-olive-dark dark:text-cream placeholder-olive/50 dark:placeholder-caramel/50 focus:outline-none focus:border-coffee"
+                className="w-full px-4 py-2 bg-white dark:bg-olive-dark/50 border-2 border-coffee/50 dark:border-caramel/30 rounded-lg text-olive-dark dark:text-cream placeholder-olive/50 dark:placeholder-caramel/50 focus:outline-none focus:border-coffee"
               />
             </div>
 
@@ -440,7 +440,7 @@ const BrewMethodEditor: React.FC<BrewMethodEditorProps> = ({ method, onSave, onC
                 onChange={(e) => setDescription(e.target.value)}
                 placeholder="Brief description of this method"
                 rows={3}
-                className="w-full px-4 py-2 bg-white/80 dark:bg-olive-dark/50 border border-coffee/40 dark:border-caramel/30 rounded-lg text-olive-dark dark:text-cream placeholder-olive/50 dark:placeholder-caramel/50 focus:outline-none focus:border-coffee resize-none"
+                className="w-full px-4 py-2 bg-white dark:bg-olive-dark/50 border-2 border-coffee/50 dark:border-caramel/30 rounded-lg text-olive-dark dark:text-cream placeholder-olive/50 dark:placeholder-caramel/50 focus:outline-none focus:border-coffee resize-none"
               />
             </div>
 
@@ -451,7 +451,7 @@ const BrewMethodEditor: React.FC<BrewMethodEditorProps> = ({ method, onSave, onC
                   <select
                     value={category}
                     onChange={(e) => setCategory(e.target.value)}
-                    className="w-full px-4 py-2 bg-white/80 dark:bg-olive-dark/50 border border-coffee/40 dark:border-caramel/30 rounded-lg text-olive-dark dark:text-cream focus:outline-none focus:border-coffee cursor-pointer pr-24 appearance-none"
+                    className="w-full px-4 py-2 bg-white dark:bg-olive-dark/50 border-2 border-coffee/50 dark:border-caramel/30 rounded-lg text-olive-dark dark:text-cream focus:outline-none focus:border-coffee cursor-pointer pr-24 appearance-none"
                   >
                     {getCategories().map((cat) => (
                       <option key={cat} value={cat}>
@@ -500,7 +500,7 @@ const BrewMethodEditor: React.FC<BrewMethodEditorProps> = ({ method, onSave, onC
                     value={newCategoryName}
                     onChange={(e) => setNewCategoryName(e.target.value)}
                     placeholder="Enter new category name"
-                    className="w-full px-4 py-2 bg-white/80 dark:bg-olive-dark/50 border border-coffee/40 dark:border-caramel/30 rounded-lg text-olive-dark dark:text-cream placeholder-olive/50 dark:placeholder-caramel/50 focus:outline-none focus:border-coffee"
+                    className="w-full px-4 py-2 bg-white dark:bg-olive-dark/50 border-2 border-coffee/50 dark:border-caramel/30 rounded-lg text-olive-dark dark:text-cream placeholder-olive/50 dark:placeholder-caramel/50 focus:outline-none focus:border-coffee"
                     autoFocus
                   />
                   <div className="flex gap-2">
@@ -524,14 +524,14 @@ const BrewMethodEditor: React.FC<BrewMethodEditorProps> = ({ method, onSave, onC
                         setIsAddingCategory(false);
                         setNewCategoryName("");
                       }}
-                      className="flex-1 px-4 py-2 bg-white/80 dark:bg-olive-dark/50 hover:bg-white dark:hover:bg-olive-dark/70 text-olive dark:text-caramel hover:text-coffee dark:hover:text-cream rounded-lg font-semibold transition-colors"
+                      className="flex-1 px-4 py-2 bg-white dark:bg-olive-dark/50 hover:bg-white dark:hover:bg-olive-dark/70 text-olive dark:text-caramel hover:text-coffee dark:hover:text-cream rounded-lg font-semibold transition-colors"
                     >
                       Cancel
                     </button>
                   </div>
                 </div>
               )}
-              <p className="text-xs text-caramel/70 mt-1">
+              <p className="text-xs text-olive/80 dark:text-caramel/70 mt-1">
                 {isAddingCategory
                   ? "Enter a name for the new category"
                   : "Select a category or create a new one"}
@@ -545,7 +545,7 @@ const BrewMethodEditor: React.FC<BrewMethodEditorProps> = ({ method, onSave, onC
           <div className="space-y-4">
             <h3 className="text-lg font-semibold text-olive-dark dark:text-cream mb-4">Helper Values</h3>
 
-            <div className="p-4 bg-white/80 dark:bg-olive-dark/30 rounded-lg border border-coffee/30">
+            <div className="p-4 bg-white dark:bg-olive-dark/30 rounded-lg border border-coffee/30">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
                   <label className="block text-sm font-medium text-olive-dark dark:text-cream mb-2">
@@ -557,7 +557,7 @@ const BrewMethodEditor: React.FC<BrewMethodEditorProps> = ({ method, onSave, onC
                     value={coffeeAmount}
                     onChange={(e) => setCoffeeAmount(e.target.value)}
                     placeholder="20"
-                    className="w-full px-4 py-2 bg-white/80 dark:bg-olive-dark/50 border border-coffee/40 dark:border-caramel/30 rounded-lg text-olive-dark dark:text-cream focus:outline-none focus:border-coffee"
+                    className="w-full px-4 py-2 bg-white dark:bg-olive-dark/50 border-2 border-coffee/50 dark:border-caramel/30 rounded-lg text-olive-dark dark:text-cream focus:outline-none focus:border-coffee"
                   />
                 </div>
                 <div>
@@ -570,19 +570,19 @@ const BrewMethodEditor: React.FC<BrewMethodEditorProps> = ({ method, onSave, onC
                     value={waterRatio}
                     onChange={(e) => setWaterRatio(e.target.value)}
                     placeholder="15"
-                    className="w-full px-4 py-2 bg-white/80 dark:bg-olive-dark/50 border border-coffee/40 dark:border-caramel/30 rounded-lg text-olive-dark dark:text-cream focus:outline-none focus:border-coffee"
+                    className="w-full px-4 py-2 bg-white dark:bg-olive-dark/50 border-2 border-coffee/50 dark:border-caramel/30 rounded-lg text-olive-dark dark:text-cream focus:outline-none focus:border-coffee"
                   />
                 </div>
               </div>
 
               <div className="mt-4 pt-4 border-t border-coffee/40 dark:border-caramel/20">
                 <div className="flex items-center justify-between">
-                  <span className="text-sm text-caramel/70">Total Water</span>
+                  <span className="text-sm text-olive/80 dark:text-caramel/70">Total Water</span>
                   <span className="text-lg font-semibold text-olive-dark dark:text-cream">
                     {totals.expectedTotalWater.toFixed(0)}g
                   </span>
                 </div>
-                <p className="text-xs text-caramel/70 mt-2">
+                <p className="text-xs text-olive/80 dark:text-caramel/70 mt-2">
                   This is calculated as coffee amount × water ratio. You can navigate back to adjust
                   these values at any time.
                 </p>
@@ -607,10 +607,10 @@ const BrewMethodEditor: React.FC<BrewMethodEditorProps> = ({ method, onSave, onC
             </div>
 
             {/* Progress Summary */}
-            <div className="p-4 bg-white/80 dark:bg-olive-dark/30 rounded-lg border border-coffee/30">
+            <div className="p-4 bg-white dark:bg-olive-dark/30 rounded-lg border border-coffee/30">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
                 <div>
-                  <span className="text-caramel/70">Total Water Used:</span>
+                  <span className="text-olive/80 dark:text-caramel/70">Total Water Used:</span>
                   <span
                     className={`ml-2 font-semibold ${
                       totals.totalPercentage > 100 ? "text-red-400" : "text-olive-dark dark:text-cream"
@@ -618,12 +618,12 @@ const BrewMethodEditor: React.FC<BrewMethodEditorProps> = ({ method, onSave, onC
                   >
                     {totals.totalWaterGrams.toFixed(0)}g / {totals.expectedTotalWater.toFixed(0)}g
                   </span>
-                  <span className="ml-2 text-xs text-caramel/70">
+                  <span className="ml-2 text-xs text-olive/80 dark:text-caramel/70">
                     ({totals.totalPercentage.toFixed(1)}%)
                   </span>
                 </div>
                 <div>
-                  <span className="text-caramel/70">Total Time:</span>
+                  <span className="text-olive/80 dark:text-caramel/70">Total Time:</span>
                   <span className="ml-2 font-semibold text-olive-dark dark:text-cream">
                     {Math.floor(totals.totalBrewTime / 60)}:
                     {(totals.totalBrewTime % 60).toString().padStart(2, "0")}
@@ -664,7 +664,7 @@ const BrewMethodEditor: React.FC<BrewMethodEditorProps> = ({ method, onSave, onC
             </div>
 
             {/* Current Brewing Step Form */}
-            <div className="p-4 bg-white/80 dark:bg-olive-dark/30 rounded-lg border border-coffee/30">
+            <div className="p-4 bg-white dark:bg-olive-dark/30 rounded-lg border border-coffee/30">
               <div className="space-y-4">
                 <div>
                   <label className="block text-sm font-medium text-olive-dark dark:text-cream mb-2">
@@ -678,12 +678,12 @@ const BrewMethodEditor: React.FC<BrewMethodEditorProps> = ({ method, onSave, onC
                       updateBrewingStep(currentBrewingStepIndex, "waterGrams", e.target.value)
                     }
                     placeholder="0"
-                    className="w-full px-4 py-2 bg-white/80 dark:bg-olive-dark/50 border border-coffee/40 dark:border-caramel/30 rounded-lg text-olive-dark dark:text-cream focus:outline-none focus:border-coffee"
+                    className="w-full px-4 py-2 bg-white dark:bg-olive-dark/50 border-2 border-coffee/50 dark:border-caramel/30 rounded-lg text-olive-dark dark:text-cream focus:outline-none focus:border-coffee"
                   />
                   {(() => {
                     const { cumulativeWater } = getCumulativeValues(currentBrewingStepIndex);
                     return (
-                      <p className="text-xs text-caramel/70 mt-1">
+                      <p className="text-xs text-olive/80 dark:text-caramel/70 mt-1">
                         Cumulative: {cumulativeWater.toFixed(0)}g
                       </p>
                     );
@@ -702,12 +702,12 @@ const BrewMethodEditor: React.FC<BrewMethodEditorProps> = ({ method, onSave, onC
                       updateBrewingStep(currentBrewingStepIndex, "durationSeconds", e.target.value)
                     }
                     placeholder="30"
-                    className="w-full px-4 py-2 bg-white/80 dark:bg-olive-dark/50 border border-coffee/40 dark:border-caramel/30 rounded-lg text-olive-dark dark:text-cream focus:outline-none focus:border-coffee"
+                    className="w-full px-4 py-2 bg-white dark:bg-olive-dark/50 border-2 border-coffee/50 dark:border-caramel/30 rounded-lg text-olive-dark dark:text-cream focus:outline-none focus:border-coffee"
                   />
                   {(() => {
                     const { cumulativeTime } = getCumulativeValues(currentBrewingStepIndex);
                     return (
-                      <p className="text-xs text-caramel/70 mt-1">
+                      <p className="text-xs text-olive/80 dark:text-caramel/70 mt-1">
                         Cumulative: {Math.floor(cumulativeTime / 60)}:
                         {(cumulativeTime % 60).toString().padStart(2, "0")}
                       </p>
@@ -726,7 +726,7 @@ const BrewMethodEditor: React.FC<BrewMethodEditorProps> = ({ method, onSave, onC
                       updateBrewingStep(currentBrewingStepIndex, "description", e.target.value)
                     }
                     placeholder="e.g., Bloom phase, swirl gently"
-                    className="w-full px-4 py-2 bg-white/80 dark:bg-olive-dark/50 border border-coffee/40 dark:border-caramel/30 rounded-lg text-olive-dark dark:text-cream placeholder-olive/50 dark:placeholder-caramel/50 focus:outline-none focus:border-coffee"
+                    className="w-full px-4 py-2 bg-white dark:bg-olive-dark/50 border-2 border-coffee/50 dark:border-caramel/30 rounded-lg text-olive-dark dark:text-cream placeholder-olive/50 dark:placeholder-caramel/50 focus:outline-none focus:border-coffee"
                   />
                 </div>
               </div>
@@ -743,7 +743,7 @@ const BrewMethodEditor: React.FC<BrewMethodEditorProps> = ({ method, onSave, onC
                       className={`p-3 rounded-lg border ${
                         index === currentBrewingStepIndex
                           ? "bg-coffee/20 border-coffee"
-                          : "bg-white/80 dark:bg-olive-dark/20 border-coffee/40 dark:border-caramel/20"
+                          : "bg-white dark:bg-olive-dark/20 border-coffee/40 dark:border-caramel/20"
                       } cursor-pointer hover:bg-white dark:hover:bg-olive-dark/30 transition-colors`}
                       onClick={() => {
                         if (validateCurrentStep()) {
@@ -758,11 +758,11 @@ const BrewMethodEditor: React.FC<BrewMethodEditorProps> = ({ method, onSave, onC
                           </div>
                           <div className="text-sm">
                             <span className="text-olive-dark dark:text-cream font-medium">{step.waterGrams}g</span>
-                            <span className="text-caramel/70 mx-2">•</span>
+                            <span className="text-olive/80 dark:text-caramel/70 mx-2">•</span>
                             <span className="text-olive-dark dark:text-cream">{step.durationSeconds}s</span>
                             {step.description && (
                               <>
-                                <span className="text-caramel/70 mx-2">•</span>
+                                <span className="text-olive/80 dark:text-caramel/70 mx-2">•</span>
                                 <span className="text-caramel/80">{step.description}</span>
                               </>
                             )}
@@ -839,7 +839,7 @@ const BrewMethodEditor: React.FC<BrewMethodEditorProps> = ({ method, onSave, onC
           <button
             onClick={handleBack}
             disabled={currentStep === "basic"}
-            className="flex-1 px-6 py-3 bg-white/80 dark:bg-olive-dark/50 hover:bg-white dark:hover:bg-olive-dark/70 text-olive dark:text-caramel hover:text-coffee dark:hover:text-cream rounded-lg font-semibold transition-colors disabled:opacity-30 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+            className="flex-1 px-6 py-3 bg-white dark:bg-olive-dark/50 hover:bg-white dark:hover:bg-olive-dark/70 text-olive dark:text-caramel hover:text-coffee dark:hover:text-cream rounded-lg font-semibold transition-colors disabled:opacity-30 disabled:cursor-not-allowed flex items-center justify-center gap-2"
           >
             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path
@@ -855,7 +855,7 @@ const BrewMethodEditor: React.FC<BrewMethodEditorProps> = ({ method, onSave, onC
           {/* Cancel button */}
           <button
             onClick={handleCancel}
-            className="flex-1 px-6 py-3 bg-white/80 dark:bg-olive-dark/50 hover:bg-white dark:hover:bg-olive-dark/70 text-olive dark:text-caramel hover:text-coffee dark:hover:text-cream rounded-lg font-semibold transition-colors"
+            className="flex-1 px-6 py-3 bg-white dark:bg-olive-dark/50 hover:bg-white dark:hover:bg-olive-dark/70 text-olive dark:text-caramel hover:text-coffee dark:hover:text-cream rounded-lg font-semibold transition-colors"
           >
             Cancel
           </button>

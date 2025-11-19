@@ -103,7 +103,7 @@ const CoffeePage: React.FC = () => {
   });
 
   return (
-    <div className="bg-white/60 dark:bg-olive/20 backdrop-blur-sm rounded-lg p-6 shadow-2xl">
+    <div className="bg-white dark:bg-olive/20 backdrop-blur-sm rounded-lg p-6 shadow-2xl">
       <div className="flex items-center justify-between mb-6">
         <div className="flex items-center gap-2">
           <div className="w-1 h-6 bg-coffee rounded-full"></div>
@@ -121,22 +121,22 @@ const CoffeePage: React.FC = () => {
       </div>
 
       {coffees.length === 0 ? (
-        <div className="mt-6 p-6 bg-white/80 dark:bg-olive-dark/30 rounded-lg text-center">
-          <p className="text-caramel/70 text-sm">
+        <div className="mt-6 p-6 bg-white dark:bg-olive-dark/30 rounded-lg text-center">
+          <p className="text-olive/80 dark:text-caramel/70 text-sm">
             No coffees yet. Click "Add Coffee" to start building your library.
           </p>
         </div>
       ) : (
         <div className="space-y-4">
           {Array.from(brands.entries()).map(([brand, brandCoffees]) => (
-            <div key={brand} className="border border-coffee/40 dark:border-caramel/20 rounded-lg overflow-hidden">
+            <div key={brand} className="border-2 border-coffee/50 dark:border-caramel/20 rounded-lg overflow-hidden">
               <button
                 onClick={() => setExpandedBrand(expandedBrand === brand ? null : brand)}
-                className="w-full px-4 py-3 bg-white/80 dark:bg-olive-dark/30 hover:bg-white dark:hover:bg-olive-dark/50 transition-colors flex items-center justify-between"
+                className="w-full px-4 py-3 bg-white dark:bg-olive-dark/30 hover:bg-white dark:hover:bg-olive-dark/50 transition-colors flex items-center justify-between"
               >
                 <span className="font-semibold text-olive-dark dark:text-cream">{brand}</span>
                 <div className="flex items-center gap-2">
-                  <span className="text-xs text-caramel/70">
+                  <span className="text-xs text-olive/80 dark:text-caramel/70">
                     {brandCoffees.length} {brandCoffees.length === 1 ? "coffee" : "coffees"}
                   </span>
                   <svg
@@ -193,7 +193,7 @@ const CoffeeCard: React.FC<CoffeeCardProps> = ({ coffee, onEdit, onDelete, onDup
   };
 
   return (
-    <div className="p-4 bg-white/80 dark:bg-olive-dark/20 hover:bg-white dark:hover:bg-olive-dark/30 transition-colors">
+    <div className="p-4 bg-white dark:bg-olive-dark/20 hover:bg-white dark:hover:bg-olive-dark/30 transition-colors">
       <div className="flex items-start justify-between gap-4">
         <div className="flex-1">
           <div className="mb-1">

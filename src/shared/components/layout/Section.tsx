@@ -24,13 +24,13 @@ export const Section: React.FC<SectionProps> = ({
 }) => {
   return (
     <section
-      className={`bg-gradient-to-br from-white/70 via-white/60 to-white/50
-                  dark:from-olive/30 dark:via-olive-dark/40 dark:to-olive/20
+      className={`bg-white dark:from-olive/30 dark:via-olive-dark/40 dark:to-olive/20
+                  dark:bg-gradient-to-br
                   backdrop-blur-xl backdrop-saturate-150
-                  border border-olive/10 dark:border-white/10
+                  border-2 border-olive/20 dark:border-white/10
                   rounded-lg p-6
-                  shadow-depth-2-light dark:shadow-depth-2
-                  hover:shadow-depth-3-light dark:hover:shadow-depth-3
+                  shadow-depth-3-light dark:shadow-depth-2
+                  hover:shadow-depth-4-light dark:hover:shadow-depth-3
                   transition-all duration-300 ease-in-out
                   mb-8
                   animate-fade-in

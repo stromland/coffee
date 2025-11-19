@@ -102,7 +102,7 @@ const BrewMethodManager: React.FC<BrewMethodManagerProps> = ({ onMethodChange })
   });
 
   return (
-    <div className="bg-white/60 dark:bg-olive/20 backdrop-blur-sm rounded-lg p-6 shadow-2xl">
+    <div className="bg-white dark:bg-olive/20 backdrop-blur-sm rounded-lg p-6 shadow-2xl">
       <div className="flex items-center justify-between mb-6">
         <div className="flex items-center gap-2">
           <div className="w-1 h-6 bg-coffee rounded-full"></div>
@@ -121,14 +121,14 @@ const BrewMethodManager: React.FC<BrewMethodManagerProps> = ({ onMethodChange })
 
       <div className="space-y-4">
         {Array.from(categories.entries()).map(([category, categoryMethods]) => (
-          <div key={category} className="border border-coffee/40 dark:border-caramel/20 rounded-lg overflow-hidden">
+          <div key={category} className="border-2 border-coffee/50 dark:border-caramel/20 rounded-lg overflow-hidden">
             <button
               onClick={() => setExpandedCategory(expandedCategory === category ? null : category)}
-              className="w-full px-4 py-3 bg-white/80 dark:bg-olive-dark/30 hover:bg-white dark:hover:bg-olive-dark/50 transition-colors flex items-center justify-between"
+              className="w-full px-4 py-3 bg-white dark:bg-olive-dark/30 hover:bg-white dark:hover:bg-olive-dark/50 transition-colors flex items-center justify-between"
             >
               <span className="font-semibold text-olive-dark dark:text-cream">{category}</span>
               <div className="flex items-center gap-2">
-                <span className="text-xs text-caramel/70">
+                <span className="text-xs text-olive/80 dark:text-caramel/70">
                   {categoryMethods.length} {categoryMethods.length === 1 ? "method" : "methods"}
                 </span>
                 <svg
@@ -154,7 +154,7 @@ const BrewMethodManager: React.FC<BrewMethodManagerProps> = ({ onMethodChange })
                 {categoryMethods.map((method) => (
                   <div
                     key={method.id}
-                    className="p-4 bg-white/80 dark:bg-olive-dark/20 hover:bg-white dark:hover:bg-olive-dark/30 transition-colors"
+                    className="p-4 bg-white dark:bg-olive-dark/20 hover:bg-white dark:hover:bg-olive-dark/30 transition-colors"
                   >
                     <div className="flex items-start justify-between gap-4">
                       <div className="flex-1">
@@ -167,7 +167,7 @@ const BrewMethodManager: React.FC<BrewMethodManagerProps> = ({ onMethodChange })
                           )}
                         </div>
                         <p className="text-sm text-caramel/80 mb-2">{method.description}</p>
-                        <div className="flex flex-wrap gap-3 text-xs text-caramel/70">
+                        <div className="flex flex-wrap gap-3 text-xs text-olive/80 dark:text-caramel/70">
                           <span>{method.pours.length} pours</span>
                           {method.creditName && (
                             <>
@@ -252,8 +252,8 @@ const BrewMethodManager: React.FC<BrewMethodManagerProps> = ({ onMethodChange })
       </div>
 
       {customMethods.length === 0 && (
-        <div className="mt-6 p-6 bg-white/80 dark:bg-olive-dark/30 rounded-lg text-center">
-          <p className="text-caramel/70 text-sm">
+        <div className="mt-6 p-6 bg-white dark:bg-olive-dark/30 rounded-lg text-center">
+          <p className="text-olive/80 dark:text-caramel/70 text-sm">
             No custom methods yet. Click "Create Method" to add your own brewing recipe.
           </p>
         </div>

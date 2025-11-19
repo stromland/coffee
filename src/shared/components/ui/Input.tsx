@@ -22,17 +22,17 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
 
     const baseStyles =
       "px-4 py-2 " +
-      "bg-white/80 dark:bg-olive-dark/50 " +
+      "bg-white dark:bg-olive-dark/50 " +
       "backdrop-blur-sm " +
-      "border rounded-md " +
+      "border-2 rounded-md " +
       "text-olive-dark dark:text-cream " +
-      "placeholder-olive/50 dark:placeholder-caramel/50 " +
+      "placeholder-olive/60 dark:placeholder-caramel/50 " +
       "shadow-depth-1-light dark:shadow-depth-1 " +
       "focus:shadow-depth-2-light dark:focus:shadow-depth-2 " +
       "focus:ring-2 focus:ring-coffee/50 focus:ring-offset-2 " +
       "focus:ring-offset-cream-light dark:focus:ring-offset-olive-dark " +
       "transition-all duration-200 ease-in-out " +
-      "hover:bg-white dark:hover:bg-olive-dark/60";
+      "hover:border-coffee/60 dark:hover:bg-olive-dark/60";
 
     const borderStyle = error
       ? "border-red-500 dark:border-red-500 focus:border-red-500 dark:focus:border-red-500"

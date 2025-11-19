@@ -138,14 +138,14 @@ const BrewingSteps: React.FC<BrewingStepsProps> = ({
       }
     >
       {methodName && (
-        <div className="mb-5 p-4 bg-white/80 dark:bg-olive-dark/50 rounded-lg">
+        <div className="mb-5 p-4 bg-white dark:bg-olive-dark/50 rounded-lg">
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
             <div>
-              <span className="text-xs text-caramel/70 block mb-1">Method</span>
+              <span className="text-xs text-olive/80 dark:text-caramel/70 block mb-1">Method</span>
               <span className="text-sm font-semibold text-olive-dark dark:text-cream">{methodName}</span>
               {selectedCoffeeId && (
                 <div className="mt-3 pt-3 border-t border-olive/30">
-                  <span className="text-xs text-caramel/70 block mb-1">Coffee</span>
+                  <span className="text-xs text-olive/80 dark:text-caramel/70 block mb-1">Coffee</span>
                   <span className="text-sm font-semibold text-olive-dark dark:text-cream">
                     {(() => {
                       const coffee = coffeeService.getCoffee(selectedCoffeeId);
@@ -177,7 +177,7 @@ const BrewingSteps: React.FC<BrewingStepsProps> = ({
         </div>
       )}
 
-      <div className="mb-5 p-4 bg-white/80 dark:bg-olive-dark/50 rounded-lg">
+      <div className="mb-5 p-4 bg-white dark:bg-olive-dark/50 rounded-lg">
         <p className="text-sm text-olive dark:text-caramel">
           <span className="font-semibold text-olive-dark dark:text-cream">Coffee:</span> {coffeeAmount}g |
           <span className="font-semibold text-olive-dark dark:text-cream ml-2">Water:</span> {totalWater.toFixed(0)}g |
@@ -206,7 +206,7 @@ const BrewingSteps: React.FC<BrewingStepsProps> = ({
                 {step.stepNumber}
               </div>
 
-              <div className="bg-white/80 dark:bg-olive-dark/40 rounded-lg p-4 hover:bg-white dark:hover:bg-olive-dark/50 transition-all">
+              <div className="bg-white dark:bg-olive-dark/40 rounded-lg p-4 hover:bg-white dark:hover:bg-olive-dark/50 transition-all">
                 <div className="flex justify-between items-start mb-3">
                   <h3 className="font-semibold text-olive-dark dark:text-cream text-base">{step.description}</h3>
                   <span className="text-xl font-mono font-bold text-coffee ml-4 bg-coffee/10 px-3 py-1 rounded-md">
@@ -215,7 +215,7 @@ const BrewingSteps: React.FC<BrewingStepsProps> = ({
                 </div>
 
                 {step.waterAmount > 0 && (
-                  <div className="bg-white/60 dark:bg-olive/20 px-4 py-3 rounded-md">
+                  <div className="bg-white dark:bg-olive/20 px-4 py-3 rounded-md">
                     <span className="text-caramel/80 text-xs block mb-1">Pour to</span>
                     <span className="font-bold text-olive-dark dark:text-cream text-2xl">
                       {step.cumulativeWater.toFixed(1)}g
