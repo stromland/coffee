@@ -24,8 +24,7 @@ export const Section: React.FC<SectionProps> = ({
 }) => {
   return (
     <section
-      className={`bg-white dark:from-olive/30 dark:via-olive-dark/40 dark:to-olive/20
-                  dark:bg-gradient-to-br
+      className={`bg-gradient-to-br from-white to-white dark:from-olive/30 dark:via-olive-dark/40 dark:to-olive/20
                   backdrop-blur-xl backdrop-saturate-150
                   border-2 border-olive/20 dark:border-white/10
                   rounded-lg p-6

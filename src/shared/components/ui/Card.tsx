@@ -17,8 +17,7 @@ export interface CardProps extends React.HTMLAttributes<HTMLDivElement> {
 export const Card = React.forwardRef<HTMLDivElement, CardProps>(
   ({ children, title, header, footer, padding = "md", className = "", ...props }, ref) => {
     const baseStyles =
-      "bg-white dark:from-olive/30 dark:via-olive-dark/40 dark:to-olive/20 " +
-      "dark:bg-gradient-to-br " +
+      "bg-gradient-to-br from-white to-white dark:from-olive/30 dark:via-olive-dark/40 dark:to-olive/20 " +
       "backdrop-blur-xl backdrop-saturate-150 " +
       "border-2 border-olive/20 dark:border-white/10 " +
       "rounded-lg " +
