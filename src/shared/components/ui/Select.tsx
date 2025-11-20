@@ -23,18 +23,29 @@ export const Select = React.forwardRef<HTMLSelectElement, SelectProps>(
     const selectId = React.useMemo(() => id || `select-${++selectIdCounter}`, [id]);
 
     const baseStyles =
-      "px-4 py-2 bg-olive-dark/50 border rounded-md text-cream focus:ring-2 focus:ring-coffee transition-colors cursor-pointer";
+      "px-4 py-2 " +
+      "bg-white dark:bg-olive-dark/50 " +
+      "backdrop-blur-sm " +
+      "border-2 rounded-md " +
+      "text-olive-dark dark:text-cream " +
+      "shadow-depth-1-light dark:shadow-depth-1 " +
+      "focus:shadow-depth-2-light dark:focus:shadow-depth-2 " +
+      "focus:ring-2 focus:ring-coffee/50 focus:ring-offset-2 " +
+      "focus:ring-offset-cream-light dark:focus:ring-offset-olive-dark " +
+      "transition-all duration-200 ease-in-out " +
+      "hover:border-coffee/60 dark:hover:bg-olive-dark/60 " +
+      "cursor-pointer";
 
     const borderStyle = error
-      ? "border-red-500 focus:border-red-500"
-      : "border-coffee/40 focus:border-coffee";
+      ? "border-red-500 dark:border-red-500 focus:border-red-500 dark:focus:border-red-500"
+      : "border-coffee/40 dark:border-coffee/40 focus:border-coffee dark:focus:border-coffee";
 
     const widthStyle = fullWidth ? "w-full" : "";
 
     return (
       <div className={fullWidth ? "w-full" : ""}>
         {label && (
-          <label htmlFor={selectId} className="block text-sm font-medium text-caramel mb-2">
+          <label htmlFor={selectId} className="block text-sm font-medium text-olive dark:text-caramel mb-2">
             {label}
           </label>
         )}
@@ -50,8 +61,8 @@ export const Select = React.forwardRef<HTMLSelectElement, SelectProps>(
             </option>
           ))}
         </select>
-        {error && <p className="mt-1 text-sm text-red-500">{error}</p>}
-        {helperText && !error && <p className="mt-1 text-xs text-caramel/70">{helperText}</p>}
+        {error && <p className="mt-1 text-sm text-red-500 dark:text-red-400">{error}</p>}
+        {helperText && !error && <p className="mt-1 text-xs text-olive/70 dark:text-caramel/70">{helperText}</p>}
       </div>
     );
   }

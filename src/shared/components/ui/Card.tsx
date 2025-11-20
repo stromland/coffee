@@ -16,7 +16,15 @@ export interface CardProps extends React.HTMLAttributes<HTMLDivElement> {
  */
 export const Card = React.forwardRef<HTMLDivElement, CardProps>(
   ({ children, title, header, footer, padding = "md", className = "", ...props }, ref) => {
-    const baseStyles = "bg-olive/20 backdrop-blur-sm rounded-lg shadow-2xl";
+    const baseStyles =
+      "bg-gradient-to-br from-white to-white dark:from-olive/30 dark:via-olive-dark/40 dark:to-olive/20 " +
+      "backdrop-blur-xl backdrop-saturate-150 " +
+      "border-2 border-olive/20 dark:border-white/10 " +
+      "rounded-lg " +
+      "shadow-depth-3-light dark:shadow-depth-2 " +
+      "hover:shadow-depth-4-light dark:hover:shadow-depth-3 " +
+      "transition-all duration-300 ease-in-out " +
+      "animate-fade-in";
 
     const paddingStyles = {
       none: "",
@@ -30,8 +38,8 @@ export const Card = React.forwardRef<HTMLDivElement, CardProps>(
       header ||
       (title && (
         <div className="flex items-center gap-2">
-          <div className="w-1 h-6 bg-coffee rounded-full"></div>
-          <h2 className="text-xl font-bold text-cream">{title}</h2>
+          <div className="w-1 h-6 bg-gradient-to-b from-coffee via-caramel to-coffee rounded-full shadow-glow-coffee"></div>
+          <h2 className="text-xl font-bold text-olive-dark dark:text-cream">{title}</h2>
         </div>
       ));
 
@@ -42,7 +50,9 @@ export const Card = React.forwardRef<HTMLDivElement, CardProps>(
         )}
         <div className={paddingStyles[padding]}>{children}</div>
         {footer && (
-          <div className={`border-t border-coffee/20 ${paddingStyles[padding]} pt-4`}>{footer}</div>
+          <div className={`border-t border-coffee/20 dark:border-coffee/20 ${paddingStyles[padding]} pt-4`}>
+            {footer}
+          </div>
         )}
       </div>
     );

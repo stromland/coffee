@@ -3,19 +3,66 @@
 @tailwind utilities;
 
 @layer base {
+  /* Root element configuration */
   html {
     height: 100%;
     overflow-y: auto;
-    --color-olive-dark: #283618;
   }
 
+  /* Dark mode theme variables (default) */
+  html.dark {
+    --color-bg-primary: #283618;
+    --color-bg-secondary: #1a1410;
+    --color-bg-tertiary: #1f2914;
+    --color-text-primary: #fefae0;
+    --color-text-secondary: #dda15e;
+    --color-accent: #bc6c25;
+  }
+
+  /* Light mode theme variables */
+  html.light {
+    --color-bg-primary: #fffef7;
+    --color-bg-secondary: #f5f5f0;
+    --color-bg-tertiary: #f8f7ef;
+    --color-text-primary: #283618;
+    --color-text-secondary: #606c38;
+    --color-accent: #bc6c25;
+  }
+
+  /* Base body styles */
   body {
     margin: 0;
     padding: 0;
-    background-color: var(--color-olive-dark);
+    background: linear-gradient(135deg, var(--color-bg-primary) 0%, var(--color-bg-tertiary) 50%, var(--color-bg-primary) 100%);
+    color: var(--color-text-primary);
+    transition: background-color 0.3s ease, color 0.3s ease;
   }
 
   #root {
     min-height: 100vh;
+  }
+
+  /* Smooth transitions for theme changes */
+  * {
+    transition-property: background-color, border-color, color, fill, stroke;
+    transition-duration: 0.2s;
+    transition-timing-function: ease-in-out;
+  }
+
+  /* Respect user's motion preferences */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+
+  /* Improve focus visibility for accessibility */
+  *:focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 2px;
   }
 }

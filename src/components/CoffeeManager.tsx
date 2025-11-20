@@ -59,11 +59,11 @@ const CoffeeEditor: React.FC<CoffeeEditorProps> = ({ coffee, onSave, onCancel, o
   };
 
   return (
-    <div className="bg-olive/20 backdrop-blur-sm rounded-lg p-6 shadow-2xl">
+    <div className="bg-white dark:bg-olive/20 backdrop-blur-sm rounded-lg p-6 shadow-2xl">
       <div className="flex items-center justify-between mb-6">
         <div className="flex items-center gap-2">
           <div className="w-1 h-6 bg-coffee rounded-full"></div>
-          <h2 className="text-xl font-bold text-cream">
+          <h2 className="text-xl font-bold text-olive-dark dark:text-cream">
             {coffee?.id ? "Edit Coffee" : "Add New Coffee"}
           </h2>
         </div>
@@ -88,14 +88,14 @@ const CoffeeEditor: React.FC<CoffeeEditorProps> = ({ coffee, onSave, onCancel, o
           />
 
           <div>
-            <label className="block text-sm font-medium text-cream mb-2">
+            <label className="block text-sm font-medium text-olive-dark dark:text-cream mb-2">
               Description (Optional)
             </label>
             <textarea
               placeholder="Describe the coffee's flavor profile, origin, or characteristics..."
               value={description}
               onChange={(e) => setDescription(e.target.value)}
-              className="w-full px-4 py-2 bg-olive-dark/50 border border-caramel/30 rounded-lg text-cream placeholder-caramel/50 focus:outline-none focus:border-coffee"
+              className="w-full px-4 py-2 bg-white dark:bg-olive-dark/50 border-2 border-coffee/50 dark:border-caramel/30 rounded-lg text-olive-dark dark:text-cream placeholder-olive/50 dark:placeholder-caramel/50 focus:outline-none focus:border-coffee"
               rows={3}
             />
           </div>
@@ -141,20 +141,20 @@ const CoffeeEditor: React.FC<CoffeeEditorProps> = ({ coffee, onSave, onCancel, o
           {onDuplicate && (
             <button
               onClick={onDuplicate}
-              className="flex-1 px-6 py-3 bg-olive-dark/50 hover:bg-olive-dark/70 text-caramel hover:text-cream rounded-lg font-semibold transition-colors"
+              className="flex-1 px-6 py-3 bg-white dark:bg-olive-dark/50 hover:bg-white dark:hover:bg-olive-dark/70 text-olive dark:text-caramel hover:text-coffee dark:hover:text-cream rounded-lg font-semibold transition-colors"
             >
               Duplicate
             </button>
           )}
           <button
             onClick={onCancel}
-            className="flex-1 px-6 py-3 bg-olive-dark/50 hover:bg-olive-dark/70 text-caramel hover:text-cream rounded-lg font-semibold transition-colors"
+            className="flex-1 px-6 py-3 bg-white dark:bg-olive-dark/50 hover:bg-white dark:hover:bg-olive-dark/70 text-olive dark:text-caramel hover:text-coffee dark:hover:text-cream rounded-lg font-semibold transition-colors"
           >
             Cancel
           </button>
           <button
             onClick={handleSave}
-            className="flex-1 px-6 py-3 bg-coffee hover:bg-coffee/80 text-cream rounded-lg font-semibold transition-colors"
+            className="flex-1 px-6 py-3 bg-coffee hover:bg-coffee/80 text-white dark:text-cream rounded-lg font-semibold transition-colors"
           >
             {coffee?.id ? "Save Changes" : "Add Coffee"}
           </button>

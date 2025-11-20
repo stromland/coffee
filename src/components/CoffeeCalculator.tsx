@@ -58,8 +58,8 @@ const CoffeeCalculator: React.FC<CoffeeCalculatorProps> = ({ settings, onSetting
 
       <div className="mt-6 p-6 bg-gradient-to-br from-coffee/30 to-coffee/10 rounded-lg shadow-inner">
         <div className="flex justify-between items-center">
-          <span className="text-caramel font-medium">Total Water:</span>
-          <span className="text-3xl font-bold text-cream">{settings.totalWater.toFixed(0)}g</span>
+          <span className="text-olive dark:text-caramel font-medium">Total Water:</span>
+          <span className="text-3xl font-bold text-olive-dark dark:text-cream">{settings.totalWater.toFixed(0)}g</span>
         </div>
         <div className="mt-3 text-sm text-caramel/80">
           Ratio: 1:{settings.waterRatio} ({settings.coffeeAmount}g coffee × {settings.waterRatio})
