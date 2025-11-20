@@ -48,7 +48,7 @@ const AppLayout = ({ children }: AppLayoutProps) => {
                                 shadow-depth-1-light dark:shadow-depth-1 hover:shadow-depth-2-light dark:hover:shadow-depth-2 ${
                       isActive("/")
                         ? "bg-gradient-to-r from-coffee to-coffee/90 text-white dark:text-cream"
-                        : "bg-white/60 dark:bg-olive/20 text-olive-dark dark:text-caramel hover:text-coffee dark:hover:text-cream hover:bg-white/80 dark:hover:bg-olive/30 backdrop-blur-sm"
+                        : "bg-gradient-to-br from-cream to-caramel/20 dark:bg-olive/20 text-olive-dark dark:text-caramel hover:text-coffee dark:hover:text-cream hover:from-cream hover:to-caramel/30 dark:hover:bg-olive/30 border border-olive/20 dark:border-transparent backdrop-blur-sm"
                     }`}
                   >
                     <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -67,7 +67,7 @@ const AppLayout = ({ children }: AppLayoutProps) => {
                                 shadow-depth-1-light dark:shadow-depth-1 hover:shadow-depth-2-light dark:hover:shadow-depth-2 ${
                       isActive("/methods")
                         ? "bg-gradient-to-r from-coffee to-coffee/90 text-white dark:text-cream"
-                        : "bg-white/60 dark:bg-olive/20 text-olive-dark dark:text-caramel hover:text-coffee dark:hover:text-cream hover:bg-white/80 dark:hover:bg-olive/30 backdrop-blur-sm"
+                        : "bg-gradient-to-br from-cream to-caramel/20 dark:bg-olive/20 text-olive-dark dark:text-caramel hover:text-coffee dark:hover:text-cream hover:from-cream hover:to-caramel/30 dark:hover:bg-olive/30 border border-olive/20 dark:border-transparent backdrop-blur-sm"
                     }`}
                   >
                     <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -86,7 +86,7 @@ const AppLayout = ({ children }: AppLayoutProps) => {
                                 shadow-depth-1-light dark:shadow-depth-1 hover:shadow-depth-2-light dark:hover:shadow-depth-2 ${
                       isActive("/coffee")
                         ? "bg-gradient-to-r from-coffee to-coffee/90 text-white dark:text-cream"
-                        : "bg-white/60 dark:bg-olive/20 text-olive-dark dark:text-caramel hover:text-coffee dark:hover:text-cream hover:bg-white/80 dark:hover:bg-olive/30 backdrop-blur-sm"
+                        : "bg-gradient-to-br from-cream to-caramel/20 dark:bg-olive/20 text-olive-dark dark:text-caramel hover:text-coffee dark:hover:text-cream hover:from-cream hover:to-caramel/30 dark:hover:bg-olive/30 border border-olive/20 dark:border-transparent backdrop-blur-sm"
                     }`}
                   >
                     <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -101,7 +101,7 @@ const AppLayout = ({ children }: AppLayoutProps) => {
                                 shadow-depth-1-light dark:shadow-depth-1 hover:shadow-depth-2-light dark:hover:shadow-depth-2 ${
                       isActive("/history")
                         ? "bg-gradient-to-r from-coffee to-coffee/90 text-white dark:text-cream"
-                        : "bg-white/60 dark:bg-olive/20 text-olive-dark dark:text-caramel hover:text-coffee dark:hover:text-cream hover:bg-white/80 dark:hover:bg-olive/30 backdrop-blur-sm"
+                        : "bg-gradient-to-br from-cream to-caramel/20 dark:bg-olive/20 text-olive-dark dark:text-caramel hover:text-coffee dark:hover:text-cream hover:from-cream hover:to-caramel/30 dark:hover:bg-olive/30 border border-olive/20 dark:border-transparent backdrop-blur-sm"
                     }`}
                   >
                     <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">

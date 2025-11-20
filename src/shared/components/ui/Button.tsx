@@ -46,12 +46,12 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         "hover:shadow-depth-3-light dark:hover:shadow-depth-3 " +
         "active:shadow-depth-1-light dark:active:shadow-depth-1",
       secondary:
-        "bg-white/60 dark:bg-olive/30 " +
-        "hover:bg-white/80 dark:hover:bg-olive/40 " +
-        "border border-coffee/50 dark:border-coffee/50 " +
+        "bg-gradient-to-br from-cream to-caramel/20 dark:bg-olive/30 " +
+        "hover:from-cream hover:to-caramel/30 dark:hover:bg-olive/40 " +
+        "border-2 border-olive/30 dark:border-coffee/50 " +
         "text-olive-dark dark:text-cream " +
-        "shadow-depth-1-light dark:shadow-depth-1 " +
-        "hover:shadow-depth-2-light dark:hover:shadow-depth-2 " +
+        "shadow-depth-2-light dark:shadow-depth-1 " +
+        "hover:shadow-depth-3-light dark:hover:shadow-depth-2 " +
         "backdrop-blur-sm",
       danger:
         "bg-gradient-to-r from-red-600 to-red-700 dark:from-red-600 dark:to-red-700 " +
@@ -61,9 +61,10 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         "hover:shadow-depth-3-light dark:hover:shadow-depth-3",
       ghost:
         "bg-transparent dark:bg-transparent " +
-        "text-olive dark:text-caramel " +
+        "text-olive-dark dark:text-caramel " +
         "hover:text-coffee dark:hover:text-cream " +
-        "hover:bg-olive/10 dark:hover:bg-olive/20 " +
+        "hover:bg-caramel/15 dark:hover:bg-olive/20 " +
+        "border border-transparent hover:border-olive/20 dark:hover:border-coffee/30 " +
         "backdrop-blur-sm",
     };
 
